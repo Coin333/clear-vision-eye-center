@@ -97,9 +97,17 @@
     .link-underline { background-image: linear-gradient(#2563eb,#2563eb); background-size: 0% 1.5px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .35s cubic-bezier(.16,1,.3,1); }
     .link-underline:hover { background-size: 100% 1.5px; }
 
-    .cond:hover { background-color: #0C1B33; color: #FBFAF7; }
-    .cond:hover .cond-def { color: rgba(251,250,247,.7); }
-    .cond:hover .cond-tag { color: #93c5fd; }
+    /* Conditions: each name sits in soft focus and sharpens on hover/focus */
+    .cond-term { filter: blur(4px); transition: filter .5s cubic-bezier(.16,1,.3,1), color .35s ease; }
+    .cond-row:hover .cond-term,
+    .cond-row:focus-visible .cond-term,
+    .cond-row:focus-within .cond-term { filter: blur(0); color: #2563eb; }
+    .cond-arrow { opacity: 0; transform: translateX(-8px); transition: opacity .35s ease, transform .4s cubic-bezier(.16,1,.3,1); }
+    .cond-row:hover .cond-arrow,
+    .cond-row:focus-within .cond-arrow { opacity: 1; transform: translateX(0); }
+    .cond-row:focus-visible { outline: none; }
+    @media (hover: none) { .cond-term { filter: none; } }
+    @media (prefers-reduced-motion: reduce) { .cond-term { filter: none; transition: color .35s ease; } }
 
     .faq-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
     .faq-item.open .faq-panel { grid-template-rows: 1fr; }
@@ -391,49 +399,83 @@
       </div>
     </section>
 
-    <!-- CONDITIONS WE TREAT -->
-    <section class="py-16 md:py-24 border-t border-ink/10">
+    <!-- CONDITIONS WE TREAT (focus glossary) -->
+    <section id="conditions" class="py-20 md:py-28 border-t border-ink/10">
       <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+        <div class="grid md:grid-cols-[0.85fr_1.6fr] gap-10 lg:gap-16 mb-10 md:mb-14">
           <div>
             <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-ink/50">(Conditions we treat)</p>
-            <h2 class="reveal reveal-d1 font-display text-4xl md:text-5xl tracking-tight text-ink mt-5" style="font-weight:600">From blur to clarity.</h2>
+            <h2 class="reveal reveal-d1 font-display text-4xl md:text-6xl tracking-tight text-ink mt-5 leading-[1.02]" style="font-weight:600">From blur<br />to clarity.</h2>
           </div>
-          <p class="reveal reveal-d1 text-ink/60 max-w-sm">If your vision has changed, there is usually a name for it, and a way to correct it. Hover to learn more.</p>
+          <p class="reveal reveal-d1 self-end text-lg text-ink/65 leading-relaxed max-w-lg">
+            If your vision has changed, there is usually a name for it, and a way to correct it. Run your eye down the list and bring each one into focus.
+          </p>
         </div>
 
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-ink/10 rounded-[20px] overflow-hidden border border-ink/10">
-          <div class="cond bg-bone p-7 transition-colors duration-300">
-            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">Cataracts</p>
-            <h3 class="font-display text-2xl mt-3" style="font-weight:500">Clouded lens</h3>
-            <p class="cond-def mt-2 text-ink/60 transition-colors">A clouding of the eye's natural lens, corrected by replacing it with a clear implant.</p>
-          </div>
-          <div class="cond bg-bone p-7 transition-colors duration-300">
-            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">Glaucoma</p>
-            <h3 class="font-display text-2xl mt-3" style="font-weight:500">Optic-nerve pressure</h3>
-            <p class="cond-def mt-2 text-ink/60 transition-colors">Pressure that can quietly damage sight. Caught early, it is managed medically or surgically.</p>
-          </div>
-          <div class="cond bg-bone p-7 transition-colors duration-300">
-            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">Presbyopia</p>
-            <h3 class="font-display text-2xl mt-3" style="font-weight:500">Aging focus</h3>
-            <p class="cond-def mt-2 text-ink/60 transition-colors">Around age 40 the lens stiffens and near focus fades. Lenses and implants bring it back.</p>
-          </div>
-          <div class="cond bg-bone p-7 transition-colors duration-300">
-            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">Astigmatism</p>
-            <h3 class="font-display text-2xl mt-3" style="font-weight:500">Irregular contour</h3>
-            <p class="cond-def mt-2 text-ink/60 transition-colors">An uneven corneal curve that blurs vision at every distance, correctable in surgery or glasses.</p>
-          </div>
-          <div class="cond bg-bone p-7 transition-colors duration-300">
-            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">Nearsightedness</p>
-            <h3 class="font-display text-2xl mt-3" style="font-weight:500">Distance blur</h3>
-            <p class="cond-def mt-2 text-ink/60 transition-colors">Myopia softens far-away detail. We correct it with eyewear or a tailored lens implant.</p>
-          </div>
-          <div class="cond bg-bone p-7 transition-colors duration-300">
-            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">Farsightedness</p>
-            <h3 class="font-display text-2xl mt-3" style="font-weight:500">Near blur</h3>
-            <p class="cond-def mt-2 text-ink/60 transition-colors">Hyperopia makes close work a strain. The right correction makes reading effortless again.</p>
-          </div>
+        <div class="reveal" id="condList">
+          <a href="#contact" class="cond-row group grid md:grid-cols-[minmax(0,1fr)_1.5fr] items-baseline gap-2 md:gap-12 border-t border-ink/15 py-7 md:py-9">
+            <div class="flex items-baseline gap-3">
+              <h3 class="cond-term font-display text-3xl md:text-5xl text-ink" style="font-weight:500">Cataracts</h3>
+              <i data-lucide="arrow-up-right" class="cond-arrow w-5 h-5 text-brand-600"></i>
+            </div>
+            <div>
+              <p class="font-mono text-[11px] tracking-[.15em] uppercase text-brand-700 mb-1.5">Clouded lens</p>
+              <p class="text-ink/65 md:text-lg max-w-xl">A clouding of the eye's natural lens, corrected by replacing it with a clear implant.</p>
+            </div>
+          </a>
+          <a href="#contact" class="cond-row group grid md:grid-cols-[minmax(0,1fr)_1.5fr] items-baseline gap-2 md:gap-12 border-t border-ink/15 py-7 md:py-9">
+            <div class="flex items-baseline gap-3">
+              <h3 class="cond-term font-display text-3xl md:text-5xl text-ink" style="font-weight:500">Glaucoma</h3>
+              <i data-lucide="arrow-up-right" class="cond-arrow w-5 h-5 text-brand-600"></i>
+            </div>
+            <div>
+              <p class="font-mono text-[11px] tracking-[.15em] uppercase text-brand-700 mb-1.5">Optic-nerve pressure</p>
+              <p class="text-ink/65 md:text-lg max-w-xl">Pressure that can quietly damage sight. Caught early, it is managed medically or surgically.</p>
+            </div>
+          </a>
+          <a href="#contact" class="cond-row group grid md:grid-cols-[minmax(0,1fr)_1.5fr] items-baseline gap-2 md:gap-12 border-t border-ink/15 py-7 md:py-9">
+            <div class="flex items-baseline gap-3">
+              <h3 class="cond-term font-display text-3xl md:text-5xl text-ink" style="font-weight:500">Presbyopia</h3>
+              <i data-lucide="arrow-up-right" class="cond-arrow w-5 h-5 text-brand-600"></i>
+            </div>
+            <div>
+              <p class="font-mono text-[11px] tracking-[.15em] uppercase text-brand-700 mb-1.5">Aging focus</p>
+              <p class="text-ink/65 md:text-lg max-w-xl">Around age 40 the lens stiffens and near focus fades. Lenses and implants bring it back.</p>
+            </div>
+          </a>
+          <a href="#contact" class="cond-row group grid md:grid-cols-[minmax(0,1fr)_1.5fr] items-baseline gap-2 md:gap-12 border-t border-ink/15 py-7 md:py-9">
+            <div class="flex items-baseline gap-3">
+              <h3 class="cond-term font-display text-3xl md:text-5xl text-ink" style="font-weight:500">Astigmatism</h3>
+              <i data-lucide="arrow-up-right" class="cond-arrow w-5 h-5 text-brand-600"></i>
+            </div>
+            <div>
+              <p class="font-mono text-[11px] tracking-[.15em] uppercase text-brand-700 mb-1.5">Irregular contour</p>
+              <p class="text-ink/65 md:text-lg max-w-xl">An uneven corneal curve that blurs vision at every distance, correctable in surgery or glasses.</p>
+            </div>
+          </a>
+          <a href="#contact" class="cond-row group grid md:grid-cols-[minmax(0,1fr)_1.5fr] items-baseline gap-2 md:gap-12 border-t border-ink/15 py-7 md:py-9">
+            <div class="flex items-baseline gap-3">
+              <h3 class="cond-term font-display text-3xl md:text-5xl text-ink" style="font-weight:500">Nearsightedness</h3>
+              <i data-lucide="arrow-up-right" class="cond-arrow w-5 h-5 text-brand-600"></i>
+            </div>
+            <div>
+              <p class="font-mono text-[11px] tracking-[.15em] uppercase text-brand-700 mb-1.5">Myopia · distance blur</p>
+              <p class="text-ink/65 md:text-lg max-w-xl">Far-away detail softens. We correct it with eyewear or a tailored lens implant.</p>
+            </div>
+          </a>
+          <a href="#contact" class="cond-row group grid md:grid-cols-[minmax(0,1fr)_1.5fr] items-baseline gap-2 md:gap-12 border-t border-b border-ink/15 py-7 md:py-9">
+            <div class="flex items-baseline gap-3">
+              <h3 class="cond-term font-display text-3xl md:text-5xl text-ink" style="font-weight:500">Farsightedness</h3>
+              <i data-lucide="arrow-up-right" class="cond-arrow w-5 h-5 text-brand-600"></i>
+            </div>
+            <div>
+              <p class="font-mono text-[11px] tracking-[.15em] uppercase text-brand-700 mb-1.5">Hyperopia · near blur</p>
+              <p class="text-ink/65 md:text-lg max-w-xl">Close work becomes a strain. The right correction makes reading effortless again.</p>
+            </div>
+          </a>
         </div>
+
+        <p class="reveal mt-8 font-mono text-xs tracking-[.15em] uppercase text-ink/40">Hover a name to bring it into focus · tap to ask Dr. Chuck</p>
       </div>
     </section>
 
