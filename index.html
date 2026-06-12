@@ -54,14 +54,15 @@
 
     .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg,#3b82f6,#1d4ed8); z-index: 80; width: 0%; transition: width .1s linear; }
 
-    .chart-row { font-family: 'Inter', sans-serif; font-weight: 900; letter-spacing: .04em; line-height: .92; text-transform: uppercase; color: #0C1B33; }
+    .chart-row { font-family: 'Inter', sans-serif; font-weight: 900; letter-spacing: .08em; line-height: .95; text-transform: uppercase; color: #0C1B33; }
+    @media (min-width: 768px) { .chart-row { letter-spacing: .18em; } }
 
     /* Hero hook: the whole chart loads out of focus and resolves to clarity */
     .fline { opacity: 0; animation: focusIn 1.25s cubic-bezier(.2,.85,.2,1) forwards; will-change: filter, transform, opacity; }
     @keyframes focusIn {
-      0%   { opacity: 0; filter: blur(18px); transform: translateY(10px) scale(1.04); letter-spacing: .16em; }
+      0%   { opacity: 0; filter: blur(18px); transform: translateY(10px) scale(1.04); }
       55%  { opacity: 1; }
-      100% { opacity: 1; filter: blur(0); transform: none; letter-spacing: .04em; }
+      100% { opacity: 1; filter: blur(0); transform: none; }
     }
     .hero-fade { opacity: 0; animation: heroFade .9s ease forwards; }
     @keyframes heroFade { to { opacity: 1; } }
@@ -79,7 +80,7 @@
     .svc-arrow { opacity: 0; transform: translateX(-10px); transition: opacity .35s ease, transform .4s cubic-bezier(.16,1,.3,1); }
     .svc-row:hover .svc-arrow { opacity: 1; transform: translateX(0); }
 
-    #svcPreviewImg { opacity: 0; transition: opacity .55s cubic-bezier(.16,1,.3,1); }
+    #svcPreviewImg { opacity: 0; transition: opacity .35s ease; }
     #svcPreviewImg.on { opacity: 1; }
 
     .ba { position: relative; overflow: hidden; user-select: none; touch-action: none; }
@@ -198,21 +199,21 @@
         </div>
 
         <div class="border-t border-ink/15">
-          <div class="flex items-baseline gap-5 md:gap-10 py-2.5 md:py-3 border-b border-dashed border-ink/12">
-            <span class="fline font-mono text-[11px] md:text-sm text-ink/40 w-12 md:w-20 shrink-0" style="animation-delay:0s">20/200</span>
-            <span class="fline chart-row text-[16vw] md:text-[9.5rem]" style="animation-delay:0s">Clear</span>
+          <div class="relative text-center py-3 md:py-4 border-b border-dashed border-ink/12">
+            <span class="fline hidden md:block absolute left-0 top-1/2 -translate-y-1/2 font-mono text-sm text-ink/40" style="animation-delay:0s">20/200</span>
+            <span class="fline chart-row block text-[clamp(3.5rem,18vw,9.5rem)]" style="animation-delay:0s">Clear</span>
           </div>
-          <div class="flex items-baseline gap-5 md:gap-10 py-2.5 md:py-3 border-b border-dashed border-ink/12">
-            <span class="fline font-mono text-[11px] md:text-sm text-ink/40 w-12 md:w-20 shrink-0" style="animation-delay:.18s">20/100</span>
-            <span class="fline chart-row text-[11vw] md:text-[6.25rem]" style="animation-delay:.18s">Vision for</span>
+          <div class="relative text-center py-3 md:py-4 border-b border-dashed border-ink/12">
+            <span class="fline hidden md:block absolute left-0 top-1/2 -translate-y-1/2 font-mono text-sm text-ink/40" style="animation-delay:.18s">20/100</span>
+            <span class="fline chart-row block text-[clamp(2rem,11vw,6.25rem)]" style="animation-delay:.18s">Vision for</span>
           </div>
-          <div class="flex items-baseline gap-5 md:gap-10 py-2.5 md:py-3 border-b border-dashed border-ink/12">
-            <span class="fline font-mono text-[11px] md:text-sm text-ink/40 w-12 md:w-20 shrink-0" style="animation-delay:.36s">20/70</span>
-            <span class="fline chart-row text-[8vw] md:text-[4.5rem]" style="animation-delay:.36s">Every stage of</span>
+          <div class="relative text-center py-3 md:py-4 border-b border-dashed border-ink/12">
+            <span class="fline hidden md:block absolute left-0 top-1/2 -translate-y-1/2 font-mono text-sm text-ink/40" style="animation-delay:.36s">20/70</span>
+            <span class="fline chart-row block text-[clamp(1.5rem,8vw,4.5rem)]" style="animation-delay:.36s">Every stage of</span>
           </div>
-          <div class="flex items-baseline gap-5 md:gap-10 py-2.5 md:py-3 border-b-2 border-chartred">
-            <span class="fline font-mono text-[11px] md:text-sm text-chartred w-12 md:w-20 shrink-0 font-semibold" style="animation-delay:.54s">20/20</span>
-            <span class="fline chart-row text-[6.5vw] md:text-[3.25rem]" style="animation-delay:.54s">Life, here in <span class="text-brand-600">Pomona</span></span>
+          <div class="relative text-center py-3 md:py-4 border-b-2 border-chartred">
+            <span class="fline hidden md:block absolute left-0 top-1/2 -translate-y-1/2 font-mono text-sm text-chartred font-semibold" style="animation-delay:.54s">20/20</span>
+            <span class="fline chart-row block text-[clamp(1.15rem,5.6vw,3.25rem)]" style="animation-delay:.54s">Life, here in <span class="text-brand-600">Pomona</span></span>
           </div>
         </div>
 
@@ -320,14 +321,13 @@
           <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-ink/50">(What we do)</p>
           <h2 class="reveal reveal-d1 font-display text-4xl md:text-5xl tracking-tight text-ink mt-5 leading-[1.05]" style="font-weight:600">Care for every part of seeing.</h2>
           <p class="reveal reveal-d2 mt-5 text-ink/60 leading-relaxed">From the front desk to the operating microscope, every service is delivered by the same surgeon who has done it thousands of times.</p>
-          <div class="reveal reveal-d3 hidden lg:block mt-8 relative rounded-2xl overflow-hidden border border-ink/10 aspect-[4/3] bg-ink/5">
-            <div class="absolute inset-0 grid place-items-center font-mono text-[11px] tracking-[.15em] uppercase text-ink/30">Hover a service</div>
-            <img id="svcPreviewImg" src="" alt="" class="absolute inset-0 w-full h-full object-cover" />
+          <div class="reveal reveal-d3 hidden lg:block mt-8 relative rounded-2xl overflow-hidden border border-ink/10 aspect-[4/3] bg-gradient-to-br from-brand-50 to-bone">
+            <img id="svcPreviewImg" src="" alt="Selected service" class="absolute inset-0 w-full h-full object-cover" />
           </div>
         </div>
 
         <div class="reveal" id="svcList">
-          <a href="#contact" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="assets/eye-closeup.jpg">
+          <a href="#contact" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="assets/svc-care.jpg">
             <div class="flex items-baseline gap-5 md:gap-8">
               <span class="svc-num font-mono text-sm text-ink/40 w-8 shrink-0 transition-colors">01</span>
               <div class="flex-1">
@@ -367,7 +367,7 @@
               <i data-lucide="arrow-up-right" class="svc-arrow w-6 h-6 text-brand-600 mt-2"></i>
             </div>
           </a>
-          <a href="#contact" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="assets/eyesurgery.jpg">
+          <a href="#contact" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="assets/svc-05-lens.jpg">
             <div class="flex items-baseline gap-5 md:gap-8">
               <span class="svc-num font-mono text-sm text-ink/40 w-8 shrink-0 transition-colors">05</span>
               <div class="flex-1">
@@ -377,7 +377,7 @@
               <i data-lucide="arrow-up-right" class="svc-arrow w-6 h-6 text-brand-600 mt-2"></i>
             </div>
           </a>
-          <a href="#contact" class="svc-row group block border-t border-b border-ink/15 py-7 md:py-9" data-img="assets/glasses.jpg">
+          <a href="#contact" class="svc-row group block border-t border-b border-ink/15 py-7 md:py-9" data-img="assets/svc-06-glaucoma.jpg">
             <div class="flex items-baseline gap-5 md:gap-8">
               <span class="svc-num font-mono text-sm text-ink/40 w-8 shrink-0 transition-colors">06</span>
               <div class="flex-1">
@@ -666,8 +666,11 @@
 
         <div class="reveal reveal-d1">
           <form id="apptForm" class="bg-white rounded-[20px] border border-ink/10 shadow-[0_30px_70px_-30px_rgba(12,27,51,.3)] p-8 md:p-10" novalidate>
-            <h3 class="font-display text-2xl text-ink" style="font-weight:600">Request an appointment</h3>
-            <p class="text-sm text-ink/55 mt-1">We'll reply by your preferred method, usually within one business day.</p>
+            <div class="flex items-center justify-between gap-3">
+              <h3 class="font-display text-2xl text-ink" style="font-weight:600">Request an appointment</h3>
+              <span class="font-mono text-[10px] tracking-[.15em] uppercase text-ink/40 border border-ink/15 rounded-full px-2.5 py-1 shrink-0">Optional</span>
+            </div>
+            <p class="text-sm text-ink/55 mt-1">Rather talk to a person? Just call <a href="tel:+19097662150" class="text-brand-700 link-underline font-medium">(909) 766-2150</a>. Or send a request and we'll reply your way, usually within one business day.</p>
 
             <div class="mt-7 grid sm:grid-cols-[auto_1fr] gap-4">
               <div>
@@ -781,16 +784,19 @@
     </div>
   </footer>
 
-  <!-- Mobile sticky call bar -->
-  <div class="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-bone/95 backdrop-blur-md border-t border-ink/10 px-4 py-3 flex gap-3" style="padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));">
-    <a href="tel:+19097662150" class="flex-1 inline-flex items-center justify-center gap-2 border border-ink/20 text-ink font-semibold py-3 rounded-full">
+  <!-- Mobile sticky action bar -->
+  <div class="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-bone/95 backdrop-blur-md border-t border-ink/10 px-3 py-2.5 grid grid-cols-3 gap-2" style="padding-bottom: calc(0.625rem + env(safe-area-inset-bottom));">
+    <a href="tel:+19097662150" class="inline-flex flex-col items-center justify-center gap-1 border border-ink/20 text-ink font-semibold py-2 rounded-xl text-xs">
       <i data-lucide="phone" class="w-4 h-4"></i> Call
     </a>
-    <a href="#contact" class="flex-1 inline-flex items-center justify-center gap-2 bg-brand-600 text-white font-semibold py-3 rounded-full">
-      <i data-lucide="calendar-check" class="w-4 h-4"></i> Book a visit
+    <a href="https://maps.google.com/?q=1774+Alameda+St,+Pomona,+CA+91768" target="_blank" rel="noopener" class="inline-flex flex-col items-center justify-center gap-1 border border-ink/20 text-ink font-semibold py-2 rounded-xl text-xs">
+      <i data-lucide="map-pin" class="w-4 h-4"></i> Directions
+    </a>
+    <a href="#contact" class="inline-flex flex-col items-center justify-center gap-1 bg-brand-600 text-white font-semibold py-2 rounded-xl text-xs">
+      <i data-lucide="calendar-check" class="w-4 h-4"></i> Book
     </a>
   </div>
-  <div class="lg:hidden h-16" aria-hidden="true"></div>
+  <div class="lg:hidden h-20" aria-hidden="true"></div>
 
   <script>
     lucide.createIcons();
@@ -848,9 +854,29 @@
     }, { threshold: 0.5 });
     counters.forEach(c => cIO.observe(c));
 
-    // Open / closed status (Yelp hours: Mon-Fri 8:00-12:30 & 13:30-17:00; closed weekends)
+    /* ===========================================================
+       HOURS CONFIG  (the office can edit this once a year)
+       Hours: Mon–Fri 8:00–12:30 & 1:30–5:00, closed weekends.
+       HOLIDAYS / CLOSURES: add any date the office is closed as
+       'YYYY-MM-DD'. On those days the badge always shows "Closed".
+       =========================================================== */
+    const CLOSURES = [
+      '2026-01-01', // New Year's Day
+      '2026-05-25', // Memorial Day
+      '2026-07-03', // Independence Day (observed)
+      '2026-09-07', // Labor Day
+      '2026-11-26', // Thanksgiving
+      '2026-11-27', // Day after Thanksgiving
+      '2026-12-24', // Christmas Eve
+      '2026-12-25', // Christmas Day
+      '2026-12-31'  // New Year's Eve
+    ];
+    function ymd(d) {
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
     function computeStatus() {
       const now = new Date();
+      if (CLOSURES.includes(ymd(now))) return { open: false, label: 'Closed today · Holiday' };
       const day = now.getDay(); // 0 Sun .. 6 Sat
       const m = now.getHours() * 60 + now.getMinutes();
       const weekday = day >= 1 && day <= 5;
@@ -877,17 +903,28 @@
       });
     })();
 
-    // Service preview: fades in under the section intro, swaps as you move between rows
+    // Service preview: always fades out then in on every change, even row-to-row
     const previewImg = document.getElementById('svcPreviewImg');
     const svcList = document.getElementById('svcList');
     if (previewImg && svcList) {
-      document.querySelectorAll('.svc-row').forEach(row => {
-        row.addEventListener('mouseenter', () => {
-          if (previewImg.getAttribute('src') !== row.dataset.img) previewImg.src = row.dataset.img;
-          previewImg.classList.add('on');
-        });
-      });
-      svcList.addEventListener('mouseleave', () => previewImg.classList.remove('on'));
+      const rows = Array.from(document.querySelectorAll('.svc-row'));
+      const defaultImg = rows[0].dataset.img;
+      let fadeT;
+      function show(src) {
+        if (previewImg.dataset.current === src && previewImg.classList.contains('on')) return;
+        previewImg.classList.remove('on');                 // fade out
+        clearTimeout(fadeT);
+        fadeT = setTimeout(() => {
+          previewImg.src = src;
+          previewImg.dataset.current = src;
+          previewImg.classList.add('on');                  // fade in
+        }, 180);
+      }
+      previewImg.src = defaultImg;
+      previewImg.dataset.current = defaultImg;
+      requestAnimationFrame(() => previewImg.classList.add('on'));
+      rows.forEach(row => row.addEventListener('mouseenter', () => show(row.dataset.img)));
+      svcList.addEventListener('mouseleave', () => show(defaultImg));
     }
 
     // FAQ accordion
