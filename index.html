@@ -43,7 +43,6 @@
   <style>
     body { -webkit-font-smoothing: antialiased; background-color: #FBFAF7; }
 
-    /* Film grain overlay for a printed, human feel */
     .grain::after {
       content: ""; position: fixed; inset: 0; z-index: 70; pointer-events: none; opacity: .035;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -55,34 +54,40 @@
 
     .progress-bar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg,#3b82f6,#1d4ed8); z-index: 80; width: 0%; transition: width .1s linear; }
 
-    /* Eye chart */
     .chart-row { font-family: 'Inter', sans-serif; font-weight: 900; letter-spacing: .04em; line-height: .92; text-transform: uppercase; color: #0C1B33; }
 
-    /* Credential marquee */
+    /* Hero hook: the whole chart loads out of focus and resolves to clarity */
+    .fline { opacity: 0; animation: focusIn 1.25s cubic-bezier(.2,.85,.2,1) forwards; will-change: filter, transform, opacity; }
+    @keyframes focusIn {
+      0%   { opacity: 0; filter: blur(18px); transform: translateY(10px) scale(1.04); letter-spacing: .16em; }
+      55%  { opacity: 1; }
+      100% { opacity: 1; filter: blur(0); transform: none; letter-spacing: .04em; }
+    }
+    .hero-fade { opacity: 0; animation: heroFade .9s ease forwards; }
+    @keyframes heroFade { to { opacity: 1; } }
+    .scroll-cue span { animation: cueBob 1.8s ease-in-out infinite; }
+    @keyframes cueBob { 0%,100% { transform: translateY(0); opacity: .5; } 50% { transform: translateY(6px); opacity: 1; } }
+
+    /* Marquee — always running, never pauses */
     .marquee { overflow: hidden; }
     .marquee-track { display: inline-flex; white-space: nowrap; animation: marquee 38s linear infinite; }
     @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .marquee:hover .marquee-track { animation-play-state: paused; }
 
-    /* Editorial service rows */
-    .svc-row { transition: background-color .35s ease, color .35s ease; }
     .svc-title { transition: transform .4s cubic-bezier(.16,1,.3,1), color .35s ease; }
     .svc-row:hover .svc-title { transform: translateX(14px); color: #2563eb; }
     .svc-row:hover .svc-num { color: #2563eb; }
     .svc-arrow { opacity: 0; transform: translateX(-10px); transition: opacity .35s ease, transform .4s cubic-bezier(.16,1,.3,1); }
     .svc-row:hover .svc-arrow { opacity: 1; transform: translateX(0); }
 
-    /* Cursor-follow preview */
-    #svcPreview { position: fixed; top: 0; left: 0; width: 230px; height: 290px; z-index: 40; pointer-events: none; opacity: 0; transform: translate(-50%,-50%) scale(.92); transition: opacity .35s ease, transform .45s cubic-bezier(.16,1,.3,1); border-radius: 14px; overflow: hidden; box-shadow: 0 30px 60px -20px rgba(12,27,51,.45); will-change: transform; }
+    #svcPreview { position: fixed; top: 0; left: 0; width: 230px; height: 290px; z-index: 40; pointer-events: none; opacity: 0; transform: translate(-50%,-50%); transition: opacity .35s ease; border-radius: 14px; overflow: hidden; box-shadow: 0 30px 60px -20px rgba(12,27,51,.45); will-change: transform; }
     #svcPreview.on { opacity: 1; }
     #svcPreview img { width: 100%; height: 100%; object-fit: cover; }
 
-    /* Before/after slider */
     .ba { position: relative; overflow: hidden; user-select: none; touch-action: none; }
     .ba img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
     .ba .cloudy { position: absolute; inset: 0; clip-path: inset(0 50% 0 0); }
-    .ba .cloudy img { filter: blur(3px) sepia(.45) saturate(.65) brightness(1.12) contrast(.82); }
-    .ba .cloudy::after { content:""; position:absolute; inset:0; background: rgba(190,160,70,.22); }
+    .ba .cloudy img { filter: blur(3.5px) sepia(.5) saturate(.6) brightness(1.12) contrast(.8); }
+    .ba .cloudy::after { content:""; position:absolute; inset:0; background: rgba(190,160,70,.24); }
     .ba-handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 2px; background: #fff; transform: translateX(-50%); box-shadow: 0 0 0 1px rgba(12,27,51,.12); cursor: ew-resize; }
     .ba-knob { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 46px; height: 46px; border-radius: 9999px; background: #fff; box-shadow: 0 8px 24px -6px rgba(12,27,51,.5); display: grid; place-items: center; color: #2563eb; }
     .ba-knob:focus-visible { outline: 3px solid #2563eb; outline-offset: 3px; }
@@ -92,9 +97,21 @@
     .link-underline { background-image: linear-gradient(#2563eb,#2563eb); background-size: 0% 1.5px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .35s cubic-bezier(.16,1,.3,1); }
     .link-underline:hover { background-size: 100% 1.5px; }
 
+    .cond:hover { background-color: #0C1B33; color: #FBFAF7; }
+    .cond:hover .cond-def { color: rgba(251,250,247,.7); }
+    .cond:hover .cond-tag { color: #93c5fd; }
+
+    .faq-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+    .faq-item.open .faq-panel { grid-template-rows: 1fr; }
+    .faq-panel > div { overflow: hidden; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-icon { transition: transform .3s ease; }
+
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1; transform: none; transition: none; }
       .marquee-track { animation: none; }
+      .fline, .hero-fade { opacity: 1; animation: none; filter: none; transform: none; }
+      .scroll-cue span { animation: none; }
     }
   </style>
 </head>
@@ -103,8 +120,6 @@
 
   <div class="progress-bar" id="progress"></div>
   <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[90] focus:px-4 focus:py-2 focus:bg-brand-600 focus:text-white focus:rounded-lg focus:font-semibold">Skip to main content</a>
-
-  <!-- cursor-follow preview -->
   <div id="svcPreview" aria-hidden="true"><img id="svcPreviewImg" src="" alt="" /></div>
 
   <!-- Top utility bar -->
@@ -112,9 +127,11 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-8 h-10 flex items-center justify-between">
       <span class="font-mono tracking-tight">1774 Alameda St · Pomona, CA 91768</span>
       <div class="flex items-center gap-7">
+        <span id="statusBarTop" class="inline-flex items-center gap-2 font-mono text-xs"><span class="w-2 h-2 rounded-full bg-ink/30"></span><span>Checking hours…</span></span>
+        <span class="text-ink/30">·</span>
         <a href="mailto:ask.doctorchuck@gmail.com" class="link-underline">ask.doctorchuck@gmail.com</a>
         <span class="text-ink/30">·</span>
-        <a href="tel:+19096221188" class="font-semibold text-ink link-underline">(909) 622-1188</a>
+        <a href="tel:+19097662150" class="font-semibold text-ink link-underline">(909) 766-2150</a>
       </div>
     </div>
   </div>
@@ -131,7 +148,7 @@
             <circle cx="26.4" cy="11.6" r="2" fill="#FBFAF7"/>
           </svg>
           <span class="leading-tight">
-            <span class="block font-display font-600 text-[17px] tracking-tight text-ink" style="font-weight:600">Clear Vision Eye Center</span>
+            <span class="block font-display text-[17px] tracking-tight text-ink" style="font-weight:600">Clear Vision Eye Center</span>
             <span class="block text-[10px] font-mono tracking-[.18em] text-brand-700 uppercase">Dennis A. Chuck, M.D.</span>
           </span>
         </a>
@@ -141,6 +158,7 @@
           <a href="#services" class="text-ink/70 hover:text-ink link-underline">Services</a>
           <a href="#cataracts" class="text-ink/70 hover:text-ink link-underline">Cataracts</a>
           <a href="#doctor" class="text-ink/70 hover:text-ink link-underline">Dr. Chuck</a>
+          <a href="#faq" class="text-ink/70 hover:text-ink link-underline">FAQ</a>
           <a href="#contact" class="text-ink/70 hover:text-ink link-underline">Contact</a>
         </div>
 
@@ -160,8 +178,9 @@
         <a href="#services" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Services</a>
         <a href="#cataracts" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Cataracts</a>
         <a href="#doctor" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Dr. Chuck</a>
+        <a href="#faq" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">FAQ</a>
         <a href="#contact" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Contact</a>
-        <a href="tel:+19096221188" class="mt-2 text-center bg-ink text-bone font-semibold px-5 py-3 rounded-full">Call (909) 622-1188</a>
+        <a href="tel:+19097662150" class="mt-2 text-center bg-ink text-bone font-semibold px-5 py-3 rounded-full">Call (909) 766-2150</a>
       </div>
     </div>
   </nav>
@@ -169,35 +188,37 @@
   <main id="main">
     <span id="top"></span>
 
-    <!-- HERO: eye chart -->
-    <section class="relative pt-28 md:pt-36 pb-16 md:pb-20">
-      <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <div class="flex items-center justify-between gap-4 mb-8 md:mb-12">
-          <p class="reveal font-mono text-[11px] md:text-xs tracking-[.2em] uppercase text-ink/50">Clear Vision Eye Center — Est. 1983</p>
-          <p class="reveal font-mono text-[11px] md:text-xs tracking-[.2em] uppercase text-ink/40 hidden sm:block">Cover one eye · Read top to bottom</p>
+    <!-- HERO: full-viewport eye chart that loads out of focus and resolves to clarity -->
+    <section class="relative min-h-[100svh] flex flex-col justify-center pt-24 pb-12 overflow-hidden">
+      <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_60%_at_50%_38%,#ffffff_0%,#FBFAF7_55%,#F1F0EB_100%)]"></div>
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 w-full">
+        <div class="hero-fade flex items-center justify-between gap-4 mb-7 md:mb-10" style="animation-delay:.2s">
+          <p class="font-mono text-[11px] md:text-xs tracking-[.2em] uppercase text-ink/50">Clear Vision Eye Center — Est. 1983</p>
+          <span id="statusHero" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-ink/15 bg-white font-mono text-[11px] tracking-wide">
+            <span class="w-2 h-2 rounded-full bg-ink/30"></span><span>Checking hours…</span>
+          </span>
         </div>
 
-        <!-- Chart -->
         <div class="border-t border-ink/15">
-          <div class="reveal flex items-baseline gap-5 md:gap-10 py-3 md:py-4 border-b border-dashed border-ink/12">
-            <span class="font-mono text-[11px] md:text-sm text-ink/40 w-12 md:w-20 shrink-0">20/200</span>
-            <span class="chart-row text-[15vw] md:text-[8.5rem]">Clear</span>
+          <div class="flex items-baseline gap-5 md:gap-10 py-2.5 md:py-3 border-b border-dashed border-ink/12">
+            <span class="fline font-mono text-[11px] md:text-sm text-ink/40 w-12 md:w-20 shrink-0" style="animation-delay:0s">20/200</span>
+            <span class="fline chart-row text-[16vw] md:text-[9.5rem]" style="animation-delay:0s">Clear</span>
           </div>
-          <div class="reveal reveal-d1 flex items-baseline gap-5 md:gap-10 py-3 md:py-4 border-b border-dashed border-ink/12">
-            <span class="font-mono text-[11px] md:text-sm text-ink/40 w-12 md:w-20 shrink-0">20/100</span>
-            <span class="chart-row text-[11vw] md:text-[6rem]">Vision for</span>
+          <div class="flex items-baseline gap-5 md:gap-10 py-2.5 md:py-3 border-b border-dashed border-ink/12">
+            <span class="fline font-mono text-[11px] md:text-sm text-ink/40 w-12 md:w-20 shrink-0" style="animation-delay:.18s">20/100</span>
+            <span class="fline chart-row text-[11vw] md:text-[6.25rem]" style="animation-delay:.18s">Vision for</span>
           </div>
-          <div class="reveal reveal-d2 flex items-baseline gap-5 md:gap-10 py-3 md:py-4 border-b border-dashed border-ink/12">
-            <span class="font-mono text-[11px] md:text-sm text-ink/40 w-12 md:w-20 shrink-0">20/70</span>
-            <span class="chart-row text-[8vw] md:text-[4.25rem]">Every stage of</span>
+          <div class="flex items-baseline gap-5 md:gap-10 py-2.5 md:py-3 border-b border-dashed border-ink/12">
+            <span class="fline font-mono text-[11px] md:text-sm text-ink/40 w-12 md:w-20 shrink-0" style="animation-delay:.36s">20/70</span>
+            <span class="fline chart-row text-[8vw] md:text-[4.5rem]" style="animation-delay:.36s">Every stage of</span>
           </div>
-          <div class="reveal reveal-d3 flex items-baseline gap-5 md:gap-10 py-3 md:py-4 border-b-2 border-chartred">
-            <span class="font-mono text-[11px] md:text-sm text-chartred w-12 md:w-20 shrink-0 font-semibold">20/20</span>
-            <span class="chart-row text-[6vw] md:text-[3rem]">Life, here in Pomona</span>
+          <div class="flex items-baseline gap-5 md:gap-10 py-2.5 md:py-3 border-b-2 border-chartred">
+            <span class="fline font-mono text-[11px] md:text-sm text-chartred w-12 md:w-20 shrink-0 font-semibold" style="animation-delay:.54s">20/20</span>
+            <span class="fline chart-row text-[6.5vw] md:text-[3.25rem]" style="animation-delay:.54s">Life, here in <span class="text-brand-600">Pomona</span></span>
           </div>
         </div>
 
-        <div class="reveal reveal-d2 mt-10 grid md:grid-cols-[1.4fr_1fr] gap-8 items-end">
+        <div class="hero-fade mt-9 grid md:grid-cols-[1.4fr_1fr] gap-8 items-end" style="animation-delay:1s">
           <p class="text-lg md:text-xl text-ink/70 leading-relaxed max-w-2xl">
             Board-certified ophthalmology and small-incision cataract surgery from <span class="text-ink font-medium">Dennis A. Chuck, M.D.</span> One practice for your whole family, from eyeglasses to eye surgery.
           </p>
@@ -205,12 +226,17 @@
             <a href="#contact" class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-7 py-3.5 rounded-full transition-all duration-300 cursor-pointer">
               Request an appointment <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
             </a>
-            <a href="tel:+19096221188" class="inline-flex items-center justify-center gap-2 border border-ink/20 hover:border-ink text-ink font-semibold px-7 py-3.5 rounded-full transition-all duration-300 cursor-pointer">
-              (909) 622-1188
+            <a href="tel:+19097662150" class="inline-flex items-center justify-center gap-2 border border-ink/20 hover:border-ink text-ink font-semibold px-7 py-3.5 rounded-full transition-all duration-300 cursor-pointer">
+              (909) 766-2150
             </a>
           </div>
         </div>
       </div>
+
+      <a href="#about" class="scroll-cue hero-fade absolute bottom-6 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-1 text-ink/40 hover:text-ink transition-colors" style="animation-delay:1.4s" aria-label="Scroll to read on">
+        <span class="font-mono text-[10px] tracking-[.2em] uppercase">Scroll</span>
+        <span><i data-lucide="chevron-down" class="w-4 h-4"></i></span>
+      </a>
     </section>
 
     <!-- Credential marquee -->
@@ -242,7 +268,7 @@
       <div class="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[1fr_1.1fr] gap-14 lg:gap-20 items-center">
         <div class="reveal relative">
           <div class="rounded-[20px] overflow-hidden border border-ink/10 bg-brand-100 aspect-[4/5] shadow-[0_40px_80px_-30px_rgba(12,27,51,.35)]">
-            <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&w=900&q=80" alt="Ophthalmologist reviewing a patient's eye health" class="w-full h-full object-cover" loading="lazy" />
+            <img src="assets/eye-closeup.jpg" alt="A patient undergoing a refraction eye exam at Clear Vision Eye Center" class="w-full h-full object-cover" loading="lazy" />
           </div>
           <div class="absolute -bottom-6 -right-4 sm:-right-8 bg-bone border border-ink/10 rounded-2xl shadow-xl px-6 py-5">
             <p class="font-display text-4xl text-brand-700" style="font-weight:600">40<span class="text-ink/30">+</span></p>
@@ -267,8 +293,30 @@
       </div>
     </section>
 
-    <!-- SERVICES (editorial list) -->
-    <section id="services" class="py-16 md:py-24 border-t border-ink/10">
+    <!-- STATS (count-up) -->
+    <section class="border-y border-ink/10 bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 py-14 grid grid-cols-2 lg:grid-cols-4 divide-ink/10">
+        <div class="reveal px-2">
+          <p class="font-display text-5xl md:text-6xl text-ink" style="font-weight:600"><span class="count" data-to="40">0</span><span class="text-brand-600">+</span></p>
+          <p class="font-mono text-[11px] tracking-[.15em] uppercase text-ink/50 mt-2">Years caring for Pomona</p>
+        </div>
+        <div class="reveal reveal-d1 px-2">
+          <p class="font-display text-5xl md:text-6xl text-ink" style="font-weight:600">~<span class="count" data-to="15">0</span></p>
+          <p class="font-mono text-[11px] tracking-[.15em] uppercase text-ink/50 mt-2">Minute outpatient surgery</p>
+        </div>
+        <div class="reveal reveal-d2 px-2">
+          <p class="font-display text-5xl md:text-6xl text-ink" style="font-weight:600"><span class="count" data-to="2.8" data-dec="1">0</span><span class="text-brand-600 text-3xl align-middle"> mm</span></p>
+          <p class="font-mono text-[11px] tracking-[.15em] uppercase text-ink/50 mt-2">Micro-incision, or less</p>
+        </div>
+        <div class="reveal reveal-d3 px-2">
+          <p class="font-display text-5xl md:text-6xl text-ink" style="font-weight:600"><span class="count" data-to="3">0</span><span class="text-brand-600">M+</span></p>
+          <p class="font-mono text-[11px] tracking-[.15em] uppercase text-ink/50 mt-2">U.S. cataract surgeries / year</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services" class="py-16 md:py-24">
       <div class="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[0.8fr_2fr] gap-12">
         <div class="lg:sticky lg:top-28 self-start">
           <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-ink/50">(What we do)</p>
@@ -277,8 +325,7 @@
         </div>
 
         <div class="reveal">
-          <!-- Row -->
-          <a href="#contact" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="https://images.unsplash.com/photo-1551601651-2a8555f1a136?auto=format&fit=crop&w=500&q=80">
+          <a href="#contact" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="assets/eye-closeup.jpg">
             <div class="flex items-baseline gap-5 md:gap-8">
               <span class="svc-num font-mono text-sm text-ink/40 w-8 shrink-0 transition-colors">01</span>
               <div class="flex-1">
@@ -288,7 +335,7 @@
               <i data-lucide="arrow-up-right" class="svc-arrow w-6 h-6 text-brand-600 mt-2"></i>
             </div>
           </a>
-          <a href="#cataracts" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=500&q=80">
+          <a href="#cataracts" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="assets/eyesurgery.jpg">
             <div class="flex items-baseline gap-5 md:gap-8">
               <span class="svc-num font-mono text-sm text-ink/40 w-8 shrink-0 transition-colors">02</span>
               <div class="flex-1">
@@ -298,7 +345,7 @@
               <i data-lucide="arrow-up-right" class="svc-arrow w-6 h-6 text-brand-600 mt-2"></i>
             </div>
           </a>
-          <a href="#contact" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="https://images.unsplash.com/photo-1574258495973-f010dfbb5371?auto=format&fit=crop&w=500&q=80">
+          <a href="#contact" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="assets/glasses.jpg">
             <div class="flex items-baseline gap-5 md:gap-8">
               <span class="svc-num font-mono text-sm text-ink/40 w-8 shrink-0 transition-colors">03</span>
               <div class="flex-1">
@@ -308,7 +355,7 @@
               <i data-lucide="arrow-up-right" class="svc-arrow w-6 h-6 text-brand-600 mt-2"></i>
             </div>
           </a>
-          <a href="#contact" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="https://images.unsplash.com/photo-1512678080530-7760d81faba6?auto=format&fit=crop&w=500&q=80">
+          <a href="#contact" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="assets/eye-closeup.jpg">
             <div class="flex items-baseline gap-5 md:gap-8">
               <span class="svc-num font-mono text-sm text-ink/40 w-8 shrink-0 transition-colors">04</span>
               <div class="flex-1">
@@ -318,7 +365,7 @@
               <i data-lucide="arrow-up-right" class="svc-arrow w-6 h-6 text-brand-600 mt-2"></i>
             </div>
           </a>
-          <a href="#contact" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="https://images.unsplash.com/photo-1579154204601-01588f351e67?auto=format&fit=crop&w=500&q=80">
+          <a href="#contact" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="assets/eyesurgery.jpg">
             <div class="flex items-baseline gap-5 md:gap-8">
               <span class="svc-num font-mono text-sm text-ink/40 w-8 shrink-0 transition-colors">05</span>
               <div class="flex-1">
@@ -328,7 +375,7 @@
               <i data-lucide="arrow-up-right" class="svc-arrow w-6 h-6 text-brand-600 mt-2"></i>
             </div>
           </a>
-          <a href="#contact" class="svc-row group block border-t border-b border-ink/15 py-7 md:py-9" data-img="https://images.unsplash.com/photo-1579684453423-f84349ef60b0?auto=format&fit=crop&w=500&q=80">
+          <a href="#contact" class="svc-row group block border-t border-b border-ink/15 py-7 md:py-9" data-img="assets/glasses.jpg">
             <div class="flex items-baseline gap-5 md:gap-8">
               <span class="svc-num font-mono text-sm text-ink/40 w-8 shrink-0 transition-colors">06</span>
               <div class="flex-1">
@@ -342,7 +389,53 @@
       </div>
     </section>
 
-    <!-- CATARACTS + interactive slider -->
+    <!-- CONDITIONS WE TREAT -->
+    <section class="py-16 md:py-24 border-t border-ink/10">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div>
+            <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-ink/50">(Conditions we treat)</p>
+            <h2 class="reveal reveal-d1 font-display text-4xl md:text-5xl tracking-tight text-ink mt-5" style="font-weight:600">From blur to clarity.</h2>
+          </div>
+          <p class="reveal reveal-d1 text-ink/60 max-w-sm">If your vision has changed, there is usually a name for it, and a way to correct it. Hover to learn more.</p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-ink/10 rounded-[20px] overflow-hidden border border-ink/10">
+          <div class="cond bg-bone p-7 transition-colors duration-300">
+            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">01 — Cataracts</p>
+            <h3 class="font-display text-2xl mt-3" style="font-weight:500">Clouded lens</h3>
+            <p class="cond-def mt-2 text-ink/60 transition-colors">A clouding of the eye's natural lens, corrected by replacing it with a clear implant.</p>
+          </div>
+          <div class="cond bg-bone p-7 transition-colors duration-300">
+            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">02 — Glaucoma</p>
+            <h3 class="font-display text-2xl mt-3" style="font-weight:500">Optic-nerve pressure</h3>
+            <p class="cond-def mt-2 text-ink/60 transition-colors">Pressure that can quietly damage sight. Caught early, it is managed medically or surgically.</p>
+          </div>
+          <div class="cond bg-bone p-7 transition-colors duration-300">
+            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">03 — Presbyopia</p>
+            <h3 class="font-display text-2xl mt-3" style="font-weight:500">Aging focus</h3>
+            <p class="cond-def mt-2 text-ink/60 transition-colors">Around age 40 the lens stiffens and near focus fades. Lenses and implants bring it back.</p>
+          </div>
+          <div class="cond bg-bone p-7 transition-colors duration-300">
+            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">04 — Astigmatism</p>
+            <h3 class="font-display text-2xl mt-3" style="font-weight:500">Irregular contour</h3>
+            <p class="cond-def mt-2 text-ink/60 transition-colors">An uneven corneal curve that blurs vision at every distance, correctable in surgery or glasses.</p>
+          </div>
+          <div class="cond bg-bone p-7 transition-colors duration-300">
+            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">05 — Nearsightedness</p>
+            <h3 class="font-display text-2xl mt-3" style="font-weight:500">Distance blur</h3>
+            <p class="cond-def mt-2 text-ink/60 transition-colors">Myopia softens far-away detail. We correct it with eyewear or a tailored lens implant.</p>
+          </div>
+          <div class="cond bg-bone p-7 transition-colors duration-300">
+            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">06 — Farsightedness</p>
+            <h3 class="font-display text-2xl mt-3" style="font-weight:500">Near blur</h3>
+            <p class="cond-def mt-2 text-ink/60 transition-colors">Hyperopia makes close work a strain. The right correction makes reading effortless again.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CATARACTS + slider -->
     <section id="cataracts" class="py-20 md:py-28 bg-ink text-bone relative overflow-hidden">
       <div class="max-w-7xl mx-auto px-6 lg:px-8">
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -355,12 +448,11 @@
             <p class="reveal reveal-d3 mt-4 font-mono text-sm text-bone/50">← Cataract vision &nbsp;·&nbsp; After surgery →</p>
           </div>
 
-          <!-- slider -->
           <div class="reveal reveal-d1">
             <div class="ba rounded-[20px] border border-white/10 shadow-2xl aspect-[4/3]" id="ba">
-              <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1000&q=80" alt="A clear, sharp view after cataract surgery" />
+              <img src="assets/glasses.jpg" alt="A clear, sharp view after cataract surgery" />
               <div class="cloudy" id="baCloudy">
-                <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=1000&q=80" alt="A hazy, clouded view caused by a cataract" />
+                <img src="assets/glasses.jpg" alt="A hazy, clouded view caused by a cataract" />
               </div>
               <span class="absolute top-3 left-3 font-mono text-[11px] tracking-wide uppercase bg-ink/60 text-bone px-2.5 py-1 rounded-full">Cataract</span>
               <span class="absolute top-3 right-3 font-mono text-[11px] tracking-wide uppercase bg-brand-600 text-white px-2.5 py-1 rounded-full">Clear</span>
@@ -373,39 +465,39 @@
           </div>
         </div>
 
-        <!-- education -->
+        <!-- education (de-numbered: editorial hairline markers, not fake-sequential numbers) -->
         <div class="grid md:grid-cols-2 gap-8 mt-16">
           <div class="reveal border-t border-white/15 pt-7">
-            <h3 class="font-display text-2xl mb-4" style="font-weight:500">Signs you may notice</h3>
-            <ul class="space-y-3 text-bone/70">
-              <li class="flex gap-3"><span class="font-mono text-brand-300 text-sm pt-1">01</span> Blurred or softened sharp images</li>
-              <li class="flex gap-3"><span class="font-mono text-brand-300 text-sm pt-1">02</span> Dulled or faded light colors</li>
-              <li class="flex gap-3"><span class="font-mono text-brand-300 text-sm pt-1">03</span> Increasing difficulty seeing at night</li>
-              <li class="flex gap-3"><span class="font-mono text-brand-300 text-sm pt-1">04</span> Reading glasses or bifocals no longer help</li>
+            <h3 class="font-display text-2xl mb-5" style="font-weight:500">Signs you may notice</h3>
+            <ul class="space-y-4 text-bone/70">
+              <li class="flex gap-4 items-start"><span class="mt-2.5 h-px w-5 bg-brand-400 shrink-0"></span> It feels as if you are looking through a dirty window</li>
+              <li class="flex gap-4 items-start"><span class="mt-2.5 h-px w-5 bg-brand-400 shrink-0"></span> Dulled or faded light colors</li>
+              <li class="flex gap-4 items-start"><span class="mt-2.5 h-px w-5 bg-brand-400 shrink-0"></span> Increasing difficulty seeing at night</li>
+              <li class="flex gap-4 items-start"><span class="mt-2.5 h-px w-5 bg-brand-400 shrink-0"></span> Reading glasses or bifocals no longer help</li>
             </ul>
           </div>
           <div class="reveal reveal-d1 border-t border-white/15 pt-7">
-            <h3 class="font-display text-2xl mb-4" style="font-weight:500">Lowering your risk</h3>
-            <ul class="space-y-3 text-bone/70">
-              <li class="flex gap-3"><span class="font-mono text-brand-300 text-sm pt-1">01</span> A diet rich in antioxidants (vitamin A, carotene)</li>
-              <li class="flex gap-3"><span class="font-mono text-brand-300 text-sm pt-1">02</span> UV-protective glasses and lenses</li>
-              <li class="flex gap-3"><span class="font-mono text-brand-300 text-sm pt-1">03</span> Quitting smoking (smokers face up to twice the risk)</li>
-              <li class="flex gap-3"><span class="font-mono text-brand-300 text-sm pt-1">04</span> Regular exams to track changes early</li>
+            <h3 class="font-display text-2xl mb-5" style="font-weight:500">Lowering your risk</h3>
+            <ul class="space-y-4 text-bone/70">
+              <li class="flex gap-4 items-start"><span class="mt-2.5 h-px w-5 bg-brand-400 shrink-0"></span> A diet rich in antioxidants (vitamin A, carotene)</li>
+              <li class="flex gap-4 items-start"><span class="mt-2.5 h-px w-5 bg-brand-400 shrink-0"></span> UV-protective glasses and lenses</li>
+              <li class="flex gap-4 items-start"><span class="mt-2.5 h-px w-5 bg-brand-400 shrink-0"></span> Quitting smoking, which can double the risk</li>
+              <li class="flex gap-4 items-start"><span class="mt-2.5 h-px w-5 bg-brand-400 shrink-0"></span> Regular exams to track changes early</li>
             </ul>
           </div>
         </div>
 
-        <!-- surgery steps -->
+        <!-- surgery steps (numbers KEPT — genuinely sequential) -->
         <div class="mt-16 border-t border-white/15 pt-10">
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
             <h3 class="reveal font-display text-3xl md:text-4xl" style="font-weight:600">The procedure, in about 15 minutes.</h3>
             <p class="reveal reveal-d1 font-mono text-sm text-bone/50 max-w-xs">An outpatient procedure under microscope magnification. Once a cataract is removed, it cannot return.</p>
           </div>
           <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden">
-            <div class="reveal bg-ink p-7"><span class="font-mono text-brand-300">01</span><h4 class="font-display text-xl mt-3 mb-2" style="font-weight:500">Gentle anesthesia</h4><p class="text-sm text-bone/60">Topical anesthesia without needles, plus light IV sedation for comfort.</p></div>
-            <div class="reveal reveal-d1 bg-ink p-7"><span class="font-mono text-brand-300">02</span><h4 class="font-display text-xl mt-3 mb-2" style="font-weight:500">Micro-incision</h4><p class="text-sm text-bone/60">An incision of 2.8 mm or less allows ultrasonic phacoemulsification of the lens.</p></div>
-            <div class="reveal reveal-d2 bg-ink p-7"><span class="font-mono text-brand-300">03</span><h4 class="font-display text-xl mt-3 mb-2" style="font-weight:500">Lens removal</h4><p class="text-sm text-bone/60">The cloudy lens material is removed while the clear lens capsule is preserved.</p></div>
-            <div class="reveal reveal-d3 bg-ink p-7"><span class="font-mono text-brand-300">04</span><h4 class="font-display text-xl mt-3 mb-2" style="font-weight:500">New lens implant</h4><p class="text-sm text-bone/60">A foldable lens is inserted through the same incision and permanently replaces the old one.</p></div>
+            <div class="reveal bg-ink p-7"><span class="font-mono text-brand-300">Step 01</span><h4 class="font-display text-xl mt-3 mb-2" style="font-weight:500">Gentle anesthesia</h4><p class="text-sm text-bone/60">Topical anesthesia without needles, plus light IV sedation for comfort.</p></div>
+            <div class="reveal reveal-d1 bg-ink p-7"><span class="font-mono text-brand-300">Step 02</span><h4 class="font-display text-xl mt-3 mb-2" style="font-weight:500">Micro-incision</h4><p class="text-sm text-bone/60">An incision of 2.8 mm or less allows ultrasonic phacoemulsification of the lens.</p></div>
+            <div class="reveal reveal-d2 bg-ink p-7"><span class="font-mono text-brand-300">Step 03</span><h4 class="font-display text-xl mt-3 mb-2" style="font-weight:500">Lens removal</h4><p class="text-sm text-bone/60">The cloudy lens material is removed while the clear lens capsule is preserved.</p></div>
+            <div class="reveal reveal-d3 bg-ink p-7"><span class="font-mono text-brand-300">Step 04</span><h4 class="font-display text-xl mt-3 mb-2" style="font-weight:500">New lens implant</h4><p class="text-sm text-bone/60">A foldable lens is inserted through the same incision and permanently replaces the old one.</p></div>
           </div>
           <p class="reveal mt-8 text-bone/70 max-w-2xl">Recovery is quick. Most patients feel minimal discomfort, wear a light protective shield, and return to normal activities within days. Vision improves soon after surgery and keeps getting better over several weeks.</p>
         </div>
@@ -416,11 +508,11 @@
     <section id="doctor" class="py-20 md:py-28">
       <div class="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[1fr_1.3fr] gap-14 items-start">
         <div class="reveal lg:sticky lg:top-28 self-start">
-          <div class="rounded-[20px] overflow-hidden border border-ink/10 aspect-[4/5] bg-brand-900 relative shadow-[0_40px_80px_-30px_rgba(12,27,51,.4)]">
-            <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=800&q=80" alt="Portrait of a physician in a white coat" class="w-full h-full object-cover opacity-95" loading="lazy" />
-            <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent p-6 pt-16">
-              <p class="font-display text-2xl text-white" style="font-weight:600">Dennis A. Chuck, M.D.</p>
-              <p class="font-mono text-[11px] tracking-wide uppercase text-brand-200 mt-1">Ophthalmologist &amp; Eye Surgeon</p>
+          <div class="rounded-[20px] overflow-hidden border border-ink/10 bg-white shadow-[0_40px_80px_-30px_rgba(12,27,51,.4)]">
+            <img src="assets/dr-chuck.jpg" alt="Dr. Dennis A. Chuck, M.D., ophthalmologist at Clear Vision Eye Center" class="w-full aspect-[4/5] object-cover object-top" loading="lazy" />
+            <div class="p-6 border-t border-ink/10">
+              <p class="font-display text-2xl text-ink" style="font-weight:600">Dennis A. Chuck, M.D.</p>
+              <p class="font-mono text-[11px] tracking-wide uppercase text-brand-700 mt-1">Ophthalmologist &amp; Eye Surgeon</p>
             </div>
           </div>
         </div>
@@ -435,7 +527,6 @@
 
           <blockquote class="reveal reveal-d2 my-9 pl-6 border-l-2 border-brand-600">
             <p class="font-display text-2xl md:text-3xl text-ink leading-snug" style="font-weight:500">"I am proud to be known for exceptional surgical results, but it is also important to me to be known as a surgeon with a caring and personalized approach to patient care."</p>
-            <!-- signature -->
             <svg viewBox="0 0 300 70" class="mt-6 w-52 text-brand-700" fill="none" aria-hidden="true">
               <path d="M6 46 C 18 14, 30 14, 28 38 C 27 52, 20 52, 26 40 C 34 24, 46 22, 44 40 C 43 50, 50 44, 56 34 C 62 24, 70 26, 64 40 C 70 30, 80 28, 78 42 M 92 18 C 86 40, 84 50, 96 40 C 104 33, 100 26, 96 34 C 92 44, 104 46, 112 38 C 122 28, 116 50, 126 42 C 134 35, 130 28, 128 40 C 126 50, 138 46, 150 30 C 156 22, 150 50, 162 42 M 176 22 C 170 42, 172 50, 182 42 C 192 34, 184 28, 180 36 M 196 20 C 190 44, 196 50, 206 40 C 214 32, 208 28, 204 36 C 200 46, 214 46, 224 36 C 232 28, 226 30, 230 42 C 234 50, 244 40, 252 26 C 258 16, 254 48, 268 40 C 280 33, 286 30, 294 36" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -465,6 +556,78 @@
       </div>
     </section>
 
+    <!-- TEAM band (real photo) -->
+    <section class="relative">
+      <div class="relative h-[60vh] min-h-[420px] overflow-hidden">
+        <img src="assets/staff.jpg" alt="The Clear Vision Eye Center team in the optical shop" class="w-full h-full object-cover object-[center_30%]" loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/30 to-ink/10"></div>
+        <div class="absolute inset-x-0 bottom-0">
+          <div class="max-w-7xl mx-auto px-6 lg:px-8 pb-10 md:pb-14">
+            <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-brand-200">(The people)</p>
+            <h2 class="reveal reveal-d1 font-display text-3xl md:text-5xl text-bone mt-4 max-w-2xl leading-[1.05]" style="font-weight:600">A team that knows your name when you walk in.</h2>
+            <p class="reveal reveal-d2 text-bone/80 mt-4 max-w-xl">From your first call to your fitting at the optical counter, the same familiar faces look after your whole family's eyes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-20 md:py-28">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[0.8fr_2fr] gap-12">
+        <div class="lg:sticky lg:top-28 self-start">
+          <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-ink/50">(Good to know)</p>
+          <h2 class="reveal reveal-d1 font-display text-4xl md:text-5xl tracking-tight text-ink mt-5 leading-[1.05]" style="font-weight:600">Questions, answered.</h2>
+          <p class="reveal reveal-d2 mt-5 text-ink/60 leading-relaxed">Still wondering about something? Call <a href="tel:+19097662150" class="text-brand-700 link-underline font-medium">(909) 766-2150</a> and we will talk it through.</p>
+        </div>
+
+        <div class="reveal" id="faqList">
+          <!-- item -->
+          <div class="faq-item border-t border-ink/15">
+            <button class="faq-btn w-full flex items-center justify-between gap-6 text-left py-6 group">
+              <span class="font-display text-xl md:text-2xl text-ink pr-4" style="font-weight:500">Do I actually need cataract surgery?</span>
+              <span class="faq-icon shrink-0 text-brand-600"><i data-lucide="plus" class="w-6 h-6"></i></span>
+            </button>
+            <div class="faq-panel"><div><p class="pb-6 text-ink/65 md:text-lg max-w-2xl">When cloudiness begins to limit your daily activities, the recommended treatment is to remove the clouded lens and replace it with a clear implant. There is no proven non-surgical cure, but surgery is elective: Dr. Chuck will examine your eyes and help you decide when, or whether, the time is right.</p></div></div>
+          </div>
+          <div class="faq-item border-t border-ink/15">
+            <button class="faq-btn w-full flex items-center justify-between gap-6 text-left py-6 group">
+              <span class="font-display text-xl md:text-2xl text-ink pr-4" style="font-weight:500">How long does the procedure take?</span>
+              <span class="faq-icon shrink-0 text-brand-600"><i data-lucide="plus" class="w-6 h-6"></i></span>
+            </button>
+            <div class="faq-panel"><div><p class="pb-6 text-ink/65 md:text-lg max-w-2xl">The surgery itself typically takes about 15 minutes. It is an outpatient procedure performed under an operating microscope, with topical anesthesia (no needles) and light IV sedation for your comfort.</p></div></div>
+          </div>
+          <div class="faq-item border-t border-ink/15">
+            <button class="faq-btn w-full flex items-center justify-between gap-6 text-left py-6 group">
+              <span class="font-display text-xl md:text-2xl text-ink pr-4" style="font-weight:500">What is recovery like?</span>
+              <span class="faq-icon shrink-0 text-brand-600"><i data-lucide="plus" class="w-6 h-6"></i></span>
+            </button>
+            <div class="faq-panel"><div><p class="pb-6 text-ink/65 md:text-lg max-w-2xl">Most patients feel minimal discomfort. You will wear a light protective shield and use prescribed eye drops, and most people return to normal activities within days. Vision improves soon after surgery and continues to sharpen over several weeks.</p></div></div>
+          </div>
+          <div class="faq-item border-t border-ink/15">
+            <button class="faq-btn w-full flex items-center justify-between gap-6 text-left py-6 group">
+              <span class="font-display text-xl md:text-2xl text-ink pr-4" style="font-weight:500">Will I still need glasses afterward?</span>
+              <span class="faq-icon shrink-0 text-brand-600"><i data-lucide="plus" class="w-6 h-6"></i></span>
+            </button>
+            <div class="faq-panel"><div><p class="pb-6 text-ink/65 md:text-lg max-w-2xl">The foldable lens implant is selected to correct nearsightedness, farsightedness, astigmatism, or presbyopia, so many patients greatly reduce their dependence on glasses. Dr. Chuck will walk you through the lens options that fit your eyes and your lifestyle.</p></div></div>
+          </div>
+          <div class="faq-item border-t border-ink/15">
+            <button class="faq-btn w-full flex items-center justify-between gap-6 text-left py-6 group">
+              <span class="font-display text-xl md:text-2xl text-ink pr-4" style="font-weight:500">What should I bring to my first visit?</span>
+              <span class="faq-icon shrink-0 text-brand-600"><i data-lucide="plus" class="w-6 h-6"></i></span>
+            </button>
+            <div class="faq-panel"><div><p class="pb-6 text-ink/65 md:text-lg max-w-2xl">Bring your current glasses or contact lenses, a list of any medications you take, and your insurance information. If you have records from a previous eye doctor, those are helpful too.</p></div></div>
+          </div>
+          <div class="faq-item border-t border-b border-ink/15">
+            <button class="faq-btn w-full flex items-center justify-between gap-6 text-left py-6 group">
+              <span class="font-display text-xl md:text-2xl text-ink pr-4" style="font-weight:500">Do you take my insurance?</span>
+              <span class="faq-icon shrink-0 text-brand-600"><i data-lucide="plus" class="w-6 h-6"></i></span>
+            </button>
+            <div class="faq-panel"><div><p class="pb-6 text-ink/65 md:text-lg max-w-2xl">We work with many vision and medical plans. The fastest way to confirm your specific coverage is to call us at (909) 766-2150, and our front desk will check it for you before your appointment.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CONTACT -->
     <section id="contact" class="py-20 md:py-28 border-t border-ink/10">
       <div class="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-14 lg:gap-20">
@@ -474,9 +637,9 @@
           <p class="reveal reveal-d2 mt-6 text-lg text-ink/70 leading-relaxed max-w-lg">Call us or send a request and we'll help you find a time. We're happy to talk through exams, eyewear, or cataract surgery.</p>
 
           <div class="reveal reveal-d2 mt-9 divide-y divide-ink/10 border-y border-ink/10">
-            <a href="tel:+19096221188" class="flex items-center justify-between py-5 group">
+            <a href="tel:+19097662150" class="flex items-center justify-between py-5 group">
               <span class="font-mono text-xs tracking-[.2em] uppercase text-ink/45">Phone</span>
-              <span class="font-display text-xl md:text-2xl text-ink group-hover:text-brand-700 transition-colors" style="font-weight:500">(909) 622-1188</span>
+              <span class="font-display text-xl md:text-2xl text-ink group-hover:text-brand-700 transition-colors" style="font-weight:500">(909) 766-2150</span>
             </a>
             <a href="mailto:ask.doctorchuck@gmail.com" class="flex items-center justify-between py-5 group gap-4">
               <span class="font-mono text-xs tracking-[.2em] uppercase text-ink/45 shrink-0">Email</span>
@@ -499,7 +662,6 @@
           </div>
         </div>
 
-        <!-- Form -->
         <div class="reveal reveal-d1">
           <form id="apptForm" class="bg-white rounded-[20px] border border-ink/10 shadow-[0_30px_70px_-30px_rgba(12,27,51,.3)] p-8 md:p-10" novalidate>
             <h3 class="font-display text-2xl text-ink" style="font-weight:600">Request an appointment</h3>
@@ -563,12 +725,12 @@
             <button type="submit" class="mt-7 w-full inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-6 py-3.5 rounded-full transition-all duration-300 cursor-pointer">
               Send request <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
             </button>
-            <p class="mt-3 text-xs text-ink/40 text-center">Opens your email app with the details prefilled. For urgent needs, please call (909) 622-1188.</p>
+            <p class="mt-3 text-xs text-ink/40 text-center">Opens your email app with the details prefilled. For urgent needs, please call (909) 766-2150.</p>
           </form>
 
           <div id="formSuccess" class="hidden bg-white rounded-[20px] border border-brand-200 shadow-xl p-10 text-center">
             <p class="font-display text-2xl text-ink" style="font-weight:600">Almost there.</p>
-            <p class="mt-3 text-ink/65 max-w-sm mx-auto">Your email app should be open with your request ready to send. If it didn't open, call us at (909) 622-1188 and we'll take care of you.</p>
+            <p class="mt-3 text-ink/65 max-w-sm mx-auto">Your email app should be open with your request ready to send. If it didn't open, call us at (909) 766-2150 and we'll take care of you.</p>
             <button id="resetForm" class="mt-6 inline-flex items-center gap-2 text-brand-700 font-semibold link-underline cursor-pointer">Send another request</button>
           </div>
         </div>
@@ -589,6 +751,7 @@
             <span class="font-display text-lg" style="font-weight:600">Clear Vision Eye Center</span>
           </div>
           <p class="mt-4 text-sm text-bone/60 max-w-sm leading-relaxed">Clear vision for every stage of life. Comprehensive eye care, eyewear, and small-incision cataract surgery in Pomona, California.</p>
+          <p id="statusFooter" class="mt-5 inline-flex items-center gap-2 font-mono text-xs text-bone/70"><span class="w-2 h-2 rounded-full bg-bone/30"></span><span>Checking hours…</span></p>
         </div>
         <div>
           <p class="font-mono text-[11px] tracking-[.2em] uppercase text-bone/40 mb-4">Explore</p>
@@ -597,12 +760,13 @@
             <li><a href="#services" class="text-bone/75 hover:text-white link-underline">Services</a></li>
             <li><a href="#cataracts" class="text-bone/75 hover:text-white link-underline">Cataracts</a></li>
             <li><a href="#doctor" class="text-bone/75 hover:text-white link-underline">Dr. Chuck</a></li>
+            <li><a href="#faq" class="text-bone/75 hover:text-white link-underline">FAQ</a></li>
           </ul>
         </div>
         <div>
           <p class="font-mono text-[11px] tracking-[.2em] uppercase text-bone/40 mb-4">Contact</p>
           <ul class="space-y-2.5 text-sm">
-            <li><a href="tel:+19096221188" class="text-bone/75 hover:text-white link-underline">(909) 622-1188</a></li>
+            <li><a href="tel:+19097662150" class="text-bone/75 hover:text-white link-underline">(909) 766-2150</a></li>
             <li><a href="mailto:ask.doctorchuck@gmail.com" class="text-bone/75 hover:text-white link-underline">ask.doctorchuck@gmail.com</a></li>
             <li class="text-bone/75">1774 Alameda St, Pomona, CA 91768</li>
           </ul>
@@ -614,6 +778,17 @@
       </div>
     </div>
   </footer>
+
+  <!-- Mobile sticky call bar -->
+  <div class="lg:hidden fixed bottom-0 inset-x-0 z-50 bg-bone/95 backdrop-blur-md border-t border-ink/10 px-4 py-3 flex gap-3" style="padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));">
+    <a href="tel:+19097662150" class="flex-1 inline-flex items-center justify-center gap-2 border border-ink/20 text-ink font-semibold py-3 rounded-full">
+      <i data-lucide="phone" class="w-4 h-4"></i> Call
+    </a>
+    <a href="#contact" class="flex-1 inline-flex items-center justify-center gap-2 bg-brand-600 text-white font-semibold py-3 rounded-full">
+      <i data-lucide="calendar-check" class="w-4 h-4"></i> Book a visit
+    </a>
+  </div>
+  <div class="lg:hidden h-16" aria-hidden="true"></div>
 
   <script>
     lucide.createIcons();
@@ -651,13 +826,62 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // Cursor-follow service preview (desktop, hover-capable only)
+    // Count-up stats
+    const counters = document.querySelectorAll('.count');
+    const cIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target; cIO.unobserve(el);
+        const to = parseFloat(el.dataset.to); const dec = parseInt(el.dataset.dec || '0');
+        const dur = 1200; let start = null;
+        function tick(ts) {
+          if (!start) start = ts;
+          const p = Math.min((ts - start) / dur, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = (to * eased).toFixed(dec);
+          if (p < 1) requestAnimationFrame(tick); else el.textContent = to.toFixed(dec);
+        }
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => cIO.observe(c));
+
+    // Open / closed status (Yelp hours: Mon-Fri 8:00-12:30 & 13:30-17:00; closed weekends)
+    function computeStatus() {
+      const now = new Date();
+      const day = now.getDay(); // 0 Sun .. 6 Sat
+      const m = now.getHours() * 60 + now.getMinutes();
+      const weekday = day >= 1 && day <= 5;
+      const morning = m >= 480 && m < 750;   // 8:00 - 12:30
+      const afternoon = m >= 810 && m < 1020; // 13:30 - 17:00
+      let open = weekday && (morning || afternoon);
+      let label;
+      if (open) {
+        label = afternoon ? 'Open now · Closes 5:00 PM' : 'Open now · Until 12:30 PM';
+      } else if (weekday && m >= 750 && m < 810) {
+        label = 'Out to lunch · Back at 1:30 PM';
+      } else {
+        label = 'Closed · Opens Mon–Fri 8:00 AM';
+        if (weekday && m < 480) label = 'Closed · Opens today 8:00 AM';
+      }
+      return { open, label };
+    }
+    (function paintStatus() {
+      const s = computeStatus();
+      const dot = s.open ? 'bg-emerald-500' : 'bg-chartred';
+      [['statusHero', true], ['statusBarTop', false], ['statusFooter', false]].forEach(([id]) => {
+        const el = document.getElementById(id); if (!el) return;
+        el.innerHTML = '<span class="w-2 h-2 rounded-full ' + dot + '"></span><span>' + s.label + '</span>';
+      });
+    })();
+
+    // Cursor-follow service preview
     const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     if (canHover) {
       const preview = document.getElementById('svcPreview');
       const previewImg = document.getElementById('svcPreviewImg');
-      let raf = null, tx = 0, ty = 0, cx = 0, cy = 0;
-      function loop() { cx += (tx - cx) * 0.18; cy += (ty - cy) * 0.18; preview.style.transform = `translate(${cx}px, ${cy}px) translate(-50%,-50%) scale(${preview.classList.contains('on') ? 1 : .92})`; raf = requestAnimationFrame(loop); }
+      let tx = 0, ty = 0, cx = 0, cy = 0;
+      function loop() { cx += (tx - cx) * 0.18; cy += (ty - cy) * 0.18; preview.style.transform = `translate(${cx}px, ${cy}px) translate(-50%,-50%)`; requestAnimationFrame(loop); }
       loop();
       document.querySelectorAll('.svc-row').forEach(row => {
         row.addEventListener('mouseenter', () => { previewImg.src = row.dataset.img; preview.classList.add('on'); });
@@ -665,6 +889,17 @@
         row.addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; });
       });
     }
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-btn').forEach(btn => {
+      const item = btn.closest('.faq-item');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(o => { o.classList.remove('open'); o.querySelector('.faq-btn').setAttribute('aria-expanded', 'false'); });
+        if (!isOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
+      });
+    });
 
     // Before / after slider
     (function () {
