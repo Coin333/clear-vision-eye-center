@@ -767,18 +767,34 @@
               </div>
             </fieldset>
 
+            <!-- honeypot: humans leave this empty, bots fill it -->
+            <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
             <p id="formError" role="alert" class="hidden mt-4 text-sm text-chartred"></p>
 
-            <button type="submit" class="mt-7 w-full inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-6 py-3.5 rounded-full transition-all duration-300 cursor-pointer">
-              Send request <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+            <button id="submitBtn" type="submit" class="mt-7 w-full inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold px-6 py-3.5 rounded-full transition-all duration-300 cursor-pointer">
+              <span id="submitLabel" class="inline-flex items-center gap-2">Send request <i data-lucide="arrow-up-right" class="w-4 h-4"></i></span>
+              <span id="submitSpinner" class="hidden items-center gap-2"><i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Sending…</span>
             </button>
-            <p class="mt-3 text-xs text-ink/40 text-center">Opens your email app with the details prefilled. For urgent needs, please call (909) 766-2150.</p>
+            <p class="mt-3 text-xs text-ink/40 text-center">Sends straight to our front desk. For urgent needs, please call (909) 766-2150.</p>
           </form>
 
           <div id="formSuccess" class="hidden bg-white rounded-[20px] border border-brand-200 shadow-xl p-10 text-center">
-            <p class="font-display text-2xl text-ink" style="font-weight:600">Almost there.</p>
-            <p class="mt-3 text-ink/65 max-w-sm mx-auto">Your email app should be open with your request ready to send. If it didn't open, call us at (909) 766-2150 and we'll take care of you.</p>
+            <span class="mx-auto grid place-items-center w-14 h-14 rounded-full bg-brand-50 text-brand-600 mb-5"><i data-lucide="check" class="w-7 h-7"></i></span>
+            <p class="font-display text-2xl text-ink" style="font-weight:600">Request sent.</p>
+            <p class="mt-3 text-ink/65 max-w-sm mx-auto">Thank you. We've received your request and will reach out by your preferred method, usually within one business day. Need us sooner? Call (909) 766-2150.</p>
             <button id="resetForm" class="mt-6 inline-flex items-center gap-2 text-brand-700 font-semibold link-underline cursor-pointer">Send another request</button>
+          </div>
+
+          <div id="formFallback" class="hidden bg-white rounded-[20px] border border-amber-200 shadow-xl p-10 text-center">
+            <span class="mx-auto grid place-items-center w-14 h-14 rounded-full bg-amber-50 text-amber-600 mb-5"><i data-lucide="message-circle" class="w-7 h-7"></i></span>
+            <p class="font-display text-2xl text-ink" style="font-weight:600">Let's connect another way.</p>
+            <p class="mt-3 text-ink/65 max-w-sm mx-auto">We couldn't send that automatically just now. Email us directly or give us a call, we'd love to help.</p>
+            <div class="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+              <a id="mailtoFallback" href="#" class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-6 py-3 rounded-full transition-colors"><i data-lucide="mail" class="w-4 h-4"></i> Email us</a>
+              <a href="tel:+19097662150" class="inline-flex items-center justify-center gap-2 border border-ink/20 hover:border-ink text-ink font-semibold px-6 py-3 rounded-full transition-colors"><i data-lucide="phone" class="w-4 h-4"></i> (909) 766-2150</a>
+            </div>
+            <button id="resetFallback" class="mt-6 text-brand-700 font-semibold link-underline cursor-pointer">Back to the form</button>
           </div>
         </div>
       </div>
@@ -1009,12 +1025,13 @@
     const form = document.getElementById('apptForm');
     const formError = document.getElementById('formError');
     const formSuccess = document.getElementById('formSuccess');
-    form.addEventListener('submit', (ev) => {
-      ev.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      if (!name) { formError.textContent = 'Please enter your name so we can reach you.'; formError.classList.remove('hidden'); document.getElementById('name').focus(); return; }
-      formError.classList.add('hidden');
-      const d = new FormData(form);
+    const formFallback = document.getElementById('formFallback');
+    const submitBtn = document.getElementById('submitBtn');
+    const submitLabel = document.getElementById('submitLabel');
+    const submitSpinner = document.getElementById('submitSpinner');
+    const FRONT_DESK_EMAIL = 'ask.doctorchuck@gmail.com';
+
+    function buildMailto(d, name) {
       const subject = encodeURIComponent('Appointment Request — ' + d.get('title') + ' ' + name);
       const body = encodeURIComponent(
         'Appointment request from the website:\n\n' +
@@ -1025,10 +1042,54 @@
         'Preferred contact method: ' + d.get('contactMethod') + '\n\n' +
         'Message:\n' + (d.get('message') || '(none)') + '\n'
       );
-      window.location.href = 'mailto:ask.doctorchuck@gmail.com?subject=' + subject + '&body=' + body;
-      form.classList.add('hidden'); formSuccess.classList.remove('hidden');
+      return 'mailto:' + FRONT_DESK_EMAIL + '?subject=' + subject + '&body=' + body;
+    }
+    function setLoading(on) {
+      submitBtn.disabled = on;
+      submitLabel.classList.toggle('hidden', on);
+      submitSpinner.classList.toggle('hidden', !on);
+      submitSpinner.classList.toggle('inline-flex', on);
+    }
+
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      if (form.querySelector('[name="_honey"]').value) return; // bot trap
+      const name = document.getElementById('name').value.trim();
+      if (!name) { formError.textContent = 'Please enter your name so we can reach you.'; formError.classList.remove('hidden'); document.getElementById('name').focus(); return; }
+      formError.classList.add('hidden');
+      const d = new FormData(form);
+      const payload = {
+        _subject: 'Appointment Request — ' + d.get('title') + ' ' + name,
+        _template: 'table',
+        _captcha: 'false',
+        Name: d.get('title') + ' ' + name,
+        Phone: d.get('phone') || 'Not provided',
+        Email: d.get('email') || 'Not provided',
+        Reason: d.get('reason'),
+        'Preferred contact': d.get('contactMethod'),
+        Message: d.get('message') || '(none)'
+      };
+      setLoading(true);
+      try {
+        const res = await fetch('https://formsubmit.co/ajax/' + FRONT_DESK_EMAIL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('bad status ' + res.status);
+        const data = await res.json();
+        if (!(data && (data.success === true || data.success === 'true'))) throw new Error((data && data.message) || 'not sent');
+        form.classList.add('hidden'); formSuccess.classList.remove('hidden');
+      } catch (err) {
+        document.getElementById('mailtoFallback').href = buildMailto(d, name);
+        form.classList.add('hidden'); formFallback.classList.remove('hidden');
+      } finally {
+        setLoading(false);
+      }
     });
+
     document.getElementById('resetForm').addEventListener('click', () => { form.reset(); form.classList.remove('hidden'); formSuccess.classList.add('hidden'); });
+    document.getElementById('resetFallback').addEventListener('click', () => { form.reset(); form.classList.remove('hidden'); formFallback.classList.add('hidden'); });
   </script>
 </body>
 </html>
