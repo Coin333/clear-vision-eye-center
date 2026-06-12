@@ -79,9 +79,8 @@
     .svc-arrow { opacity: 0; transform: translateX(-10px); transition: opacity .35s ease, transform .4s cubic-bezier(.16,1,.3,1); }
     .svc-row:hover .svc-arrow { opacity: 1; transform: translateX(0); }
 
-    #svcPreview { position: fixed; top: 0; left: 0; width: 230px; height: 290px; z-index: 40; pointer-events: none; opacity: 0; transform: translate(-50%,-50%); transition: opacity .35s ease; border-radius: 14px; overflow: hidden; box-shadow: 0 30px 60px -20px rgba(12,27,51,.45); will-change: transform; }
-    #svcPreview.on { opacity: 1; }
-    #svcPreview img { width: 100%; height: 100%; object-fit: cover; }
+    #svcPreviewImg { opacity: 0; transition: opacity .55s cubic-bezier(.16,1,.3,1); }
+    #svcPreviewImg.on { opacity: 1; }
 
     .ba { position: relative; overflow: hidden; user-select: none; touch-action: none; }
     .ba img { width: 100%; height: 100%; object-fit: cover; display: block; pointer-events: none; }
@@ -120,7 +119,6 @@
 
   <div class="progress-bar" id="progress"></div>
   <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[90] focus:px-4 focus:py-2 focus:bg-brand-600 focus:text-white focus:rounded-lg focus:font-semibold">Skip to main content</a>
-  <div id="svcPreview" aria-hidden="true"><img id="svcPreviewImg" src="" alt="" /></div>
 
   <!-- Top utility bar -->
   <div class="hidden md:block border-b border-ink/10 text-ink/70 text-[13px]">
@@ -322,9 +320,13 @@
           <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-ink/50">(What we do)</p>
           <h2 class="reveal reveal-d1 font-display text-4xl md:text-5xl tracking-tight text-ink mt-5 leading-[1.05]" style="font-weight:600">Care for every part of seeing.</h2>
           <p class="reveal reveal-d2 mt-5 text-ink/60 leading-relaxed">From the front desk to the operating microscope, every service is delivered by the same surgeon who has done it thousands of times.</p>
+          <div class="reveal reveal-d3 hidden lg:block mt-8 relative rounded-2xl overflow-hidden border border-ink/10 aspect-[4/3] bg-ink/5">
+            <div class="absolute inset-0 grid place-items-center font-mono text-[11px] tracking-[.15em] uppercase text-ink/30">Hover a service</div>
+            <img id="svcPreviewImg" src="" alt="" class="absolute inset-0 w-full h-full object-cover" />
+          </div>
         </div>
 
-        <div class="reveal">
+        <div class="reveal" id="svcList">
           <a href="#contact" class="svc-row group block border-t border-ink/15 py-7 md:py-9" data-img="assets/eye-closeup.jpg">
             <div class="flex items-baseline gap-5 md:gap-8">
               <span class="svc-num font-mono text-sm text-ink/40 w-8 shrink-0 transition-colors">01</span>
@@ -402,32 +404,32 @@
 
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-ink/10 rounded-[20px] overflow-hidden border border-ink/10">
           <div class="cond bg-bone p-7 transition-colors duration-300">
-            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">01 — Cataracts</p>
+            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">Cataracts</p>
             <h3 class="font-display text-2xl mt-3" style="font-weight:500">Clouded lens</h3>
             <p class="cond-def mt-2 text-ink/60 transition-colors">A clouding of the eye's natural lens, corrected by replacing it with a clear implant.</p>
           </div>
           <div class="cond bg-bone p-7 transition-colors duration-300">
-            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">02 — Glaucoma</p>
+            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">Glaucoma</p>
             <h3 class="font-display text-2xl mt-3" style="font-weight:500">Optic-nerve pressure</h3>
             <p class="cond-def mt-2 text-ink/60 transition-colors">Pressure that can quietly damage sight. Caught early, it is managed medically or surgically.</p>
           </div>
           <div class="cond bg-bone p-7 transition-colors duration-300">
-            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">03 — Presbyopia</p>
+            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">Presbyopia</p>
             <h3 class="font-display text-2xl mt-3" style="font-weight:500">Aging focus</h3>
             <p class="cond-def mt-2 text-ink/60 transition-colors">Around age 40 the lens stiffens and near focus fades. Lenses and implants bring it back.</p>
           </div>
           <div class="cond bg-bone p-7 transition-colors duration-300">
-            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">04 — Astigmatism</p>
+            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">Astigmatism</p>
             <h3 class="font-display text-2xl mt-3" style="font-weight:500">Irregular contour</h3>
             <p class="cond-def mt-2 text-ink/60 transition-colors">An uneven corneal curve that blurs vision at every distance, correctable in surgery or glasses.</p>
           </div>
           <div class="cond bg-bone p-7 transition-colors duration-300">
-            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">05 — Nearsightedness</p>
+            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">Nearsightedness</p>
             <h3 class="font-display text-2xl mt-3" style="font-weight:500">Distance blur</h3>
             <p class="cond-def mt-2 text-ink/60 transition-colors">Myopia softens far-away detail. We correct it with eyewear or a tailored lens implant.</p>
           </div>
           <div class="cond bg-bone p-7 transition-colors duration-300">
-            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">06 — Farsightedness</p>
+            <p class="cond-tag font-mono text-xs tracking-[.15em] uppercase text-brand-700 transition-colors">Farsightedness</p>
             <h3 class="font-display text-2xl mt-3" style="font-weight:500">Near blur</h3>
             <p class="cond-def mt-2 text-ink/60 transition-colors">Hyperopia makes close work a strain. The right correction makes reading effortless again.</p>
           </div>
@@ -875,19 +877,17 @@
       });
     })();
 
-    // Cursor-follow service preview
-    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    if (canHover) {
-      const preview = document.getElementById('svcPreview');
-      const previewImg = document.getElementById('svcPreviewImg');
-      let tx = 0, ty = 0, cx = 0, cy = 0;
-      function loop() { cx += (tx - cx) * 0.18; cy += (ty - cy) * 0.18; preview.style.transform = `translate(${cx}px, ${cy}px) translate(-50%,-50%)`; requestAnimationFrame(loop); }
-      loop();
+    // Service preview: fades in under the section intro, swaps as you move between rows
+    const previewImg = document.getElementById('svcPreviewImg');
+    const svcList = document.getElementById('svcList');
+    if (previewImg && svcList) {
       document.querySelectorAll('.svc-row').forEach(row => {
-        row.addEventListener('mouseenter', () => { previewImg.src = row.dataset.img; preview.classList.add('on'); });
-        row.addEventListener('mouseleave', () => preview.classList.remove('on'));
-        row.addEventListener('mousemove', (e) => { tx = e.clientX; ty = e.clientY; });
+        row.addEventListener('mouseenter', () => {
+          if (previewImg.getAttribute('src') !== row.dataset.img) previewImg.src = row.dataset.img;
+          previewImg.classList.add('on');
+        });
       });
+      svcList.addEventListener('mouseleave', () => previewImg.classList.remove('on'));
     }
 
     // FAQ accordion
