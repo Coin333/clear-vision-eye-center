@@ -116,8 +116,8 @@
     .proc-step .proc-desc { color: rgba(251,250,247,.45); transition: color .45s ease; }
     .proc-step.active .proc-title { color: #fff; }
     .proc-step.active .proc-desc { color: rgba(251,250,247,.82); }
-    .proc-dot { transition: background-color .45s, border-color .45s, color .45s, box-shadow .45s, transform .45s cubic-bezier(.16,1,.3,1); }
-    .proc-step.active .proc-dot { background: #2563eb; border-color: #2563eb; color: #fff; box-shadow: 0 0 0 6px rgba(37,99,235,.18); transform: scale(1.06); }
+    .proc-dot { box-shadow: 0 0 0 5px #0C1B33; transition: background-color .45s, border-color .45s, color .45s, box-shadow .45s, transform .45s cubic-bezier(.16,1,.3,1); }
+    .proc-step.active .proc-dot { background: #2563eb; border-color: #2563eb; color: #fff; box-shadow: 0 0 0 5px #0C1B33, 0 0 0 11px rgba(37,99,235,.20); transform: scale(1.06); }
     .proc-step:focus-visible { outline: 2px solid #60a5fa; outline-offset: 4px; border-radius: 12px; }
     @media (prefers-reduced-motion: reduce) { .proc-step { opacity: 1; } }
 
@@ -1059,7 +1059,8 @@
       const fill = document.getElementById('procFill');
       const clock = document.getElementById('procTime');
       const TOTAL = 900; // 15:00 shown MM:SS
-      let idx = -1, timer = null, clockRAF = null, paused = false;
+      const STEP_MS = 3200, LOOP_PAUSE_MS = 3000;
+      let idx = -1, clockRAF = null, paused = false, raf = null, acc = 0, lastT = null;
       const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       function fmt(s) { s = Math.max(0, Math.round(s)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
@@ -1079,8 +1080,20 @@
         steps.forEach((s, k) => s.classList.toggle('active', k === i));
         fillTo(i);
         tweenClock((i + 1) / steps.length * TOTAL);
+        acc = 0; // reset the dwell timer on every change (incl. manual clicks)
       }
-      function play() { if (timer || reduce) return; timer = setInterval(() => { if (!paused) setActive((idx + 1) % steps.length); }, 3200); }
+      function loop(t) {
+        if (lastT === null) lastT = t;
+        const dt = t - lastT; lastT = t;
+        if (!paused) {
+          acc += dt;
+          // hold an extra beat after the final step before looping back to the start
+          const threshold = STEP_MS + (idx === steps.length - 1 ? LOOP_PAUSE_MS : 0);
+          if (acc >= threshold) setActive((idx + 1) % steps.length);
+        }
+        raf = requestAnimationFrame(loop);
+      }
+      function play() { if (raf || reduce) return; raf = requestAnimationFrame(loop); }
 
       steps.forEach((s, i) => { s.addEventListener('click', () => setActive(i)); s.addEventListener('focus', () => setActive(i)); });
       tl.addEventListener('mouseenter', () => { paused = true; });
