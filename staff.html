@@ -199,8 +199,11 @@
      - Name   e.g.  Dennis A. Chuck, M.D.
      - Role   e.g.  Ophthalmologist & Eye Surgeon
      - Bio    one or two friendly sentences (optional)
-     - Photo  a web link, OR a filename like assets/dr-chuck.jpg (optional;
-              a colored initial shows automatically if blank)
+     - Photo  EASIEST: a Google Drive "Copy link" URL (set the file to
+              "Anyone with the link"; the page converts it automatically).
+              OR a filename like assets/dr-chuck.jpg. OR any direct image URL.
+              Leave blank for an automatic colored initial. Do NOT insert a
+              picture into the cell; embedded images don't publish.
      - Order  a number (1, 2, 3 ...). Lower shows first. The Order 1 person
               is featured larger at the top.
      - Show   TRUE to display, FALSE to hide without deleting.
@@ -260,8 +263,21 @@
     function escapeHtml(s) { return (s || '').replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
     function initialOf(name) { return (name || '?').trim().charAt(0).toUpperCase(); }
 
+    // Turn whatever the office pastes in the Photo column into a usable image URL.
+    // Accepts: a filename like "assets/jane.jpg", a direct image URL, or a normal
+    // Google Drive "Copy link" share URL (which we convert to a displayable thumbnail).
+    function resolvePhoto(raw) {
+      const s = (raw || '').trim();
+      if (!s) return '';
+      if (/(drive|docs)\.google\.com/.test(s)) {
+        const id = s.match(/[-\w]{25,}/); // Google Drive file IDs are long
+        if (id) return 'https://drive.google.com/thumbnail?id=' + id[0] + '&sz=w1000';
+      }
+      return s;
+    }
+
     function mediaHTML(person, idx, aspect) {
-      const photo = (person.Photo || '').trim();
+      const photo = resolvePhoto(person.Photo);
       const name = escapeHtml(person.Name || '');
       const tone = INITIAL_TONES[idx % INITIAL_TONES.length];
       if (photo) {

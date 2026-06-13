@@ -70,12 +70,28 @@ Changes appear on the live website within a few minutes. Google refreshes the pu
 
 ---
 
-## Photo tips
+## Photos: the simplest way
 
-- Easiest: put photo files in the website's `assets/` folder and reference them like `assets/jane.jpg`.
-- Or paste a full image link (must be publicly viewable).
+> Important: do **not** insert a picture into the cell with Insert -> Image. Those embedded images do not come through when the sheet is published, so they will not appear on the site. The **Photo** cell needs a _link_ (or a filename), not an inserted picture.
+
+### Easiest for the office: Google Drive (no developer needed)
+
+1. Upload the photo to Google Drive (drag it into [drive.google.com](https://drive.google.com)).
+2. Right-click the photo -> **Share** -> under "General access" choose **Anyone with the link** -> **Viewer**.
+3. Click **Copy link**.
+4. Paste that link straight into the **Photo** cell. That's it.
+
+The page automatically converts a normal Drive share link into a displayable image, so you can paste the link exactly as Google gives it to you. (Make sure the file is set to "Anyone with the link," or it will stay private and not show.)
+
+### Alternative: a file in the website
+
+If you have access to the website's files, drop the image into the `assets/` folder and put its filename in the **Photo** cell, like `assets/jane.jpg`. This gives the sharpest result and the fastest load.
+
+### Tips
+
 - Best results: roughly portrait-shaped photos (taller than wide). The page crops to a consistent 4:5 frame.
-- No photo? Leave the **Photo** cell blank and the page shows a clean colored circle with the person's first initial.
+- No photo yet? Leave the **Photo** cell blank and the page shows a clean colored tile with the person's first initial, so it still looks finished.
+- Any other public image link (for example from the practice's website) also works if it points directly at an image.
 
 ---
 
