@@ -41,6 +41,7 @@
   </script>
 
   <style>
+    html { scroll-padding-top: 92px; } /* keep anchored headings clear of the fixed navbar */
     body { -webkit-font-smoothing: antialiased; background-color: #FBFAF7; }
 
     .grain::after {
@@ -116,6 +117,12 @@
     .faq-item.open .faq-icon { transform: rotate(45deg); }
     .faq-icon { transition: transform .3s ease; }
 
+    .lang-btn { color: rgba(12,27,51,.55); transition: background-color .2s ease, color .2s ease; cursor: pointer; }
+    .lang-btn.active { background: #0C1B33; color: #FBFAF7; }
+    .no-bar { scrollbar-width: none; -ms-overflow-style: none; }
+    .no-bar::-webkit-scrollbar { display: none; }
+    .rev-card { scroll-snap-align: start; }
+
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1; transform: none; transition: none; }
       .marquee-track { animation: none; }
@@ -134,12 +141,18 @@
   <div class="hidden md:block border-b border-ink/10 text-ink/70 text-[13px]">
     <div class="max-w-7xl mx-auto px-6 lg:px-8 h-10 flex items-center justify-between">
       <span class="font-mono tracking-tight">1774 Alameda St · Pomona, CA 91768</span>
-      <div class="flex items-center gap-7">
+      <div class="flex items-center gap-5">
         <span id="statusBarTop" class="inline-flex items-center gap-2 font-mono text-xs"><span class="w-2 h-2 rounded-full bg-ink/30"></span><span>Checking hours…</span></span>
         <span class="text-ink/30">·</span>
         <a href="mailto:ask.doctorchuck@gmail.com" class="link-underline">ask.doctorchuck@gmail.com</a>
         <span class="text-ink/30">·</span>
         <a href="tel:+19097662150" class="font-semibold text-ink link-underline">(909) 766-2150</a>
+        <span class="text-ink/30">·</span>
+        <div class="inline-flex items-center rounded-full border border-ink/20 overflow-hidden font-mono text-[11px]" role="group" aria-label="Language">
+          <button type="button" data-lang="en" class="lang-btn px-2 py-0.5">EN</button>
+          <button type="button" data-lang="es" class="lang-btn px-2 py-0.5 border-l border-ink/15">ES</button>
+          <button type="button" data-lang="zh" class="lang-btn px-2 py-0.5 border-l border-ink/15">中文</button>
+        </div>
       </div>
     </div>
   </div>
@@ -167,6 +180,7 @@
           <a href="#cataracts" class="text-ink/70 hover:text-ink link-underline">Cataracts</a>
           <a href="#doctor" class="text-ink/70 hover:text-ink link-underline">Dr. Chuck</a>
           <a href="#faq" class="text-ink/70 hover:text-ink link-underline">FAQ</a>
+          <a href="reviews.html" class="text-ink/70 hover:text-ink link-underline">Reviews</a>
           <a href="#contact" class="text-ink/70 hover:text-ink link-underline">Contact</a>
         </div>
 
@@ -187,7 +201,16 @@
         <a href="#cataracts" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Cataracts</a>
         <a href="#doctor" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Dr. Chuck</a>
         <a href="#faq" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">FAQ</a>
+        <a href="reviews.html" class="px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Reviews</a>
         <a href="#contact" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Contact</a>
+        <div class="mt-3 flex items-center gap-2 px-3">
+          <span class="font-mono text-[11px] tracking-wide uppercase text-ink/40">Language</span>
+          <div class="inline-flex items-center rounded-full border border-ink/20 overflow-hidden font-mono text-xs" role="group" aria-label="Language">
+            <button type="button" data-lang="en" class="lang-btn px-3 py-1">EN</button>
+            <button type="button" data-lang="es" class="lang-btn px-3 py-1 border-l border-ink/15">ES</button>
+            <button type="button" data-lang="zh" class="lang-btn px-3 py-1 border-l border-ink/15">中文</button>
+          </div>
+        </div>
         <a href="tel:+19097662150" class="mt-2 text-center bg-ink text-bone font-semibold px-5 py-3 rounded-full">Call (909) 766-2150</a>
       </div>
     </div>
@@ -666,6 +689,67 @@
       </div>
     </section>
 
+    <!-- REVIEWS strip -->
+    <section id="reviews" class="py-20 md:py-28 border-t border-ink/10 overflow-hidden">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+          <div>
+            <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-ink/50">(In their words)</p>
+            <h2 class="reveal reveal-d1 font-display text-4xl md:text-6xl tracking-tight text-ink mt-5 leading-[1.02]" style="font-weight:600">The doctor the<br />doctors trust.</h2>
+          </div>
+          <a href="reviews.html" class="reveal reveal-d1 inline-flex items-center gap-2 font-semibold text-brand-700 link-underline">Read all reviews <i data-lucide="arrow-right" class="w-4 h-4"></i></a>
+        </div>
+      </div>
+      <div class="no-bar flex gap-5 overflow-x-auto px-6 lg:px-8 pb-4 snap-x snap-mandatory">
+        <article class="rev-card snap-start shrink-0 w-[85%] sm:w-[420px] bg-white border border-ink/10 rounded-2xl p-7 shadow-sm">
+          <div class="flex gap-0.5 text-brand-500 mb-4" aria-label="5 out of 5 stars">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="font-display text-lg md:text-xl text-ink leading-snug" style="font-weight:500">"He's the doctor the doctors trust. You should too."</p>
+          <p class="mt-4 text-ink/60 text-sm leading-relaxed">Misdiagnosed by two other doctors, a radiologist friend sent me to Dr. Dennis. He immediately saw the problem and I was well in less than a week.</p>
+          <p class="mt-5 font-mono text-xs tracking-wide uppercase text-ink/45">Nora Quinn · Local Guide</p>
+        </article>
+        <article class="rev-card snap-start shrink-0 w-[85%] sm:w-[420px] bg-white border border-ink/10 rounded-2xl p-7 shadow-sm">
+          <div class="flex gap-0.5 text-brand-500 mb-4" aria-label="5 out of 5 stars">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="font-display text-lg md:text-xl text-ink leading-snug" style="font-weight:500">"I was not expecting much, but got a miracle."</p>
+          <p class="mt-4 text-ink/60 text-sm leading-relaxed">Macular degeneration in one eye, a cataract in the other. After surgery I have 20/20 vision and just use readers for small print. Thank you, Dr. Chuck.</p>
+          <p class="mt-5 font-mono text-xs tracking-wide uppercase text-ink/45">Rita</p>
+        </article>
+        <article class="rev-card snap-start shrink-0 w-[85%] sm:w-[420px] bg-white border border-ink/10 rounded-2xl p-7 shadow-sm">
+          <div class="flex gap-0.5 text-brand-500 mb-4" aria-label="5 out of 5 stars">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="font-display text-lg md:text-xl text-ink leading-snug" style="font-weight:500">"At the age of 73 I can still see and read without glasses."</p>
+          <p class="mt-4 text-ink/60 text-sm leading-relaxed">Dr. Chuck did my cataract surgery years ago. As someone who can't even open their eyes in water, I trust him completely. Blessed to have him all these years.</p>
+          <p class="mt-5 font-mono text-xs tracking-wide uppercase text-ink/45">Rosa Riley</p>
+        </article>
+        <article class="rev-card snap-start shrink-0 w-[85%] sm:w-[420px] bg-white border border-ink/10 rounded-2xl p-7 shadow-sm">
+          <div class="flex gap-0.5 text-brand-500 mb-4" aria-label="5 out of 5 stars">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="font-display text-lg md:text-xl text-ink leading-snug" style="font-weight:500">"God bless doctors like him that really care about their patients."</p>
+          <p class="mt-4 text-ink/60 text-sm leading-relaxed">He did my left eye for cataracts and made me feel relaxed about the surgery, with all the information I wanted. His staff is very sweet and caring.</p>
+          <p class="mt-5 font-mono text-xs tracking-wide uppercase text-ink/45">Char Asfar</p>
+        </article>
+        <article class="rev-card snap-start shrink-0 w-[85%] sm:w-[420px] bg-white border border-ink/10 rounded-2xl p-7 shadow-sm">
+          <div class="flex gap-0.5 text-brand-500 mb-4" aria-label="5 out of 5 stars">
+            <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i>
+          </div>
+          <p class="font-display text-lg md:text-xl text-ink leading-snug" style="font-weight:500">"His knowledge and professionalism are OUTSTANDING."</p>
+          <p class="mt-4 text-ink/60 text-sm leading-relaxed">I have known Dr. Chuck for 30-plus years. He has followed the health of my eyes through my diabetes, and I have had two cataract surgeries with excellent results.</p>
+          <p class="mt-5 font-mono text-xs tracking-wide uppercase text-ink/45">Edward Arismendi</p>
+        </article>
+        <a href="reviews.html" class="rev-card snap-start shrink-0 w-[70%] sm:w-[300px] grid place-items-center bg-ink text-bone rounded-2xl p-7 hover:bg-brand-700 transition-colors">
+          <span class="text-center">
+            <span class="block font-display text-2xl" style="font-weight:600">Read every review</span>
+            <span class="mt-2 inline-flex items-center gap-2 font-mono text-xs tracking-wide uppercase text-brand-200">All patient stories <i data-lucide="arrow-right" class="w-4 h-4"></i></span>
+          </span>
+        </a>
+      </div>
+    </section>
+
     <!-- FAQ -->
     <section id="faq" class="py-20 md:py-28">
       <div class="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[0.8fr_2fr] gap-12">
@@ -875,6 +959,7 @@
             <li><a href="#cataracts" class="text-bone/75 hover:text-white link-underline">Cataracts</a></li>
             <li><a href="#doctor" class="text-bone/75 hover:text-white link-underline">Dr. Chuck</a></li>
             <li><a href="#faq" class="text-bone/75 hover:text-white link-underline">FAQ</a></li>
+            <li><a href="reviews.html" class="text-bone/75 hover:text-white link-underline">Reviews</a></li>
           </ul>
         </div>
         <div>
@@ -1141,6 +1226,203 @@
 
     document.getElementById('resetForm').addEventListener('click', () => { form.reset(); form.classList.remove('hidden'); formSuccess.classList.add('hidden'); });
     document.getElementById('resetFallback').addEventListener('click', () => { form.reset(); form.classList.remove('hidden'); formFallback.classList.add('hidden'); });
+  </script>
+
+  <!-- Language toggle: translates text nodes by dictionary, leaving markup/icons intact -->
+  <script>
+  (function () {
+    const DICT = {
+      es: {
+        "About":"Nosotros","Services":"Servicios","Cataracts":"Cataratas","Dr. Chuck":"Dr. Chuck","FAQ":"Preguntas","Reviews":"Reseñas","Contact":"Contacto","Book a visit":"Reservar cita","Language":"Idioma","Skip to main content":"Saltar al contenido","Scroll":"Desliza","Call (909) 766-2150":"Llamar (909) 766-2150",
+        "Clear Vision Eye Center · Est. 1983":"Clear Vision Eye Center · Desde 1983",
+        "Board-certified ophthalmology and small-incision cataract surgery from":"Oftalmología certificada y cirugía de cataratas de incisión pequeña, de la mano de",
+        "One practice for your whole family, from eyeglasses to eye surgery.":"Una sola consulta para toda su familia, desde anteojos hasta cirugía ocular.",
+        "Request an appointment":"Solicitar una cita",
+        "(About the practice)":"(Sobre la consulta)","One practice for":"Una consulta para","everything you see.":"todo lo que ve.",
+        "Led by licensed and certified ophthalmologist Dennis A. Chuck, M.D., Clear Vision Eye Center has cared for Pomona's eyes since 1983. We are a true one-stop shop, providing everything from a routine eye exam and a new pair of glasses to advanced small-incision cataract surgery, all under one roof.":"Dirigido por el oftalmólogo licenciado y certificado Dennis A. Chuck, M.D., Clear Vision Eye Center cuida los ojos de Pomona desde 1983. Somos una consulta integral: desde un examen de la vista de rutina y un nuevo par de anteojos hasta cirugía avanzada de cataratas de incisión pequeña, todo bajo un mismo techo.",
+        "Dr. Chuck is known for exceptional surgical results, but just as much for a caring, personal approach. You are a person here, not a chart number.":"El Dr. Chuck es conocido por sus excelentes resultados quirúrgicos, y por igual por su trato cercano y humano. Aquí usted es una persona, no un número de expediente.",
+        "Meet Dr. Chuck":"Conozca al Dr. Chuck",
+        "An eye exam in progress · 1774 Alameda St, Pomona":"Un examen de la vista en curso · 1774 Alameda St, Pomona",
+        "Est. 1983":"Desde 1983","40 years":"40 años","of care · Pomona":"de atención · Pomona",
+        "Years caring for Pomona":"Años cuidando a Pomona","Minute outpatient surgery":"Minutos, cirugía ambulatoria","Micro-incision, or less":"Microincisión, o menos","U.S. cataract surgeries / year":"Cirugías de cataratas en EE. UU. / año",
+        "(What we do)":"(Lo que hacemos)","Care for every part of seeing.":"Cuidado para cada parte de su visión.",
+        "From the front desk to the operating microscope, every service is delivered by the same surgeon who has done it thousands of times.":"Desde la recepción hasta el microscopio quirúrgico, cada servicio lo brinda el mismo cirujano que lo ha hecho miles de veces.",
+        "Comprehensive Eye Care":"Cuidado integral de los ojos","Cataract Surgery":"Cirugía de cataratas","Optical Shop & Eyewear":"Óptica y anteojos","Eye Exams":"Exámenes de la vista","Lens Implants":"Implantes de lente","Glaucoma Management":"Manejo del glaucoma",
+        "Quality assessment from a qualified, practicing eye surgeon, using the latest technology to evaluate and protect your sight.":"Una evaluación de calidad por un cirujano oftalmólogo en ejercicio, con la última tecnología para evaluar y proteger su visión.",
+        "Small-incision phacoemulsification with a foldable lens implant, chosen to correct nearsightedness, farsightedness, astigmatism, and presbyopia.":"Facoemulsificación de incisión pequeña con un lente plegable, elegido para corregir miopía, hipermetropía, astigmatismo y presbicia.",
+        "A one-stop optical center. We monitor your eye health and performance, then fit you with the best glasses and contact lenses for your prescription.":"Un centro óptico integral. Cuidamos la salud de sus ojos y le adaptamos los mejores anteojos y lentes de contacto para su receta.",
+        "Thorough exams that track your vision and eye health over time, catching changes early and keeping your prescription current.":"Exámenes completos que dan seguimiento a su visión con el tiempo, detectan cambios a tiempo y mantienen su receta al día.",
+        "Surgical lens implants that can reduce or eliminate the need for glasses and contacts, tailored to your vision goals.":"Implantes de lente que pueden reducir o eliminar la necesidad de anteojos y lentes de contacto, según sus objetivos visuales.",
+        "Detection and ongoing management of glaucoma to protect your long-term sight, with surgical correction when it is needed.":"Detección y manejo continuo del glaucoma para proteger su visión a largo plazo, con cirugía cuando es necesario.",
+        "(Conditions we treat)":"(Afecciones que tratamos)","From blur":"De lo borroso","to clarity.":"a lo claro.",
+        "If your vision has changed, there is usually a name for it, and a way to correct it. Run your eye down the list and bring each one into focus.":"Si su visión ha cambiado, casi siempre tiene un nombre y una solución. Recorra la lista con la vista y enfoque cada una.",
+        "Glaucoma":"Glaucoma","Presbyopia":"Presbicia","Astigmatism":"Astigmatismo","Nearsightedness":"Miopía","Farsightedness":"Hipermetropía",
+        "Clouded lens":"Lente nublado","Optic-nerve pressure":"Presión del nervio óptico","Aging focus":"Enfoque con la edad","Irregular contour":"Contorno irregular","Myopia · distance blur":"Miopía · visión lejana borrosa","Hyperopia · near blur":"Hipermetropía · visión cercana borrosa",
+        "A clouding of the eye's natural lens, corrected by replacing it with a clear implant.":"Una opacidad del lente natural del ojo, que se corrige reemplazándolo por un implante transparente.",
+        "Pressure that can quietly damage sight. Caught early, it is managed medically or surgically.":"Presión que puede dañar la vista sin avisar. Detectada a tiempo, se maneja con medicamentos o cirugía.",
+        "Around age 40 the lens stiffens and near focus fades. Lenses and implants bring it back.":"Hacia los 40 años el lente se endurece y se pierde el enfoque cercano. Los lentes e implantes lo recuperan.",
+        "An uneven corneal curve that blurs vision at every distance, correctable in surgery or glasses.":"Una curvatura corneal despareja que vuelve borrosa la visión a toda distancia; se corrige con cirugía o anteojos.",
+        "Far-away detail softens. We correct it with eyewear or a tailored lens implant.":"El detalle lejano se vuelve borroso. Lo corregimos con anteojos o un implante de lente a medida.",
+        "Close work becomes a strain. The right correction makes reading effortless again.":"El trabajo de cerca cansa la vista. La corrección adecuada vuelve a hacer fácil la lectura.",
+        "Hover a name to bring it into focus · tap to ask Dr. Chuck":"Pase el cursor sobre un nombre para enfocarlo · toque para consultar al Dr. Chuck",
+        "(Correcting cloudiness)":"(Corrigiendo la opacidad)","See the difference,":"Vea la diferencia,","before you decide.":"antes de decidir.",
+        "A cataract is the clouding of the lens inside your eye. Early on it feels \"as if you are looking through a dirty window.\" Drag the handle to see how surgery trades that haze for clarity.":"Una catarata es la opacidad del lente dentro del ojo. Al principio se siente \"como mirar por una ventana sucia\". Arrastre el control para ver cómo la cirugía cambia esa neblina por claridad.",
+        "← Cataract vision · After surgery →":"← Visión con catarata · Después de la cirugía →",
+        "Signs you may notice":"Señales que puede notar",
+        "It feels as if you are looking through a dirty window":"Siente como si mirara por una ventana sucia","Dulled or faded light colors":"Colores apagados o desvaídos","Increasing difficulty seeing at night":"Cada vez más dificultad para ver de noche","Reading glasses or bifocals no longer help":"Los lentes de lectura o bifocales ya no ayudan",
+        "Lowering your risk":"Cómo reducir el riesgo",
+        "A diet rich in antioxidants (vitamin A, carotene)":"Una dieta rica en antioxidantes (vitamina A, caroteno)","UV-protective glasses and lenses":"Anteojos y lentes con protección UV","Quitting smoking, which can double the risk":"Dejar de fumar, que puede duplicar el riesgo","Regular exams to track changes early":"Exámenes regulares para detectar cambios a tiempo",
+        "(What to expect)":"(Qué esperar)","The whole thing takes about fifteen minutes.":"Todo el proceso toma unos quince minutos.",
+        "Most people are surprised by how calm and quick it is. Here is what your morning looks like, in plain terms.":"A la mayoría le sorprende lo tranquilo y rápido que es. Esto es lo que vivirá esa mañana, en palabras sencillas.",
+        "No needles":"Sin agujas","Awake, lightly relaxed":"Despierto, levemente relajado","Outpatient":"Ambulatorio","Home the same day":"A casa el mismo día",
+        "You settle in.":"Usted se acomoda.","You relax in a reclining chair. A few numbing drops, no needles at all, and a little something to help you unwind.":"Se relaja en un sillón reclinable. Unas gotas anestésicas, sin agujas, y algo suave para ayudarle a tranquilizarse.",
+        "A tiny opening.":"Una pequeña abertura.","Through an incision smaller than three millimeters, the clouded lens is gently softened with sound waves.":"Por una incisión de menos de tres milímetros, el lente opaco se ablanda con suavidad mediante ondas sonoras.",
+        "The cloud lifts.":"La nube se disipa.","Dr. Chuck removes the clouded lens while leaving its delicate, clear membrane in place to cradle the new one.":"El Dr. Chuck retira el lente opaco y deja en su lugar la delicada membrana transparente que sostendrá el nuevo.",
+        "Clear again.":"Claro otra vez.","A soft, folded lens slides into the same opening and gently unfolds, becoming your new lens for good.":"Un lente suave y plegado entra por la misma abertura y se despliega con suavidad, convirtiéndose en su nuevo lente para siempre.",
+        "Afterward, recovery is quick. There is usually little more than mild discomfort, you wear a light shield for a day or two, and most people are back to their routine within days, with vision that keeps sharpening over the following weeks.":"Después, la recuperación es rápida. Suele haber solo una leve molestia, usa un protector ligero por uno o dos días, y la mayoría vuelve a su rutina en pocos días, con una visión que sigue aclarándose en las semanas siguientes.",
+        "Ask Dr. Chuck about cataract surgery":"Pregunte al Dr. Chuck sobre la cirugía de cataratas",
+        "(Meet your doctor)":"(Conozca a su médico)","A surgeon's hands,":"Manos de cirujano,","a neighbor's care.":"trato de vecino.",
+        "An eye surgeon since 1983, Dr. Chuck has performed thousands of cataract and refractive procedures. He trained in ophthalmology at the USC Doheny Eye Institute, where he still serves as a Clinical Instructor, and specializes in small-incision cataract surgery.":"Cirujano oftalmólogo desde 1983, el Dr. Chuck ha realizado miles de procedimientos de cataratas y refractivos. Se formó en oftalmología en el USC Doheny Eye Institute, donde aún es Instructor Clínico, y se especializa en cirugía de cataratas de incisión pequeña.",
+        "\"I am proud to be known for exceptional surgical results, but it is also important to me to be known as a surgeon with a caring and personalized approach to patient care.\"":"\"Me enorgullece ser reconocido por resultados quirúrgicos excepcionales, pero también me importa que me conozcan como un cirujano cercano y atento con cada paciente.\"",
+        "Ophthalmologist & Eye Surgeon":"Oftalmólogo y cirujano ocular",
+        "Education & training":"Formación y estudios","Undergraduate & M.D., Brown University":"Licenciatura y M.D., Brown University","Ophthalmology residency, USC Doheny Eye Institute":"Residencia en oftalmología, USC Doheny Eye Institute","Clinical Instructor, USC Doheny Eye Institute":"Instructor Clínico, USC Doheny Eye Institute",
+        "Credentials & honors":"Credenciales y reconocimientos","Board certified, American Academy of Ophthalmology":"Certificado por la American Academy of Ophthalmology","Member, American Society of Cataract & Refractive Surgery":"Miembro de la American Society of Cataract & Refractive Surgery","Former Chief of Staff, Pomona Valley Hospital Medical Center":"Exjefe de personal médico, Pomona Valley Hospital Medical Center","Recognized in \"Who's Who in America\"":"Reconocido en \"Who's Who in America\"",
+        "(The people)":"(Las personas)","A team that knows your name when you walk in.":"Un equipo que sabe su nombre apenas entra.","From your first call to your fitting at the optical counter, the same familiar faces look after your whole family's eyes.":"Desde su primera llamada hasta la adaptación en el mostrador óptico, las mismas caras conocidas cuidan los ojos de toda su familia.",
+        "(Good to know)":"(Bueno saberlo)","Questions, answered.":"Preguntas, respondidas.","Still wondering about something? Call":"¿Aún tiene dudas? Llame al","and we will talk it through.":"y lo conversamos.",
+        "Do I actually need cataract surgery?":"¿De verdad necesito cirugía de cataratas?","When cloudiness begins to limit your daily activities, the recommended treatment is to remove the clouded lens and replace it with a clear implant. There is no proven non-surgical cure, but surgery is elective: Dr. Chuck will examine your eyes and help you decide when, or whether, the time is right.":"Cuando la opacidad empieza a limitar sus actividades diarias, el tratamiento recomendado es retirar el lente opaco y reemplazarlo por un implante transparente. No hay cura sin cirugía comprobada, pero la cirugía es electiva: el Dr. Chuck examinará sus ojos y le ayudará a decidir cuándo, o si, es el momento adecuado.",
+        "How long does the procedure take?":"¿Cuánto dura el procedimiento?","The surgery itself typically takes about 15 minutes. It is an outpatient procedure performed under an operating microscope, with topical anesthesia (no needles) and light IV sedation for your comfort.":"La cirugía en sí suele tomar unos 15 minutos. Es un procedimiento ambulatorio bajo microscopio quirúrgico, con anestesia tópica (sin agujas) y sedación intravenosa ligera para su comodidad.",
+        "What is recovery like?":"¿Cómo es la recuperación?","Most patients feel minimal discomfort. You will wear a light protective shield and use prescribed eye drops, and most people return to normal activities within days. Vision improves soon after surgery and continues to sharpen over several weeks.":"La mayoría siente molestias mínimas. Usará un protector ligero y gotas recetadas, y casi todos vuelven a sus actividades normales en pocos días. La visión mejora poco después de la cirugía y sigue aclarándose durante varias semanas.",
+        "Will I still need glasses afterward?":"¿Seguiré necesitando anteojos después?","The foldable lens implant is selected to correct nearsightedness, farsightedness, astigmatism, or presbyopia, so many patients greatly reduce their dependence on glasses. Dr. Chuck will walk you through the lens options that fit your eyes and your lifestyle.":"El lente plegable se elige para corregir miopía, hipermetropía, astigmatismo o presbicia, por lo que muchos pacientes reducen mucho su dependencia de los anteojos. El Dr. Chuck le explicará las opciones de lente que mejor se ajustan a sus ojos y su estilo de vida.",
+        "What should I bring to my first visit?":"¿Qué debo llevar a mi primera visita?","Bring your current glasses or contact lenses, a list of any medications you take, and your insurance information. If you have records from a previous eye doctor, those are helpful too.":"Traiga sus anteojos o lentes de contacto actuales, una lista de los medicamentos que toma y su información de seguro. Si tiene registros de un oftalmólogo anterior, también son útiles.",
+        "Do you take my insurance?":"¿Aceptan mi seguro?","We work with many vision and medical plans. The fastest way to confirm your specific coverage is to call us at (909) 766-2150, and our front desk will check it for you before your appointment.":"Trabajamos con muchos planes de visión y médicos. La forma más rápida de confirmar su cobertura es llamarnos al (909) 766-2150, y nuestra recepción la verificará antes de su cita.",
+        "(Get in touch)":"(Contáctenos)","A new outlook":"Una nueva mirada","starts here.":"empieza aquí.","Call us or send a request and we'll help you find a time. We're happy to talk through exams, eyewear, or cataract surgery.":"Llámenos o envíe una solicitud y le ayudaremos a encontrar un horario. Con gusto conversamos sobre exámenes, anteojos o cirugía de cataratas.",
+        "Phone":"Teléfono","Email":"Correo","Visit":"Visítenos","Mon – Fri":"Lun – Vie","Lunch 12:30 – 1:30":"Almuerzo 12:30 – 1:30","Sat / Sun":"Sáb / Dom","By request":"A pedido","Call to arrange":"Llame para coordinar",
+        "Optional":"Opcional","Rather talk to a person? Just call":"¿Prefiere hablar con alguien? Solo llame al",". Or send a request and we'll reply your way, usually within one business day.":". O envíe una solicitud y le responderemos por su medio preferido, normalmente en un día hábil.",
+        "Title":"Tratamiento","Full name":"Nombre completo","Reason for visit":"Motivo de la visita","Message (optional)":"Mensaje (opcional)","Preferred contact":"Contacto preferido",
+        "Mr.":"Sr.","Mrs.":"Sra.","Miss":"Srta.","Ms.":"Sra.","Comprehensive eye exam":"Examen integral de la vista","Cataract consultation":"Consulta de cataratas","Glasses or contact lenses":"Anteojos o lentes de contacto","Glaucoma / eye health concern":"Glaucoma / salud ocular","Other":"Otro","Mail":"Correo postal",
+        "Send request":"Enviar solicitud","Sends straight to our front desk. For urgent needs, please call (909) 766-2150.":"Llega directo a nuestra recepción. Para urgencias, llame al (909) 766-2150.",
+        "Request sent.":"Solicitud enviada.","Thank you. We've received your request and will reach out by your preferred method, usually within one business day. Need us sooner? Call (909) 766-2150.":"Gracias. Recibimos su solicitud y le contactaremos por su medio preferido, normalmente en un día hábil. ¿Nos necesita antes? Llame al (909) 766-2150.","Send another request":"Enviar otra solicitud",
+        "Let's connect another way.":"Conectemos de otra forma.","We couldn't send that automatically just now. Email us directly or give us a call, we'd love to help.":"No pudimos enviarlo automáticamente ahora. Escríbanos directamente o llámenos; con gusto le ayudamos.","Email us":"Escríbanos","Back to the form":"Volver al formulario",
+        "Clear vision for every stage of life. Comprehensive eye care, eyewear, and small-incision cataract surgery in Pomona, California.":"Visión clara para cada etapa de la vida. Cuidado integral de los ojos, anteojos y cirugía de cataratas de incisión pequeña en Pomona, California.",
+        "Explore":"Explorar","Dennis A. Chuck, M.D. · Licensed Ophthalmologist · Pomona, CA":"Dennis A. Chuck, M.D. · Oftalmólogo licenciado · Pomona, CA",
+        "(In their words)":"(En sus palabras)","The doctor the":"El médico en quien","doctors trust.":"confían los médicos.","Read all reviews":"Ver todas las reseñas"
+      },
+      zh: {
+        "About":"关于","Services":"服务","Cataracts":"白内障","Dr. Chuck":"Chuck 医生","FAQ":"常见问题","Reviews":"评价","Contact":"联系","Book a visit":"预约就诊","Language":"语言","Skip to main content":"跳到主要内容","Scroll":"向下滚动","Call (909) 766-2150":"致电 (909) 766-2150",
+        "Clear Vision Eye Center · Est. 1983":"Clear Vision Eye Center · 始于 1983",
+        "Board-certified ophthalmology and small-incision cataract surgery from":"拥有委员会认证的眼科与微切口白内障手术，由",
+        "One practice for your whole family, from eyeglasses to eye surgery.":"一站式服务，照顾全家人的双眼，从配镜到眼科手术。",
+        "Request an appointment":"预约就诊",
+        "(About the practice)":"(关于我们)","One practice for":"一处诊所，照护","everything you see.":"您所见的一切。",
+        "Led by licensed and certified ophthalmologist Dennis A. Chuck, M.D., Clear Vision Eye Center has cared for Pomona's eyes since 1983. We are a true one-stop shop, providing everything from a routine eye exam and a new pair of glasses to advanced small-incision cataract surgery, all under one roof.":"由持照并获认证的眼科医生 Dennis A. Chuck 医生主理，Clear Vision Eye Center 自 1983 年起守护波莫纳居民的双眼。我们是真正的一站式诊所：从常规视力检查、配新眼镜，到先进的微切口白内障手术，全部在同一处完成。",
+        "Dr. Chuck is known for exceptional surgical results, but just as much for a caring, personal approach. You are a person here, not a chart number.":"Chuck 医生以卓越的手术效果著称，同样也以细致、贴心的诊治态度闻名。在这里，您是一个人，而不是一个病历号。",
+        "Meet Dr. Chuck":"认识 Chuck 医生",
+        "An eye exam in progress · 1774 Alameda St, Pomona":"正在进行的视力检查 · 1774 Alameda St, Pomona",
+        "Est. 1983":"始于 1983","40 years":"40 年","of care · Pomona":"用心守护 · 波莫纳",
+        "Years caring for Pomona":"守护波莫纳的年头","Minute outpatient surgery":"分钟门诊手术","Micro-incision, or less":"微切口，甚至更小","U.S. cataract surgeries / year":"美国每年白内障手术量",
+        "(What we do)":"(我们的服务)","Care for every part of seeing.":"呵护视觉的每一个环节。",
+        "From the front desk to the operating microscope, every service is delivered by the same surgeon who has done it thousands of times.":"从前台到手术显微镜，每一项服务都由同一位做过数千次的医生亲自完成。",
+        "Comprehensive Eye Care":"全面眼科护理","Cataract Surgery":"白内障手术","Optical Shop & Eyewear":"眼镜店与镜架","Eye Exams":"视力检查","Lens Implants":"人工晶体植入","Glaucoma Management":"青光眼管理",
+        "Quality assessment from a qualified, practicing eye surgeon, using the latest technology to evaluate and protect your sight.":"由资深执业眼科医生进行高质量评估，运用最新技术检查并保护您的视力。",
+        "Small-incision phacoemulsification with a foldable lens implant, chosen to correct nearsightedness, farsightedness, astigmatism, and presbyopia.":"微切口超声乳化术，植入可折叠人工晶体，用于矫正近视、远视、散光和老花。",
+        "A one-stop optical center. We monitor your eye health and performance, then fit you with the best glasses and contact lenses for your prescription.":"一站式眼镜中心。我们关注您的眼睛健康，并为您验配最合适的眼镜与隐形眼镜。",
+        "Thorough exams that track your vision and eye health over time, catching changes early and keeping your prescription current.":"全面检查，长期跟踪您的视力与眼睛健康，及早发现变化并保持度数准确。",
+        "Surgical lens implants that can reduce or eliminate the need for glasses and contacts, tailored to your vision goals.":"人工晶体植入手术，可减少甚至免除对眼镜和隐形眼镜的依赖，量身定制。",
+        "Detection and ongoing management of glaucoma to protect your long-term sight, with surgical correction when it is needed.":"青光眼的检测与长期管理，保护您长远的视力，必要时进行手术矫正。",
+        "(Conditions we treat)":"(我们治疗的眼疾)","From blur":"从模糊","to clarity.":"到清晰。",
+        "If your vision has changed, there is usually a name for it, and a way to correct it. Run your eye down the list and bring each one into focus.":"如果您的视力发生了变化，通常都有相应的名称和矫正方法。把目光移过下面的列表，让每一项都对上焦。",
+        "Glaucoma":"青光眼","Presbyopia":"老花眼","Astigmatism":"散光","Nearsightedness":"近视","Farsightedness":"远视",
+        "Clouded lens":"晶状体浑浊","Optic-nerve pressure":"视神经压力","Aging focus":"老化对焦","Irregular contour":"角膜不规则","Myopia · distance blur":"近视 · 看远模糊","Hyperopia · near blur":"远视 · 看近模糊",
+        "A clouding of the eye's natural lens, corrected by replacing it with a clear implant.":"眼睛天然晶状体变浑浊，通过更换为透明人工晶体来矫正。",
+        "Pressure that can quietly damage sight. Caught early, it is managed medically or surgically.":"悄无声息地损害视力的眼压。及早发现，可通过药物或手术控制。",
+        "Around age 40 the lens stiffens and near focus fades. Lenses and implants bring it back.":"约 40 岁起晶状体变硬，看近能力下降。镜片与人工晶体可帮您找回。",
+        "An uneven corneal curve that blurs vision at every distance, correctable in surgery or glasses.":"角膜曲率不均，使各距离的视物都变模糊，可通过手术或眼镜矫正。",
+        "Far-away detail softens. We correct it with eyewear or a tailored lens implant.":"远处细节变模糊。我们用眼镜或定制人工晶体来矫正。",
+        "Close work becomes a strain. The right correction makes reading effortless again.":"近距离用眼变得吃力。合适的矫正让阅读重新轻松自如。",
+        "Hover a name to bring it into focus · tap to ask Dr. Chuck":"将光标移到名称上即可对焦 · 点按可咨询 Chuck 医生",
+        "(Correcting cloudiness)":"(矫正浑浊)","See the difference,":"亲眼看看差别，","before you decide.":"再做决定。",
+        "A cataract is the clouding of the lens inside your eye. Early on it feels \"as if you are looking through a dirty window.\" Drag the handle to see how surgery trades that haze for clarity.":"白内障是眼内晶状体变浑浊。早期就像\"透过一扇脏窗户看东西\"。拖动滑块，看看手术如何把这层雾换成清晰。",
+        "← Cataract vision · After surgery →":"← 白内障视觉 · 手术之后 →",
+        "Signs you may notice":"您可能注意到的迹象",
+        "It feels as if you are looking through a dirty window":"感觉像透过一扇脏窗户看东西","Dulled or faded light colors":"颜色变暗或褪色","Increasing difficulty seeing at night":"夜间视物越来越困难","Reading glasses or bifocals no longer help":"老花镜或双光镜不再管用",
+        "Lowering your risk":"降低风险",
+        "A diet rich in antioxidants (vitamin A, carotene)":"富含抗氧化物的饮食（维生素 A、胡萝卜素）","UV-protective glasses and lenses":"具备防紫外线的眼镜和镜片","Quitting smoking, which can double the risk":"戒烟，吸烟会使风险加倍","Regular exams to track changes early":"定期检查，及早发现变化",
+        "(What to expect)":"(就诊须知)","The whole thing takes about fifteen minutes.":"整个过程大约十五分钟。",
+        "Most people are surprised by how calm and quick it is. Here is what your morning looks like, in plain terms.":"大多数人都惊讶于它的平静与快捷。用最简单的话，说说您那天上午的经历。",
+        "No needles":"无需打针","Awake, lightly relaxed":"保持清醒，轻度放松","Outpatient":"门诊手术","Home the same day":"当天回家",
+        "You settle in.":"您安顿下来。","You relax in a reclining chair. A few numbing drops, no needles at all, and a little something to help you unwind.":"您在可倾斜的座椅上放松。滴几滴麻药，完全不用打针，再给一点帮助您放松的镇静。",
+        "A tiny opening.":"一个微小的切口。","Through an incision smaller than three millimeters, the clouded lens is gently softened with sound waves.":"通过小于三毫米的切口，用声波将浑浊的晶状体轻柔地软化。",
+        "The cloud lifts.":"浑浊散去。","Dr. Chuck removes the clouded lens while leaving its delicate, clear membrane in place to cradle the new one.":"Chuck 医生取出浑浊的晶状体，同时保留那层精细透明的囊膜，用以托住新的晶体。",
+        "Clear again.":"重见清晰。","A soft, folded lens slides into the same opening and gently unfolds, becoming your new lens for good.":"一枚柔软折叠的人工晶体从同一切口送入并缓缓展开，成为您永久的新晶体。",
+        "Afterward, recovery is quick. There is usually little more than mild discomfort, you wear a light shield for a day or two, and most people are back to their routine within days, with vision that keeps sharpening over the following weeks.":"术后恢复很快。通常只有轻微不适，戴一两天轻便的眼罩，多数人几天内就能恢复日常，视力还会在随后几周里持续变清晰。",
+        "Ask Dr. Chuck about cataract surgery":"向 Chuck 医生咨询白内障手术",
+        "(Meet your doctor)":"(认识您的医生)","A surgeon's hands,":"外科医生的双手，","a neighbor's care.":"邻里般的关怀。",
+        "An eye surgeon since 1983, Dr. Chuck has performed thousands of cataract and refractive procedures. He trained in ophthalmology at the USC Doheny Eye Institute, where he still serves as a Clinical Instructor, and specializes in small-incision cataract surgery.":"Chuck 医生自 1983 年起从事眼科手术，已完成数千例白内障及屈光手术。他在南加州大学 Doheny 眼科研究所接受眼科训练，至今仍担任临床讲师，专长于微切口白内障手术。",
+        "\"I am proud to be known for exceptional surgical results, but it is also important to me to be known as a surgeon with a caring and personalized approach to patient care.\"":"\"我为以卓越的手术效果著称而自豪，但同样重要的是，我希望被视为一位真诚关怀、用心对待每位患者的医生。\"",
+        "Ophthalmologist & Eye Surgeon":"眼科医生与眼科外科医生",
+        "Education & training":"教育与培训","Undergraduate & M.D., Brown University":"本科与医学博士，布朗大学","Ophthalmology residency, USC Doheny Eye Institute":"眼科住院医师培训，南加大 Doheny 眼科研究所","Clinical Instructor, USC Doheny Eye Institute":"临床讲师，南加大 Doheny 眼科研究所",
+        "Credentials & honors":"资历与荣誉","Board certified, American Academy of Ophthalmology":"美国眼科学会认证","Member, American Society of Cataract & Refractive Surgery":"美国白内障与屈光手术学会会员","Former Chief of Staff, Pomona Valley Hospital Medical Center":"曾任波莫纳谷医院医疗中心医务主任","Recognized in \"Who's Who in America\"":"入选《美国名人录》（Who's Who in America）",
+        "(The people)":"(我们的团队)","A team that knows your name when you walk in.":"一支在您踏进门时就叫得出您名字的团队。","From your first call to your fitting at the optical counter, the same familiar faces look after your whole family's eyes.":"从您的第一通电话，到在配镜柜台试戴，都是同样熟悉的面孔，照顾您全家人的双眼。",
+        "(Good to know)":"(温馨提示)","Questions, answered.":"常见问题解答。","Still wondering about something? Call":"还有疑问？请致电","and we will talk it through.":"，我们一起聊聊。",
+        "Do I actually need cataract surgery?":"我真的需要做白内障手术吗？","When cloudiness begins to limit your daily activities, the recommended treatment is to remove the clouded lens and replace it with a clear implant. There is no proven non-surgical cure, but surgery is elective: Dr. Chuck will examine your eyes and help you decide when, or whether, the time is right.":"当浑浊开始影响您的日常生活时，推荐的治疗是取出浑浊的晶状体并换上透明人工晶体。目前没有经证实的非手术疗法，但手术是可选择的：Chuck 医生会检查您的双眼，帮助您判断何时、或是否适合手术。",
+        "How long does the procedure take?":"手术需要多长时间？","The surgery itself typically takes about 15 minutes. It is an outpatient procedure performed under an operating microscope, with topical anesthesia (no needles) and light IV sedation for your comfort.":"手术本身通常约 15 分钟。这是在手术显微镜下进行的门诊手术，采用表面麻醉（无需打针）并辅以轻度静脉镇静，让您更舒适。",
+        "What is recovery like?":"恢复过程是怎样的？","Most patients feel minimal discomfort. You will wear a light protective shield and use prescribed eye drops, and most people return to normal activities within days. Vision improves soon after surgery and continues to sharpen over several weeks.":"大多数患者只有极轻微的不适。您会佩戴一个轻便的眼罩并使用处方眼药水，多数人几天内即可恢复正常活动。术后视力很快改善，并在数周内持续变清晰。",
+        "Will I still need glasses afterward?":"术后我还需要戴眼镜吗？","The foldable lens implant is selected to correct nearsightedness, farsightedness, astigmatism, or presbyopia, so many patients greatly reduce their dependence on glasses. Dr. Chuck will walk you through the lens options that fit your eyes and your lifestyle.":"可折叠人工晶体会根据矫正近视、远视、散光或老花来选择，因此许多患者能大幅减少对眼镜的依赖。Chuck 医生会为您讲解最适合您眼睛和生活方式的晶体选择。",
+        "What should I bring to my first visit?":"第一次就诊我需要带什么？","Bring your current glasses or contact lenses, a list of any medications you take, and your insurance information. If you have records from a previous eye doctor, those are helpful too.":"请带上您现在的眼镜或隐形眼镜、正在服用的药物清单，以及您的保险信息。如果有以前眼科医生的病历，也很有帮助。",
+        "Do you take my insurance?":"你们接受我的保险吗？","We work with many vision and medical plans. The fastest way to confirm your specific coverage is to call us at (909) 766-2150, and our front desk will check it for you before your appointment.":"我们与许多视力和医疗保险计划合作。确认您具体保障的最快方式是致电 (909) 766-2150，我们的前台会在您就诊前为您核实。",
+        "(Get in touch)":"(联系我们)","A new outlook":"焕然一新的视野","starts here.":"从这里开始。","Call us or send a request and we'll help you find a time. We're happy to talk through exams, eyewear, or cataract surgery.":"致电我们或提交预约申请，我们会帮您安排时间。无论是检查、配镜还是白内障手术，都欢迎与我们详谈。",
+        "Phone":"电话","Email":"邮箱","Visit":"到访","Mon – Fri":"周一至周五","Lunch 12:30 – 1:30":"午休 12:30 – 1:30","Sat / Sun":"周六 / 周日","By request":"需预约","Call to arrange":"致电安排",
+        "Optional":"可选","Rather talk to a person? Just call":"更想和真人沟通？直接致电",". Or send a request and we'll reply your way, usually within one business day.":"。或提交预约申请，我们通常会在一个工作日内按您偏好的方式回复。",
+        "Title":"称谓","Full name":"全名","Reason for visit":"就诊原因","Message (optional)":"留言（可选）","Preferred contact":"首选联系方式",
+        "Mr.":"先生","Mrs.":"女士","Miss":"小姐","Ms.":"女士","Comprehensive eye exam":"全面视力检查","Cataract consultation":"白内障咨询","Glasses or contact lenses":"眼镜或隐形眼镜","Glaucoma / eye health concern":"青光眼／眼睛健康问题","Other":"其他","Mail":"邮寄",
+        "Send request":"提交申请","Sends straight to our front desk. For urgent needs, please call (909) 766-2150.":"信息将直接发送至我们前台。如有紧急需要，请致电 (909) 766-2150。",
+        "Request sent.":"申请已提交。","Thank you. We've received your request and will reach out by your preferred method, usually within one business day. Need us sooner? Call (909) 766-2150.":"谢谢您。我们已收到您的申请，并会按您偏好的方式联系您，通常在一个工作日内。需要更快？请致电 (909) 766-2150。","Send another request":"再提交一条申请",
+        "Let's connect another way.":"换个方式联系吧。","We couldn't send that automatically just now. Email us directly or give us a call, we'd love to help.":"刚才未能自动发送。请直接给我们发邮件或来电，我们很乐意帮助您。","Email us":"给我们发邮件","Back to the form":"返回表单",
+        "Clear vision for every stage of life. Comprehensive eye care, eyewear, and small-incision cataract surgery in Pomona, California.":"清晰视野，伴您人生每一程。在加州波莫纳提供全面眼科护理、眼镜与微切口白内障手术。",
+        "Explore":"导航","Dennis A. Chuck, M.D. · Licensed Ophthalmologist · Pomona, CA":"Dennis A. Chuck, M.D. · 持照眼科医生 · 波莫纳，加州",
+        "(In their words)":"(患者心声)","The doctor the":"连医生都","doctors trust.":"信赖的医生。","Read all reviews":"查看全部评价"
+      }
+    };
+
+    const norm = s => s.replace(/\s+/g, ' ').trim();
+    const SKIP = 'script,style,noscript,.count,.lang-btn,#year,#statusBarTop,#statusHero,#statusFooter,.marquee,[data-no-i18n]';
+    const records = [];
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode(n) {
+        const p = n.parentElement;
+        if (!p || p.closest(SKIP)) return NodeFilter.FILTER_REJECT;
+        return norm(n.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    let n; while ((n = walker.nextNode())) records.push({ node: n, en: n.nodeValue });
+
+    const PH = { name: { es: 'Juana Pérez', zh: '张三' }, message: { es: 'Cuéntenos un poco sobre lo que necesita.', zh: '请简单说明您的需求。' } };
+    function setPh(id, lang) {
+      const el = document.getElementById(id); if (!el) return;
+      if (!el.dataset.phEn) el.dataset.phEn = el.getAttribute('placeholder') || '';
+      el.setAttribute('placeholder', lang === 'en' ? el.dataset.phEn : ((PH[id] && PH[id][lang]) || el.dataset.phEn));
+    }
+
+    function apply(lang) {
+      const map = DICT[lang];
+      records.forEach(r => {
+        if (lang === 'en' || !map) { r.node.nodeValue = r.en; return; }
+        const t = map[norm(r.en)];
+        if (t === undefined) { r.node.nodeValue = r.en; return; }
+        const lead = (r.en.match(/^\s*/) || [''])[0];
+        const trail = (r.en.match(/\s*$/) || [''])[0];
+        r.node.nodeValue = lead + t + trail;
+      });
+      setPh('name', lang); setPh('message', lang);
+      document.documentElement.lang = lang;
+      document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+      try { localStorage.setItem('cvlang', lang); } catch (e) {}
+    }
+    window.cvSetLang = apply;
+    document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => apply(b.dataset.lang)));
+    let saved = 'en'; try { saved = localStorage.getItem('cvlang') || 'en'; } catch (e) {}
+    apply(saved);
+  })();
   </script>
 </body>
 </html>
