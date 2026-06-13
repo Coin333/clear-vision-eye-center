@@ -2,7 +2,7 @@
 
 Marketing website for Clear Vision Eye Center of Pomona, CA, the practice of board-certified ophthalmologist Dennis A. Chuck, M.D.
 
-A single-page, dependency-free site (HTML + Tailwind CDN + Lucide icons). White-and-blue medical theme, scroll-aware navigation, reveal animations, patient education on cataracts, and a working appointment request form (mailto-based, no backend required).
+A static, build-free site (HTML + Tailwind CDN + Lucide icons). Warm "bone" and ink-navy editorial theme with a blue medical accent, scroll-aware navigation, reveal animations, patient education on cataracts, a trilingual toggle (English / Spanish / Chinese), and a working appointment request form (delivered via FormSubmit, no backend required).
 
 ## Run it
 
@@ -19,15 +19,21 @@ python3 -m http.server 8000
 # then visit http://localhost:8000
 ```
 
-## Sections
+## Pages
 
-- Hero — "A new outlook on life"
-- Trust stats (years, procedures, micro-incision, USC Doheny)
-- Services — comprehensive eye care, cataract surgery, optical shop, exams, lens implants, glaucoma
-- About the practice
-- Cataract patient education — symptoms, prevention, the 4-step surgery
-- Meet Dr. Dennis A. Chuck — bio, education, credentials
-- Contact — phone, email, address, hours, embedded map, appointment form
+- `index.html` — home: hero eye-chart, stats, services, conditions, cataract before/after slider, doctor bio, team band, reviews strip, FAQ, contact form
+- `services.html` — in-depth service content (cataract surgery + lens options, comprehensive eye exams, optical shop, lens implants, glaucoma) with a sticky table of contents
+- `reviews.html` — filterable wall of real Google patient reviews, rating summary, featured quotes
+- `staff.html` — team page driven by a Google Sheet (see `STAFF-PAGE-GUIDE.md`); ships with a built-in roster so it's never empty
+- `privacy.html` — privacy policy, including FormSubmit third-party disclosure
+- `accessibility.html` — WCAG 2.1 AA accessibility statement
+
+## Notable features
+
+- Trilingual toggle (EN / ES / 中文) that translates text nodes by dictionary, preserving icons and layout
+- Live open / closed hours badge with an editable holiday-closure list
+- LocalBusiness / Physician JSON-LD structured data for search engines
+- Google-Sheet-backed staff page that the office updates with no code
 
 ## Practice details
 

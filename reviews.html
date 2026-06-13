@@ -4,7 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Patient Reviews | Clear Vision Eye Center · Dr. Dennis A. Chuck, M.D.</title>
-  <meta name="description" content="What patients say about Dr. Dennis A. Chuck, M.D. and Clear Vision Eye Center in Pomona, CA. Real reviews on cataract surgery, eye care, and the team." />
+  <meta name="description" content="What patients say about Dr. Dennis A. Chuck, M.D. and Clear Vision Eye Center in Pomona, CA. Real Google reviews on cataract surgery, eye care, and the team." />
+  <meta name="theme-color" content="#0C1B33" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/favicon.svg" />
+  <link rel="mask-icon" href="assets/favicon.svg" color="#0C1B33" />
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,19 +18,29 @@
   <script>
     tailwind.config = { theme: { extend: {
       fontFamily: { sans: ['Inter','sans-serif'], display: ['Fraunces','serif'], mono: ['JetBrains Mono','monospace'] },
-      colors: { bone:'#FBFAF7', ink:'#0C1B33', brand: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a',950:'#13294b' } },
+      colors: { bone:'#FBFAF7', ink:'#0C1B33', chartred:'#D6453D', brand: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a',950:'#13294b' } },
     } } };
   </script>
   <style>
+    html { scroll-padding-top: 88px; }
     body { -webkit-font-smoothing: antialiased; background-color: #FBFAF7; }
     .grain::after { content:""; position:fixed; inset:0; z-index:70; pointer-events:none; opacity:.035; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
     .no-bar { scrollbar-width: none; -ms-overflow-style: none; }
     .no-bar::-webkit-scrollbar { display: none; }
     .link-underline { background-image: linear-gradient(#2563eb,#2563eb); background-size: 0% 1.5px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .35s cubic-bezier(.16,1,.3,1); }
     .link-underline:hover { background-size: 100% 1.5px; }
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .chip { transition: background-color .2s ease, color .2s ease, border-color .2s ease; cursor: pointer; }
+    .chip.active { background:#0C1B33; color:#FBFAF7; border-color:#0C1B33; }
+    .rev { transition: opacity .4s ease, transform .4s ease; }
+    .rev.hide { display: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity:1; transform:none; transition:none; } }
   </style>
 </head>
-<body class="grain font-sans text-ink bg-bone">
+<body class="grain font-sans text-ink bg-bone selection:bg-brand-200 selection:text-brand-900">
+
+  <a href="#wall" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[90] focus:px-4 focus:py-2 focus:bg-brand-600 focus:text-white focus:rounded-lg focus:font-semibold">Skip to reviews</a>
 
   <!-- Nav -->
   <nav class="sticky top-0 z-50 backdrop-blur-md bg-bone/85 border-b border-ink/10">
@@ -49,136 +63,187 @@
   </nav>
 
   <main>
-    <!-- Header -->
-    <section class="py-16 md:py-24 border-b border-ink/10">
-      <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <p class="font-mono text-xs tracking-[.2em] uppercase text-ink/50">(Patient reviews)</p>
-        <h1 class="font-display text-5xl md:text-7xl tracking-tight text-ink mt-5 leading-[1.02]" style="font-weight:600">The doctor the<br />doctors trust.</h1>
-        <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-4">
-          <div class="flex items-center gap-3">
-            <div class="flex gap-0.5 text-brand-500" aria-hidden="true">
-              <i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i>
+    <!-- HERO: editorial, rating + a single defining quote -->
+    <section class="relative overflow-hidden border-b border-ink/10">
+      <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,#ffffff_0%,#FBFAF7_60%,#F1F0EB_100%)]"></div>
+      <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16 md:py-24">
+        <div class="grid lg:grid-cols-[1fr_1.15fr] gap-12 lg:gap-20 items-center">
+          <div>
+            <p class="font-mono text-xs tracking-[.2em] uppercase text-ink/50">(Patient reviews)</p>
+            <h1 class="font-display text-5xl md:text-7xl tracking-tight text-ink mt-5 leading-[1.02]" style="font-weight:600">In their<br />own words.</h1>
+            <p class="mt-6 text-lg text-ink/70 leading-relaxed max-w-md">Four decades of Pomona families have trusted their eyes to Dr. Chuck. Here is what they tell their friends, and their own doctors.</p>
+
+            <div class="mt-9 inline-flex items-stretch rounded-2xl border border-ink/10 bg-white overflow-hidden shadow-[0_30px_60px_-35px_rgba(12,27,51,.4)]">
+              <div class="px-6 py-5 text-center">
+                <p class="font-display text-5xl text-ink leading-none" style="font-weight:600">4.2</p>
+                <div class="flex gap-0.5 text-brand-500 mt-2 justify-center" aria-hidden="true">
+                  <i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star-half" class="w-4 h-4 fill-current"></i>
+                </div>
+                <p class="font-mono text-[10px] tracking-wide uppercase text-ink/45 mt-2">out of 5</p>
+              </div>
+              <div class="px-6 py-5 border-l border-ink/10 flex flex-col justify-center">
+                <p class="font-mono text-sm text-ink/55">Based on <span class="text-ink font-semibold">41 Google reviews</span></p>
+                <a href="https://www.google.com/search?q=Dr.+Dennis+A.+Chuck+MD+Pomona+reviews" target="_blank" rel="noopener" class="mt-1.5 inline-flex items-center gap-1.5 font-semibold text-brand-700 link-underline text-sm">Read them on Google <i data-lucide="external-link" class="w-3.5 h-3.5"></i></a>
+              </div>
             </div>
-            <p class="font-display text-2xl text-ink" style="font-weight:600">4.2<span class="text-ink/40 text-lg"> / 5</span></p>
           </div>
-          <p class="font-mono text-sm text-ink/55">41 Google reviews · Ophthalmologist in Pomona, CA</p>
-          <a href="https://www.google.com/search?q=Dr.+Dennis+A.+Chuck+MD+Pomona+reviews" target="_blank" rel="noopener" class="inline-flex items-center gap-2 font-semibold text-brand-700 link-underline">See them on Google <i data-lucide="external-link" class="w-4 h-4"></i></a>
+
+          <!-- Defining quote -->
+          <figure class="reveal relative">
+            <div class="absolute -top-6 -left-2 font-display text-[9rem] leading-none text-brand-200 select-none" aria-hidden="true">&ldquo;</div>
+            <blockquote class="relative bg-ink text-bone rounded-[24px] p-8 md:p-12 shadow-2xl">
+              <div class="flex gap-0.5 text-brand-300 mb-6" aria-label="5 out of 5 stars">
+                <i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i><i data-lucide="star" class="w-5 h-5 fill-current"></i>
+              </div>
+              <p class="font-display text-2xl md:text-4xl leading-[1.15]" style="font-weight:500">He's the doctor the doctors trust. You should too.</p>
+              <p class="mt-6 text-bone/70 leading-relaxed">Misdiagnosed by two other doctors, I was sent to Dr. Chuck by a radiologist friend. He saw the problem immediately, and I was well within a week. Several of my physician friends see him too.</p>
+              <figcaption class="mt-7 flex items-center gap-3">
+                <span class="grid place-items-center w-10 h-10 rounded-full bg-brand-500/20 text-brand-200 font-display text-lg" style="font-weight:600">N</span>
+                <span>
+                  <span class="block font-mono text-xs tracking-wide uppercase text-bone/80">Nora Quinn</span>
+                  <span class="block font-mono text-[10px] tracking-wide uppercase text-bone/40">Google Local Guide</span>
+                </span>
+              </figcaption>
+            </blockquote>
+          </figure>
         </div>
       </div>
     </section>
 
-    <!-- Featured scroll -->
-    <section class="py-12 md:py-16 overflow-hidden">
-      <div class="max-w-7xl mx-auto px-6 lg:px-8 mb-8 flex items-end justify-between">
-        <h2 class="font-mono text-xs tracking-[.2em] uppercase text-ink/50">Featured stories</h2>
-        <span class="hidden sm:inline-flex items-center gap-2 font-mono text-[11px] text-ink/40"><i data-lucide="move-horizontal" class="w-4 h-4"></i> scroll</span>
-      </div>
-      <div class="no-bar flex gap-5 overflow-x-auto px-6 lg:px-8 pb-4 snap-x snap-mandatory">
-        <article class="snap-start shrink-0 w-[88%] sm:w-[480px] bg-ink text-bone rounded-2xl p-8">
-          <div class="flex gap-0.5 text-brand-300 mb-5"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-          <p class="font-display text-2xl md:text-3xl leading-snug" style="font-weight:500">"He's the doctor the doctors trust. You should too."</p>
-          <p class="mt-5 text-bone/70 leading-relaxed">I had been misdiagnosed by two other doctors. A friend who is a radiologist suggested I see Dr. Dennis. He immediately saw the problem and prescribed the right medication. I was well in less than a week. Several of my physician friends see him too.</p>
-          <p class="mt-6 font-mono text-xs tracking-wide uppercase text-brand-200">Nora Quinn · Local Guide · 12 years ago</p>
-        </article>
-        <article class="snap-start shrink-0 w-[88%] sm:w-[480px] bg-white border border-ink/10 rounded-2xl p-8 shadow-sm">
-          <div class="flex gap-0.5 text-brand-500 mb-5"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-          <p class="font-display text-2xl md:text-3xl text-ink leading-snug" style="font-weight:500">"I was not expecting much, but got a miracle."</p>
-          <p class="mt-5 text-ink/65 leading-relaxed">I had degeneration of the left eye and a cataract in the right. We came through surgery with flying colors, lenses for both eyes, and now I have 20/20 vision. The procedure was easy going, as were all the office visits. Thank you, Dr. Chuck.</p>
-          <p class="mt-6 font-mono text-xs tracking-wide uppercase text-ink/45">Rita · 10 months ago</p>
-        </article>
-        <article class="snap-start shrink-0 w-[88%] sm:w-[480px] bg-white border border-ink/10 rounded-2xl p-8 shadow-sm">
-          <div class="flex gap-0.5 text-brand-500 mb-5"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-          <p class="font-display text-2xl md:text-3xl text-ink leading-snug" style="font-weight:500">"At 73 I can still see and read without glasses."</p>
-          <p class="mt-5 text-ink/65 leading-relaxed">Dr. Chuck is the best eye specialist in my opinion. He did my cataract surgery years ago, and as a person who can't even open their eyes in water, I trust him with my eyes. Blessed to have Dr. Chuck all these years.</p>
-          <p class="mt-6 font-mono text-xs tracking-wide uppercase text-ink/45">Rosa Riley · 4 years ago</p>
-        </article>
-        <article class="snap-start shrink-0 w-[88%] sm:w-[480px] bg-white border border-ink/10 rounded-2xl p-8 shadow-sm">
-          <div class="flex gap-0.5 text-brand-500 mb-5"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div>
-          <p class="font-display text-2xl md:text-3xl text-ink leading-snug" style="font-weight:500">"God bless doctors like him who really care."</p>
-          <p class="mt-5 text-ink/65 leading-relaxed">Dr. Chuck did my left eye for cataracts and I can't wait for the right one next. He is one of the best doctors I have ever been to. Very nice, made me feel relaxed about the surgery, and gave me all the information I wanted. His staff is very sweet and caring.</p>
-          <p class="mt-6 font-mono text-xs tracking-wide uppercase text-ink/45">Char Asfar · 1 year ago</p>
-        </article>
+    <!-- WHAT PATIENTS MENTION MOST (honest, derived from the reviews themselves) -->
+    <section class="py-12 md:py-16 border-b border-ink/10 bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-ink/50 mb-8">What patients mention most</p>
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-px bg-ink/10 rounded-2xl overflow-hidden border border-ink/10">
+          <div class="reveal bg-bone p-6">
+            <p class="font-display text-4xl text-ink" style="font-weight:600">40<span class="text-brand-600">+</span></p>
+            <p class="mt-2 text-sm text-ink/60 leading-snug">Years patients have followed him, some for three decades</p>
+          </div>
+          <div class="reveal bg-bone p-6">
+            <p class="font-display text-4xl text-ink" style="font-weight:600">20/20</p>
+            <p class="mt-2 text-sm text-ink/60 leading-snug">The result patients describe after cataract surgery</p>
+          </div>
+          <div class="reveal bg-bone p-6">
+            <p class="font-display text-4xl text-ink" style="font-weight:600">"Caring"</p>
+            <p class="mt-2 text-sm text-ink/60 leading-snug">The word that shows up again and again, about him and his staff</p>
+          </div>
+          <div class="reveal bg-bone p-6">
+            <p class="font-display text-4xl text-ink" style="font-weight:600">Doctors</p>
+            <p class="mt-2 text-sm text-ink/60 leading-snug">Other physicians are among his most loyal patients</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- All reviews wall -->
-    <section class="py-12 md:py-20 border-t border-ink/10">
+    <!-- THE WALL: filterable -->
+    <section id="wall" class="py-14 md:py-20">
       <div class="max-w-7xl mx-auto px-6 lg:px-8">
-        <h2 class="font-mono text-xs tracking-[.2em] uppercase text-ink/50 mb-8">Every review</h2>
-        <div class="columns-1 sm:columns-2 lg:columns-3 gap-5 [column-fill:balance]">
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-9">
+          <div>
+            <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-ink/50">(Every review)</p>
+            <h2 class="reveal font-display text-3xl md:text-5xl tracking-tight text-ink mt-4 leading-[1.05]" style="font-weight:600">Read every story.</h2>
+          </div>
+          <!-- Filter chips -->
+          <div class="reveal flex flex-wrap gap-2.5" role="group" aria-label="Filter reviews">
+            <button class="chip active px-4 py-2 rounded-full border border-ink/20 font-mono text-[12px] tracking-wide uppercase text-ink/70" data-filter="all">All <span class="text-ink/40">(10)</span></button>
+            <button class="chip px-4 py-2 rounded-full border border-ink/20 font-mono text-[12px] tracking-wide uppercase text-ink/70" data-filter="surgery">Cataract surgery</button>
+            <button class="chip px-4 py-2 rounded-full border border-ink/20 font-mono text-[12px] tracking-wide uppercase text-ink/70" data-filter="team">The team</button>
+            <button class="chip px-4 py-2 rounded-full border border-ink/20 font-mono text-[12px] tracking-wide uppercase text-ink/70" data-filter="trust">Years of trust</button>
+          </div>
+        </div>
 
-          <article class="break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="font-mono text-[10px] uppercase tracking-wide text-ink/35">12 yrs ago</span></div>
+        <div id="wallGrid" class="columns-1 sm:columns-2 lg:columns-3 gap-5">
+
+          <article class="rev break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm" data-theme="trust">
+            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wide text-ink/35"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-brand-500"></i> Google</span></div>
             <p class="font-display text-lg text-ink mb-2" style="font-weight:500">Extremely competent and efficient.</p>
             <p class="text-ink/65 text-sm leading-relaxed">I have been going here for years. The first time, I had been misdiagnosed by two other doctors. A radiologist friend suggested Dr. Dennis. He immediately saw the problem and prescribed the right medication, and I was well in less than a week. Several of my physician friends see him too. He's the doctor the doctors trust. You should too.</p>
             <p class="mt-4 font-mono text-xs uppercase tracking-wide text-ink/45">Nora Quinn · Local Guide</p>
           </article>
 
-          <article class="break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="font-mono text-[10px] uppercase tracking-wide text-ink/35">10 mo ago</span></div>
-            <p class="text-ink/65 text-sm leading-relaxed">I highly recommend Dr. Dennis Chuck. I went in looking for help with poor eyesight and glasses that were not helping. I was not expecting much, but got a miracle. I had degeneration of the left eye and a cataract in the right. We came through surgery with flying colors, lenses for both eyes, and now have 20/20 vision. He is smooth, caring and up front. There is parking, and the ladies in the office are always helpful and polite. Thank You Dr. Chuck.</p>
+          <article class="rev break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm" data-theme="surgery">
+            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wide text-ink/35"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-brand-500"></i> Google</span></div>
+            <p class="font-display text-lg text-ink mb-2" style="font-weight:500">I was not expecting much, but got a miracle.</p>
+            <p class="text-ink/65 text-sm leading-relaxed">I went in looking for help with poor eyesight and glasses that were not helping. I had degeneration of the left eye and a cataract in the right. We came through surgery with flying colors, lenses for both eyes, and now have 20/20 vision. He is smooth, caring and up front. The ladies in the office are always helpful and polite. Thank you, Dr. Chuck.</p>
             <p class="mt-4 font-mono text-xs uppercase tracking-wide text-ink/45">Rita</p>
           </article>
 
-          <article class="break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="font-mono text-[10px] uppercase tracking-wide text-ink/35">5 yrs ago</span></div>
-            <p class="text-ink/65 text-sm leading-relaxed">Dr. Dennis Chuck is the best eye specialist in my opinion. He did my cataract surgery years ago, and as a person who can't even open their eyes in water, I trust him to take care of my eyes. At the age of 73 I can still see and read without glasses. I look forward to my yearly eye exam for my diabetes. Blessed to have Dr. Chuck all these years.</p>
+          <article class="rev break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm" data-theme="surgery trust">
+            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wide text-ink/35"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-brand-500"></i> Google</span></div>
+            <p class="font-display text-lg text-ink mb-2" style="font-weight:500">At 73 I can still see and read without glasses.</p>
+            <p class="text-ink/65 text-sm leading-relaxed">Dr. Dennis Chuck is the best eye specialist in my opinion. He did my cataract surgery years ago, and as a person who can't even open their eyes in water, I trust him to take care of my eyes. I look forward to my yearly eye exam for my diabetes. Blessed to have Dr. Chuck all these years.</p>
             <p class="mt-4 font-mono text-xs uppercase tracking-wide text-ink/45">Rosa Riley</p>
           </article>
 
-          <article class="break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="font-mono text-[10px] uppercase tracking-wide text-ink/35">10 mo ago</span></div>
+          <article class="rev break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm" data-theme="surgery">
+            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wide text-ink/35"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-brand-500"></i> Google</span></div>
+            <p class="font-display text-lg text-ink mb-2" style="font-weight:500">He explained exactly what was involved.</p>
             <p class="text-ink/65 text-sm leading-relaxed">Dr. Chuck did cataract surgery on both of my eyes. He is very professional. He explained exactly what was involved and what options were available to me, at what cost and with what likely outcomes. I was very pleased with the results and would highly recommend him to anyone considering cataract surgery.</p>
             <p class="mt-4 font-mono text-xs uppercase tracking-wide text-ink/45">Allen Easley</p>
           </article>
 
-          <article class="break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="font-mono text-[10px] uppercase tracking-wide text-ink/35">5 yrs ago</span></div>
-            <p class="text-ink/65 text-sm leading-relaxed">I have known Dr. Chuck for 30-plus years and I can testify that his knowledge and professionalism are OUTSTANDING. His staff members are courteous and professional. I started seeing him for regular eye checkups due to diabetes, and he has closely followed the health of my eyes throughout the years. I have undergone two cataract surgeries with Dr. Chuck, each with excellent results.</p>
+          <!-- interstitial pull-quote -->
+          <article class="rev break-inside-avoid mb-5 rounded-2xl p-7 bg-brand-600 text-white" data-theme="trust team">
+            <i data-lucide="quote" class="w-7 h-7 text-brand-200 mb-3"></i>
+            <p class="font-display text-2xl leading-snug" style="font-weight:500">"God bless doctors like him who really care about their patients, and not the money."</p>
+            <p class="mt-5 font-mono text-xs uppercase tracking-wide text-brand-100">Char Asfar</p>
+          </article>
+
+          <article class="rev break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm" data-theme="trust surgery">
+            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wide text-ink/35"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-brand-500"></i> Google</span></div>
+            <p class="font-display text-lg text-ink mb-2" style="font-weight:500">His knowledge and professionalism are outstanding.</p>
+            <p class="text-ink/65 text-sm leading-relaxed">I have known Dr. Chuck for 30-plus years and can testify that his knowledge and professionalism are OUTSTANDING. His staff members are courteous and professional. I started seeing him for regular checkups due to diabetes, and he has closely followed the health of my eyes throughout the years. I have undergone two cataract surgeries with him, each with excellent results.</p>
             <p class="mt-4 font-mono text-xs uppercase tracking-wide text-ink/45">Edward Arismendi</p>
           </article>
 
-          <article class="break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="font-mono text-[10px] uppercase tracking-wide text-ink/35">1 yr ago</span></div>
-            <p class="text-ink/65 text-sm leading-relaxed">Dr. Chuck did my left eye for cataracts. Can't wait for my right eye next. He is one of the best doctors I have ever been to. Very nice, made me feel relaxed about the surgery and gave me all the information I wanted. His staff is very sweet and caring. God bless doctors like him who really care about their patients and not the money.</p>
+          <article class="rev break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm" data-theme="surgery team">
+            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wide text-ink/35"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-brand-500"></i> Google</span></div>
+            <p class="font-display text-lg text-ink mb-2" style="font-weight:500">He made me feel relaxed about the surgery.</p>
+            <p class="text-ink/65 text-sm leading-relaxed">Dr. Chuck did my left eye for cataracts and I can't wait for the right one next. He is one of the best doctors I have ever been to. Very nice, made me feel relaxed about the surgery and gave me all the information I wanted. His staff is very sweet and caring.</p>
             <p class="mt-4 font-mono text-xs uppercase tracking-wide text-ink/45">Char Asfar</p>
           </article>
 
-          <article class="break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="font-mono text-[10px] uppercase tracking-wide text-ink/35">10 mo ago</span></div>
+          <article class="rev break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm" data-theme="surgery">
+            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wide text-ink/35"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-brand-500"></i> Google</span></div>
+            <p class="font-display text-lg text-ink mb-2" style="font-weight:500">Professional and thorough.</p>
             <p class="text-ink/65 text-sm leading-relaxed">Had a great experience with Dr. Dennis Chuck. He is professional and thorough. He did my cataract surgery. I would highly recommend Dr. Chuck.</p>
             <p class="mt-4 font-mono text-xs uppercase tracking-wide text-ink/45">Teresa Roarick</p>
           </article>
 
-          <article class="break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="font-mono text-[10px] uppercase tracking-wide text-ink/35">5 yrs ago</span></div>
-            <p class="text-ink/65 text-sm leading-relaxed">Dr. Chuck did my LASIK surgery 20 years ago and is now treating my husband. We trust him implicitly. He is very good and his staff is very helpful and friendly.</p>
+          <article class="rev break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm" data-theme="trust team">
+            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wide text-ink/35"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-brand-500"></i> Google</span></div>
+            <p class="font-display text-lg text-ink mb-2" style="font-weight:500">We trust him implicitly.</p>
+            <p class="text-ink/65 text-sm leading-relaxed">Dr. Chuck treated my eyes 20 years ago and is now treating my husband. We trust him implicitly. He is very good and his staff is very helpful and friendly.</p>
             <p class="mt-4 font-mono text-xs uppercase tracking-wide text-ink/45">Diana Butcher</p>
           </article>
 
-          <article class="break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm">
-            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="font-mono text-[10px] uppercase tracking-wide text-ink/35">1 yr ago</span></div>
+          <article class="rev break-inside-avoid mb-5 bg-white border border-ink/10 rounded-2xl p-6 shadow-sm" data-theme="team trust">
+            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wide text-ink/35"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-brand-500"></i> Google</span></div>
+            <p class="font-display text-lg text-ink mb-2" style="font-weight:500">Very happy with him and his staff.</p>
             <p class="text-ink/65 text-sm leading-relaxed">I've been seeing Dr. Chuck for years and am very happy with him and his staff. Parking is easy too!</p>
             <p class="mt-4 font-mono text-xs uppercase tracking-wide text-ink/45">Tamara Fair</p>
           </article>
 
-          <article class="break-inside-avoid mb-5 bg-brand-50 border border-brand-100 rounded-2xl p-6">
-            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-500"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div></div>
-            <p class="font-display text-2xl text-ink" style="font-weight:600">"The best!!!!"</p>
-            <p class="mt-4 font-mono text-xs uppercase tracking-wide text-ink/45">Cristobal Cardenas</p>
+          <article class="rev break-inside-avoid mb-5 bg-ink text-bone rounded-2xl p-6" data-theme="trust">
+            <div class="flex items-center justify-between mb-3"><div class="flex gap-0.5 text-brand-300"><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i><i data-lucide="star" class="w-4 h-4 fill-current"></i></div><span class="inline-flex items-center gap-1.5 font-mono text-[10px] uppercase tracking-wide text-bone/35"><i data-lucide="badge-check" class="w-3.5 h-3.5 text-brand-300"></i> Google</span></div>
+            <p class="font-display text-3xl text-bone" style="font-weight:600">"The best!!!!"</p>
+            <p class="mt-4 font-mono text-xs uppercase tracking-wide text-bone/45">Cristobal Cardenas</p>
           </article>
 
         </div>
+
+        <p id="noneMsg" class="hidden text-center text-ink/50 py-14 font-mono text-sm">No reviews in this category yet.</p>
       </div>
     </section>
 
     <!-- CTA -->
-    <section class="py-16 md:py-24 border-t border-ink/10">
+    <section class="py-16 md:py-24 border-t border-ink/10 bg-white">
       <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-        <h2 class="font-display text-3xl md:text-5xl tracking-tight text-ink" style="font-weight:600">Ready for your own clear-vision story?</h2>
-        <p class="mt-4 text-ink/65 max-w-xl mx-auto">Call us or request a visit, and Dr. Chuck will take good care of you.</p>
-        <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-          <a href="tel:+19097662150" class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-7 py-3.5 rounded-full transition-colors"><i data-lucide="phone" class="w-4 h-4"></i> (909) 766-2150</a>
+        <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-ink/50">(Your turn)</p>
+        <h2 class="reveal font-display text-3xl md:text-5xl tracking-tight text-ink mt-4" style="font-weight:600">Ready for your own clear-vision story?</h2>
+        <p class="reveal mt-4 text-ink/65 max-w-xl mx-auto">Call us or request a visit, and Dr. Chuck will take good care of you, the same way he has for Pomona since 1983.</p>
+        <div class="reveal mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+          <a href="tel:+19096221188" class="inline-flex items-center justify-center gap-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold px-7 py-3.5 rounded-full transition-colors"><i data-lucide="phone" class="w-4 h-4"></i> (909) 622-1188</a>
           <a href="index.html#contact" class="inline-flex items-center justify-center gap-2 border border-ink/20 hover:border-ink text-ink font-semibold px-7 py-3.5 rounded-full transition-colors">Request an appointment</a>
         </div>
       </div>
@@ -186,17 +251,48 @@
   </main>
 
   <footer class="bg-ink text-bone">
-    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
-      <a href="index.html" class="flex items-center gap-3">
-        <svg viewBox="0 0 48 28" class="w-9 h-5 text-brand-400" aria-hidden="true"><path d="M2 14 Q24 1 46 14 Q24 27 2 14 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="24" cy="14" r="6.5" fill="currentColor"/><circle cx="26.4" cy="11.6" r="2" fill="#0C1B33"/></svg>
-        <span class="font-display text-lg" style="font-weight:600">Clear Vision Eye Center</span>
-      </a>
-      <p class="font-mono text-xs text-bone/50">1774 Alameda St, Pomona, CA 91768 · (909) 766-2150</p>
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-12">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm">
+        <a href="index.html" class="flex items-center gap-3">
+          <svg viewBox="0 0 48 28" class="w-9 h-5 text-brand-400" aria-hidden="true"><path d="M2 14 Q24 1 46 14 Q24 27 2 14 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><circle cx="24" cy="14" r="6.5" fill="currentColor"/><circle cx="26.4" cy="11.6" r="2" fill="#0C1B33"/></svg>
+          <span class="font-display text-lg" style="font-weight:600">Clear Vision Eye Center</span>
+        </a>
+        <p class="font-mono text-xs text-bone/50">1774 Alameda St, Pomona, CA 91768 · (909) 622-1188</p>
+      </div>
+      <div class="mt-8 pt-6 border-t border-white/10 flex flex-wrap items-center justify-center sm:justify-start gap-x-5 gap-y-2 text-xs font-mono text-bone/45">
+        <a href="privacy.html" class="hover:text-white link-underline">Privacy Policy</a>
+        <a href="accessibility.html" class="hover:text-white link-underline">Accessibility</a>
+        <span class="text-bone/25">·</span>
+        <span>Reviews shown are real patient comments from Google.</span>
+      </div>
     </div>
   </footer>
 
   <script>
     lucide.createIcons();
+
+    // Reveal
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Filter chips
+    const chips = document.querySelectorAll('.chip');
+    const cards = Array.from(document.querySelectorAll('.rev'));
+    const noneMsg = document.getElementById('noneMsg');
+    chips.forEach(chip => chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      chip.classList.add('active');
+      const f = chip.dataset.filter;
+      let shown = 0;
+      cards.forEach(card => {
+        const match = f === 'all' || (card.dataset.theme || '').split(' ').includes(f);
+        card.classList.toggle('hide', !match);
+        if (match) shown++;
+      });
+      noneMsg.classList.toggle('hidden', shown !== 0);
+    }));
   </script>
 </body>
 </html>

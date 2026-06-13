@@ -1,0 +1,5 @@
+Name,Role,Bio,Photo,Order,Show
+"Dennis A. Chuck, M.D.","Ophthalmologist & Eye Surgeon","An eye surgeon since 1983, board certified, and a Clinical Instructor at the USC Doheny Eye Institute.",assets/dr-chuck.jpg,1,TRUE
+"Jane Doe","Office Manager","Keeps the practice running and is happy to help with scheduling and insurance questions.",,2,TRUE
+"John Smith","Licensed Optician","Helps you find frames and lenses that fit your prescription and your day.",,3,TRUE
+"Maria Garcia","Ophthalmic Technician","Guides you through testing and assists Dr. Chuck during procedures.",,4,TRUE

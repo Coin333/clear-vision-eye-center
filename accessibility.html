@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accessibility Statement | Clear Vision Eye Center · Pomona, CA</title>
+  <meta name="description" content="Clear Vision Eye Center is committed to digital accessibility for all patients, including those with disabilities, following WCAG 2.1 AA guidelines." />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#0C1B33" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/favicon.svg" />
+  <link rel="mask-icon" href="assets/favicon.svg" color="#0C1B33" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js" crossorigin="anonymous"></script>
+  <script>
+    tailwind.config = { theme: { extend: {
+      fontFamily: { sans: ['Inter','sans-serif'], display: ['Fraunces','serif'], mono: ['JetBrains Mono','monospace'] },
+      colors: { bone:'#FBFAF7', ink:'#0C1B33', brand: { 50:'#eff6ff',100:'#dbeafe',200:'#bfdbfe',300:'#93c5fd',400:'#60a5fa',500:'#3b82f6',600:'#2563eb',700:'#1d4ed8',800:'#1e40af',900:'#1e3a8a',950:'#13294b' } },
+    } } };
+  </script>
+  <style>
+    html { scroll-padding-top: 88px; }
+    body { -webkit-font-smoothing: antialiased; background-color: #FBFAF7; }
+    .grain::after { content:""; position:fixed; inset:0; z-index:70; pointer-events:none; opacity:.035; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    .link-underline { background-image: linear-gradient(#2563eb,#2563eb); background-size: 0% 1.5px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .35s cubic-bezier(.16,1,.3,1); }
+    .link-underline:hover { background-size: 100% 1.5px; }
+    .doc h2 { font-family:'Fraunces',serif; font-weight:600; color:#0C1B33; font-size:1.6rem; line-height:1.2; margin-top:2.75rem; }
+    .doc p, .doc li { color:rgba(12,27,51,.72); line-height:1.75; }
+    .doc p { margin-top:1rem; }
+    .doc ul { margin-top:1rem; list-style:disc; padding-left:1.25rem; }
+    .doc li { margin-top:.5rem; }
+    .doc a { color:#1d4ed8; }
+  </style>
+</head>
+<body class="grain font-sans text-ink bg-bone selection:bg-brand-200 selection:text-brand-900">
+
+  <nav class="sticky top-0 z-50 backdrop-blur-md bg-bone/85 border-b border-ink/10">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 h-[68px] flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3 text-ink">
+        <svg viewBox="0 0 48 28" class="w-10 h-6 text-brand-600" aria-hidden="true">
+          <path d="M2 14 Q24 1 46 14 Q24 27 2 14 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          <circle cx="24" cy="14" r="6.5" fill="currentColor"/><circle cx="26.4" cy="11.6" r="2" fill="#FBFAF7"/>
+        </svg>
+        <span class="leading-tight">
+          <span class="block font-display text-[17px] tracking-tight" style="font-weight:600">Clear Vision Eye Center</span>
+          <span class="block text-[10px] font-mono tracking-[.18em] text-brand-700 uppercase">Dennis A. Chuck, M.D.</span>
+        </span>
+      </a>
+      <a href="index.html" class="inline-flex items-center gap-2 text-ink/70 hover:text-ink link-underline text-[15px]"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to site</a>
+    </div>
+  </nav>
+
+  <main class="max-w-3xl mx-auto px-6 lg:px-8 py-16 md:py-24">
+    <p class="font-mono text-xs tracking-[.2em] uppercase text-ink/50">(Our commitment)</p>
+    <h1 class="font-display text-4xl md:text-6xl tracking-tight text-ink mt-5 leading-[1.04]" style="font-weight:600">Accessibility Statement</h1>
+    <p class="mt-5 font-mono text-sm text-ink/50">Last updated June 12, 2026</p>
+
+    <div class="doc mt-8">
+      <p>Caring for sight is our life's work, so making this website usable for people with disabilities, including those who themselves have low vision, matters deeply to us. Clear Vision Eye Center is committed to ensuring that pomonaeyedoctor.com is accessible to the widest possible audience, regardless of ability or technology.</p>
+
+      <h2>Our standard</h2>
+      <p>We aim to conform to the Web Content Accessibility Guidelines (WCAG) 2.1, Level AA, published by the World Wide Web Consortium (W3C). These guidelines explain how to make web content more accessible for people with a wide range of disabilities, including visual, auditory, physical, speech, cognitive, and neurological conditions.</p>
+
+      <h2>What we have built in</h2>
+      <ul>
+        <li>Semantic, structured HTML with clear heading levels and landmark regions.</li>
+        <li>A "Skip to content" link for keyboard and screen-reader users.</li>
+        <li>Visible keyboard focus states on links, buttons, and form fields.</li>
+        <li>Text alternatives (alt text) for meaningful images, and decorative graphics hidden from assistive technology.</li>
+        <li>Color combinations chosen to meet AA contrast ratios for text and interface elements.</li>
+        <li>Form fields with associated labels and clear, spoken error messages.</li>
+        <li>Respect for the "reduce motion" setting, which turns off non-essential animation.</li>
+        <li>Responsive layouts that work with zoom and on small screens without loss of content.</li>
+        <li>Content available in English, Spanish, and Chinese.</li>
+      </ul>
+
+      <h2>Ongoing effort</h2>
+      <p>Accessibility is a continual process, not a one-time task. We review the site as we make changes and work to fix issues as we find them. Some third-party content embedded here, such as the Google Maps frame, is outside our direct control, and we encourage those providers to maintain their own accessibility.</p>
+
+      <h2>Need help, or found a barrier?</h2>
+      <p>If you have trouble accessing any part of this website, or if you need information from this site in a different format, please tell us. We will do our best to provide what you need and to fix the problem. You can also complete any task on this site by simply calling our office, and a member of our team will gladly assist you.</p>
+      <p>
+        Clear Vision Eye Center<br />
+        1774 Alameda St, Pomona, CA 91768<br />
+        Phone: <a href="tel:+19096221188">(909) 622-1188</a><br />
+        Email: <a href="mailto:ask.doctorchuck@gmail.com">ask.doctorchuck@gmail.com</a>
+      </p>
+      <p>When you contact us, please describe the page, the problem you ran into, and the device or assistive technology you were using, so we can help as quickly as possible.</p>
+    </div>
+
+    <div class="mt-14 pt-8 border-t border-ink/10 flex flex-wrap gap-x-6 gap-y-2 text-sm font-mono">
+      <a href="index.html" class="text-brand-700 link-underline">Home</a>
+      <a href="privacy.html" class="text-brand-700 link-underline">Privacy Policy</a>
+      <a href="index.html#contact" class="text-brand-700 link-underline">Contact</a>
+    </div>
+  </main>
+
+  <footer class="bg-ink text-bone">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8 py-10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-bone/50">
+      <p>© 2026 Clear Vision Eye Center · Dennis A. Chuck, M.D.</p>
+      <p>1774 Alameda St, Pomona, CA 91768 · (909) 622-1188</p>
+    </div>
+  </footer>
+
+  <script>lucide.createIcons();</script>
+</body>
+</html>
