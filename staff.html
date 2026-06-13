@@ -69,19 +69,19 @@
   <!-- Nav -->
   <nav class="sticky top-0 z-50 backdrop-blur-md bg-bone/85 border-b border-ink/10">
     <div class="max-w-7xl mx-auto px-6 lg:px-8 h-[68px] flex items-center justify-between">
-      <a href="index.html" class="flex items-center gap-3 text-ink">
+      <a href="index.html" aria-label="Clear Vision Eye Center, home" class="flex items-center gap-3 text-ink">
         <svg viewBox="0 0 48 28" class="w-10 h-6 text-brand-600" aria-hidden="true">
           <path d="M2 14 Q24 1 46 14 Q24 27 2 14 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
           <circle cx="24" cy="14" r="6.5" fill="currentColor"/><circle cx="26.4" cy="11.6" r="2" fill="#FBFAF7"/>
         </svg>
-        <span class="leading-tight">
+        <span class="hidden sm:block leading-tight">
           <span class="block font-display text-[17px] tracking-tight" style="font-weight:600">Clear Vision Eye Center</span>
           <span class="block text-[10px] font-mono tracking-[.18em] text-brand-700 uppercase">Dennis A. Chuck, M.D.</span>
         </span>
       </a>
       <div class="flex items-center gap-4">
-        <a href="index.html" class="hidden sm:inline-flex items-center gap-2 text-ink/70 hover:text-ink link-underline text-[15px]"><i data-lucide="arrow-left" class="w-4 h-4"></i> Back to site</a>
-        <a href="index.html#contact" class="inline-flex items-center gap-2 bg-ink hover:bg-brand-700 text-bone text-[14px] font-semibold px-5 py-2.5 rounded-full transition-colors">Book a visit</a>
+        <a href="index.html" aria-label="Back to site" class="inline-flex items-center gap-2 text-ink/70 hover:text-ink link-underline text-[15px]"><i data-lucide="arrow-left" class="w-4 h-4"></i><span class="hidden sm:inline">Back to site</span></a>
+        <a href="index.html#contact" class="inline-flex items-center justify-center text-center gap-2 bg-ink hover:bg-brand-700 text-bone text-[14px] font-semibold px-5 py-2.5 rounded-full transition-colors whitespace-nowrap">Book a visit</a>
       </div>
     </div>
   </nav>
@@ -180,7 +180,7 @@
         <div class="absolute inset-x-0 bottom-0">
           <div class="max-w-7xl mx-auto px-6 lg:px-8 pb-10 md:pb-14">
             <h2 class="font-display text-3xl md:text-5xl text-bone max-w-2xl leading-[1.05]" style="font-weight:600">A team that knows your name when you walk in.</h2>
-            <a href="index.html#contact" class="mt-6 inline-flex items-center gap-2 bg-white text-ink hover:bg-brand-50 font-semibold px-6 py-3 rounded-full transition-colors">Book a visit <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+            <a href="index.html#contact" class="mt-6 inline-flex items-center justify-center text-center gap-2 bg-white text-ink hover:bg-brand-50 font-semibold px-6 py-3 rounded-full transition-colors">Book a visit <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
           </div>
         </div>
       </div>
@@ -335,8 +335,8 @@
             ${role ? `<p class="reveal reveal-d1 mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-700 border border-brand-500/20 font-mono text-[11px] tracking-wide uppercase">${role}</p>` : ''}
             ${bio ? `<p class="reveal reveal-d2 mt-6 text-lg text-ink/72 leading-relaxed max-w-xl">${bio}</p>` : ''}
             <div class="reveal reveal-d3 mt-7 flex flex-wrap gap-3">
-              <a href="index.html#contact" class="inline-flex items-center gap-2 bg-ink hover:bg-brand-700 text-bone font-semibold px-6 py-3 rounded-full transition-colors">Book a visit <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
-              ${isDoctor ? `<a href="index.html#doctor" class="inline-flex items-center gap-2 border border-ink/20 hover:border-ink text-ink font-semibold px-6 py-3 rounded-full transition-colors">Full bio &amp; credentials</a>` : ''}
+              <a href="index.html#contact" class="inline-flex items-center justify-center text-center gap-2 bg-ink hover:bg-brand-700 text-bone font-semibold px-6 py-3 rounded-full transition-colors">Book a visit <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+              ${isDoctor ? `<a href="index.html#doctor" class="inline-flex items-center justify-center text-center gap-2 border border-ink/20 hover:border-ink text-ink font-semibold px-6 py-3 rounded-full transition-colors">Full bio &amp; credentials</a>` : ''}
             </div>
           </div>
         </div>`;
