@@ -42,8 +42,39 @@ python3 -m http.server 8000
 - ask.doctorchuck@gmail.com
 - Mon–Fri 8:00 AM – 5:00 PM (lunch 12:30–1:30), Saturday by request
 
-## Deploy
+## Deploy (Cloudflare Pages)
 
-Static site, drop it anywhere: Vercel, Netlify, GitHub Pages, or any host. No build step.
+This is a static site with no build step, so deployment is just "serve these files."
+
+### Option A — connect the GitHub repo (recommended)
+
+1. In the Cloudflare dashboard go to **Workers & Pages → Create → Pages → Connect to Git**.
+2. Pick this repository (`Coin333/clear-vision-eye-center`) and the `main` branch.
+3. Build settings:
+   - **Framework preset:** `None`
+   - **Build command:** _(leave empty)_
+   - **Build output directory:** `/`
+4. Click **Save and Deploy**. Every push to `main` then auto-deploys.
+
+### Option B — direct upload via Wrangler
+
+```bash
+npx wrangler pages deploy . --project-name=clear-vision-eye-center
+```
+
+### Custom domain
+
+After the first deploy, in the Pages project go to **Custom domains → Set up a domain** and add `pomonaeyedoctor.com` (and `www`). Cloudflare provisions HTTPS automatically. The canonical URLs, sitemap, and structured data already point to `https://www.pomonaeyedoctor.com/`.
+
+### Production files in this repo
+
+- `_headers` — security headers + long-cache for `/assets/*` (Cloudflare Pages reads this automatically)
+- `robots.txt` and `sitemap.xml`
+- `404.html` — branded not-found page (Cloudflare Pages serves it for unmatched routes)
+
+### Before going live
+
+- Activate the contact form: submit the form once and click the confirmation email FormSubmit sends to `ask.doctorchuck@gmail.com`.
+- Fill in the staff Google Sheet (see `STAFF-PAGE-GUIDE.md`); the page reads it live.
 
 Built with D1 Vibe Coding
