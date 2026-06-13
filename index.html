@@ -158,7 +158,7 @@
   </div>
 
   <!-- Navbar -->
-  <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-bone/85 border-b border-ink/10"
+  <nav id="navbar" class="sticky top-0 z-50 backdrop-blur-md bg-bone/85 border-b border-ink/10"
        style="transform: translateY(0); opacity: 1; transition: transform .3s ease, opacity .3s ease;">
     <div class="max-w-7xl mx-auto px-6 lg:px-8">
       <div class="flex items-center justify-between h-[68px]">
@@ -184,7 +184,12 @@
           <a href="#contact" class="text-ink/70 hover:text-ink link-underline">Contact</a>
         </div>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3 lg:gap-4">
+          <div class="hidden sm:inline-flex items-center rounded-full border border-ink/20 overflow-hidden font-mono text-[11px]" role="group" aria-label="Language">
+            <button type="button" data-lang="en" class="lang-btn px-2 py-0.5">EN</button>
+            <button type="button" data-lang="es" class="lang-btn px-2 py-0.5 border-l border-ink/15">ES</button>
+            <button type="button" data-lang="zh" class="lang-btn px-2 py-0.5 border-l border-ink/15">中文</button>
+          </div>
           <a href="#contact" class="hidden sm:inline-flex items-center gap-2 bg-ink hover:bg-brand-700 text-bone text-[14px] font-semibold px-5 py-2.5 rounded-full transition-all duration-300 cursor-pointer">
             Book a visit
           </a>
@@ -220,7 +225,7 @@
     <span id="top"></span>
 
     <!-- HERO: full-viewport eye chart that loads out of focus and resolves to clarity -->
-    <section class="relative min-h-[100svh] flex flex-col justify-center pt-24 pb-12 overflow-hidden">
+    <section class="relative min-h-[90svh] flex flex-col justify-center pt-12 pb-12 overflow-hidden">
       <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_60%_at_50%_38%,#ffffff_0%,#FBFAF7_55%,#F1F0EB_100%)]"></div>
       <div class="max-w-7xl mx-auto px-6 lg:px-8 w-full">
         <div class="hero-fade flex items-center justify-between gap-4 mb-7 md:mb-10" style="animation-delay:.2s">
