@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clear Vision Eye Center | Dr. Dennis A. Chuck, M.D. — Pomona Ophthalmologist</title>
-  <meta name="description" content="Clear Vision Eye Center in Pomona, CA. Board-certified ophthalmologist Dr. Dennis A. Chuck, M.D. — comprehensive eye care, small-incision cataract surgery, lens implants, and a full optical shop." />
+  <title>Clear Vision Eye Center | Dr. Dennis A. Chuck, M.D. · Pomona Ophthalmologist</title>
+  <meta name="description" content="Clear Vision Eye Center in Pomona, CA. Board-certified ophthalmologist Dr. Dennis A. Chuck, M.D.: comprehensive eye care, small-incision cataract surgery, lens implants, and a full optical shop." />
   <meta name="keywords" content="Pomona eye doctor, ophthalmologist Pomona, cataract surgery, Dennis Chuck MD, Clear Vision Eye Center, eye exam Pomona CA" />
-  <meta property="og:title" content="Clear Vision Eye Center — Dr. Dennis A. Chuck, M.D., Pomona" />
+  <meta property="og:title" content="Clear Vision Eye Center · Dr. Dennis A. Chuck, M.D., Pomona" />
   <meta property="og:description" content="Clear vision for every stage of life. Comprehensive eye care and small-incision cataract surgery in Pomona, CA." />
   <meta property="og:type" content="website" />
 
@@ -69,7 +69,7 @@
     .scroll-cue span { animation: cueBob 1.8s ease-in-out infinite; }
     @keyframes cueBob { 0%,100% { transform: translateY(0); opacity: .5; } 50% { transform: translateY(6px); opacity: 1; } }
 
-    /* Marquee — always running, never pauses */
+    /* Marquee: always running, never pauses */
     .marquee { overflow: hidden; }
     .marquee-track { display: inline-flex; white-space: nowrap; animation: marquee 38s linear infinite; }
     @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
@@ -109,24 +109,6 @@
     @media (hover: none) { .cond-term { filter: none; } }
     @media (prefers-reduced-motion: reduce) { .cond-term { filter: none; transition: color .35s ease; } }
 
-    /* Procedure timeline */
-    .proc-step { opacity: .6; transition: opacity .45s ease; }
-    .proc-step:hover, .proc-step.active { opacity: 1; }
-    .proc-step .proc-title { color: rgba(251,250,247,.72); transition: color .45s ease; }
-    .proc-step .proc-desc { color: rgba(251,250,247,.45); transition: color .45s ease; }
-    .proc-step.active .proc-title { color: #fff; }
-    .proc-step.active .proc-desc { color: rgba(251,250,247,.82); }
-    .proc-dot { box-shadow: 0 0 0 5px #0C1B33; transition: background-color .45s, border-color .45s, color .45s, box-shadow .45s, transform .45s cubic-bezier(.16,1,.3,1); }
-    .proc-step.active .proc-dot { background: #2563eb; border-color: #2563eb; color: #fff; box-shadow: 0 0 0 5px #0C1B33, 0 0 0 11px rgba(37,99,235,.20); transform: scale(1.06); }
-    .proc-step:focus-visible { outline: 2px solid #60a5fa; outline-offset: 4px; border-radius: 12px; }
-    @media (prefers-reduced-motion: reduce) { .proc-step { opacity: 1; } }
-
-    /* Living eye (About) */
-    #eyePanel { cursor: crosshair; }
-    #eyeLid { transform-box: fill-box; transform-origin: center; animation: eyeBlink 6.5s ease-in-out infinite; }
-    #iris { transition: none; }
-    @keyframes eyeBlink { 0%, 92%, 100% { transform: scaleY(1); } 95.5% { transform: scaleY(.04); } }
-    @media (prefers-reduced-motion: reduce) { #eyeLid { animation: none; } }
 
     .faq-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
     .faq-item.open .faq-panel { grid-template-rows: 1fr; }
@@ -219,7 +201,7 @@
       <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_70%_60%_at_50%_38%,#ffffff_0%,#FBFAF7_55%,#F1F0EB_100%)]"></div>
       <div class="max-w-7xl mx-auto px-6 lg:px-8 w-full">
         <div class="hero-fade flex items-center justify-between gap-4 mb-7 md:mb-10" style="animation-delay:.2s">
-          <p class="font-mono text-[11px] md:text-xs tracking-[.2em] uppercase text-ink/50">Clear Vision Eye Center — Est. 1983</p>
+          <p class="font-mono text-[11px] md:text-xs tracking-[.2em] uppercase text-ink/50">Clear Vision Eye Center · Est. 1983</p>
           <span id="statusHero" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-ink/15 bg-white font-mono text-[11px] tracking-wide">
             <span class="w-2 h-2 rounded-full bg-ink/30"></span><span>Checking hours…</span>
           </span>
@@ -293,39 +275,24 @@
     <section id="about" class="py-20 md:py-28">
       <div class="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[1fr_1.1fr] gap-14 lg:gap-20 items-center">
         <div class="reveal relative">
-          <div id="eyePanel" class="relative rounded-[20px] overflow-hidden border border-ink/10 aspect-[4/5] shadow-[0_40px_80px_-30px_rgba(12,27,51,.35)] grid place-items-center bg-[radial-gradient(ellipse_at_center,#ffffff_0%,#eff6ff_52%,#dbeafe_100%)]">
-            <div class="absolute inset-0 grid-bg opacity-40 pointer-events-none"></div>
-            <svg id="eyeSvg" viewBox="0 0 320 320" class="relative w-[82%] max-w-[340px]" role="img" aria-label="An illustrated eye that follows your cursor">
-              <defs>
-                <radialGradient id="irisGrad" cx="50%" cy="42%" r="62%">
-                  <stop offset="0%" stop-color="#93c5fd" />
-                  <stop offset="46%" stop-color="#3b82f6" />
-                  <stop offset="100%" stop-color="#1e3a8a" />
-                </radialGradient>
-                <clipPath id="eyeClip"><path d="M28 160 Q160 62 292 160 Q160 258 28 160 Z" /></clipPath>
-              </defs>
-              <g id="eyeLid">
-                <path d="M28 160 Q160 62 292 160 Q160 258 28 160 Z" fill="#ffffff" />
-                <g clip-path="url(#eyeClip)">
-                  <g id="iris">
-                    <circle cx="160" cy="160" r="62" fill="url(#irisGrad)" />
-                    <circle cx="160" cy="160" r="50" fill="none" stroke="#bfdbfe" stroke-width="12" stroke-dasharray="1.5 7" opacity=".35" />
-                    <circle cx="160" cy="160" r="58" fill="none" stroke="#1e40af" stroke-width="6" stroke-dasharray="2 9" opacity=".3" />
-                    <circle cx="160" cy="160" r="62" fill="none" stroke="#1e3a8a" stroke-width="3" opacity=".55" />
-                    <circle id="pupil" cx="160" cy="160" r="26" fill="#0a1326" />
-                    <circle cx="146" cy="145" r="10" fill="#fff" opacity=".92" />
-                    <circle cx="174" cy="176" r="4.5" fill="#fff" opacity=".5" />
-                  </g>
-                </g>
-                <path d="M28 160 Q160 62 292 160 Q160 258 28 160 Z" fill="none" stroke="#0C1B33" stroke-width="4.5" stroke-linejoin="round" />
-                <path d="M28 160 Q160 62 292 160" fill="none" stroke="#0C1B33" stroke-width="7" stroke-linecap="round" />
-              </g>
-            </svg>
-            <span class="absolute bottom-4 left-4 font-mono text-[11px] tracking-[.15em] uppercase text-ink/40 inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span> It's watching you</span>
-          </div>
-          <div class="absolute -bottom-6 -right-4 sm:-right-8 bg-bone border border-ink/10 rounded-2xl shadow-xl px-6 py-5">
-            <p class="font-display text-4xl text-brand-700" style="font-weight:600">40<span class="text-ink/30">+</span></p>
-            <p class="font-mono text-[11px] tracking-wide uppercase text-ink/50 mt-1">years of care</p>
+          <figure class="relative bg-white p-3 rounded-[14px] border border-ink/10 shadow-[0_40px_80px_-30px_rgba(12,27,51,.35)] rotate-[-1.3deg]">
+            <div class="relative rounded-[8px] overflow-hidden aspect-[4/5]">
+              <img src="assets/eye-closeup.jpg" alt="An eye exam in progress at Clear Vision Eye Center" class="w-full h-full object-cover" loading="lazy" />
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/80 via-ink/20 to-transparent p-4 pt-14">
+                <p class="font-mono text-[11px] tracking-wide text-bone/90">An eye exam in progress · 1774 Alameda St, Pomona</p>
+              </div>
+            </div>
+            <figcaption class="flex items-center justify-between px-1 pt-3 pb-0.5">
+              <span class="font-mono text-[10px] tracking-[.18em] uppercase text-ink/45">Clear Vision Eye Center</span>
+              <span class="font-mono text-[10px] tracking-[.18em] uppercase text-ink/45">No. 1983</span>
+            </figcaption>
+          </figure>
+          <div class="absolute -bottom-5 -right-3 sm:-right-6 rotate-[-7deg] select-none">
+            <div class="rounded-md px-4 py-2 text-center bg-bone/85 backdrop-blur-sm text-brand-700 border-2 border-brand-700/60" style="box-shadow: inset 0 0 0 2px rgba(29,78,216,.16);">
+              <p class="font-mono text-[10px] tracking-[.2em] uppercase leading-none text-brand-700/80">Est. 1983</p>
+              <p class="font-display text-3xl leading-tight mt-1" style="font-weight:600">40 years</p>
+              <p class="font-mono text-[9px] tracking-[.18em] uppercase leading-none text-brand-700/80">of care · Pomona</p>
+            </div>
           </div>
         </div>
         <div>
@@ -577,61 +544,56 @@
           </div>
         </div>
 
-        <!-- surgery steps: a self-playing procedure timeline with a running clock -->
+        <!-- what to expect: a calm, plain-language walkthrough -->
         <div class="mt-16 border-t border-white/15 pt-12">
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-            <div class="max-w-xl">
-              <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-brand-300">(How it works)</p>
-              <h3 class="reveal reveal-d1 font-display text-3xl md:text-5xl mt-4 leading-[1.05]" style="font-weight:600">The whole procedure,<br />in about 15 minutes.</h3>
-              <p class="reveal reveal-d2 mt-4 text-bone/60 max-w-md">An outpatient procedure under microscope magnification. Once a cataract is removed, it cannot return.</p>
+          <div class="grid lg:grid-cols-[0.9fr_1.5fr] gap-10 lg:gap-16">
+            <div class="lg:sticky lg:top-28 self-start">
+              <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-brand-300">(What to expect)</p>
+              <h3 class="reveal reveal-d1 font-display text-3xl md:text-5xl mt-4 leading-[1.05]" style="font-weight:600">The whole thing takes about fifteen minutes.</h3>
+              <p class="reveal reveal-d2 mt-5 text-bone/65 leading-relaxed max-w-md">Most people are surprised by how calm and quick it is. Here is what your morning looks like, in plain terms.</p>
+              <div class="reveal reveal-d3 mt-7 flex flex-wrap gap-2">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/15 font-mono text-[11px] tracking-wide text-bone/70"><span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span> No needles</span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/15 font-mono text-[11px] tracking-wide text-bone/70"><span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span> Awake, lightly relaxed</span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/15 font-mono text-[11px] tracking-wide text-bone/70"><span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span> Outpatient</span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-white/15 font-mono text-[11px] tracking-wide text-bone/70"><span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span> Home the same day</span>
+              </div>
             </div>
-            <!-- running clock -->
-            <div class="reveal reveal-d1 shrink-0 text-right">
-              <p id="procTime" class="font-mono text-5xl md:text-6xl text-bone tabular-nums leading-none">00:00</p>
-              <p class="font-mono text-[11px] tracking-[.2em] uppercase text-bone/45 mt-2">Elapsed · outpatient</p>
+
+            <div>
+              <div class="reveal grid md:grid-cols-[auto_1fr] gap-3 md:gap-8 py-7">
+                <span class="hidden md:block mt-3 h-px w-8 bg-brand-400/70 shrink-0"></span>
+                <div>
+                  <h4 class="font-display text-2xl md:text-3xl text-bone" style="font-weight:500">You settle in.</h4>
+                  <p class="mt-2 text-bone/65 md:text-lg leading-relaxed max-w-xl">You relax in a reclining chair. A few numbing drops, no needles at all, and a little something to help you unwind.</p>
+                </div>
+              </div>
+              <div class="reveal grid md:grid-cols-[auto_1fr] gap-3 md:gap-8 py-7 border-t border-white/10">
+                <span class="hidden md:block mt-3 h-px w-8 bg-brand-400/70 shrink-0"></span>
+                <div>
+                  <h4 class="font-display text-2xl md:text-3xl text-bone" style="font-weight:500">A tiny opening.</h4>
+                  <p class="mt-2 text-bone/65 md:text-lg leading-relaxed max-w-xl">Through an incision smaller than three millimeters, the clouded lens is gently softened with sound waves.</p>
+                </div>
+              </div>
+              <div class="reveal grid md:grid-cols-[auto_1fr] gap-3 md:gap-8 py-7 border-t border-white/10">
+                <span class="hidden md:block mt-3 h-px w-8 bg-brand-400/70 shrink-0"></span>
+                <div>
+                  <h4 class="font-display text-2xl md:text-3xl text-bone" style="font-weight:500">The cloud lifts.</h4>
+                  <p class="mt-2 text-bone/65 md:text-lg leading-relaxed max-w-xl">Dr. Chuck removes the clouded lens while leaving its delicate, clear membrane in place to cradle the new one.</p>
+                </div>
+              </div>
+              <div class="reveal grid md:grid-cols-[auto_1fr] gap-3 md:gap-8 py-7 border-t border-white/10">
+                <span class="hidden md:block mt-3 h-px w-8 bg-brand-400/70 shrink-0"></span>
+                <div>
+                  <h4 class="font-display text-2xl md:text-3xl text-bone" style="font-weight:500">Clear again.</h4>
+                  <p class="mt-2 text-bone/65 md:text-lg leading-relaxed max-w-xl">A soft, folded lens slides into the same opening and gently unfolds, becoming your new lens for good.</p>
+                </div>
+              </div>
             </div>
           </div>
 
-          <div id="procTimeline" class="relative">
-            <div class="absolute left-[18px] md:left-[26px] top-3 bottom-3 w-px bg-white/15"></div>
-            <div id="procFill" class="absolute left-[18px] md:left-[26px] top-3 w-px bg-gradient-to-b from-brand-300 to-brand-600 transition-[height] duration-500 ease-out" style="height:0"></div>
-
-            <button type="button" class="proc-step group relative w-full text-left flex gap-6 md:gap-8 py-6" data-i="0" aria-label="Step 1: Gentle anesthesia">
-              <span class="proc-dot relative z-10 mt-0.5 grid place-items-center w-9 h-9 md:w-[52px] md:h-[52px] rounded-full border border-white/20 bg-ink font-mono text-sm text-bone/55 shrink-0">01</span>
-              <div class="flex-1 min-w-0">
-                <h4 class="proc-title font-display text-xl md:text-3xl" style="font-weight:500">Gentle anesthesia</h4>
-                <p class="proc-desc mt-1.5 md:text-lg max-w-xl">Topical anesthesia without needles, plus light IV sedation for comfort.</p>
-              </div>
-            </button>
-
-            <button type="button" class="proc-step group relative w-full text-left flex gap-6 md:gap-8 py-6 border-t border-white/10" data-i="1" aria-label="Step 2: Micro-incision">
-              <span class="proc-dot relative z-10 mt-0.5 grid place-items-center w-9 h-9 md:w-[52px] md:h-[52px] rounded-full border border-white/20 bg-ink font-mono text-sm text-bone/55 shrink-0">02</span>
-              <div class="flex-1 min-w-0">
-                <h4 class="proc-title font-display text-xl md:text-3xl" style="font-weight:500">Micro-incision</h4>
-                <p class="proc-desc mt-1.5 md:text-lg max-w-xl">An incision of 2.8 mm or less allows ultrasonic phacoemulsification of the lens.</p>
-              </div>
-            </button>
-
-            <button type="button" class="proc-step group relative w-full text-left flex gap-6 md:gap-8 py-6 border-t border-white/10" data-i="2" aria-label="Step 3: Lens removal">
-              <span class="proc-dot relative z-10 mt-0.5 grid place-items-center w-9 h-9 md:w-[52px] md:h-[52px] rounded-full border border-white/20 bg-ink font-mono text-sm text-bone/55 shrink-0">03</span>
-              <div class="flex-1 min-w-0">
-                <h4 class="proc-title font-display text-xl md:text-3xl" style="font-weight:500">Lens removal</h4>
-                <p class="proc-desc mt-1.5 md:text-lg max-w-xl">The cloudy lens material is removed while the clear lens capsule is preserved.</p>
-              </div>
-            </button>
-
-            <button type="button" class="proc-step group relative w-full text-left flex gap-6 md:gap-8 py-6 border-t border-white/10" data-i="3" aria-label="Step 4: New lens implant">
-              <span class="proc-dot relative z-10 mt-0.5 grid place-items-center w-9 h-9 md:w-[52px] md:h-[52px] rounded-full border border-white/20 bg-ink font-mono text-sm text-bone/55 shrink-0">04</span>
-              <div class="flex-1 min-w-0">
-                <h4 class="proc-title font-display text-xl md:text-3xl" style="font-weight:500">New lens implant</h4>
-                <p class="proc-desc mt-1.5 md:text-lg max-w-xl">A foldable lens is inserted through the same incision and permanently replaces the natural one.</p>
-              </div>
-            </button>
-          </div>
-
-          <div class="reveal mt-10 flex flex-col sm:flex-row sm:items-center gap-4 border-t border-white/10 pt-8">
-            <p class="text-bone/70 max-w-2xl flex-1">Recovery is quick. Most patients feel minimal discomfort, wear a light protective shield, and return to normal activities within days. Vision improves soon after surgery and keeps getting better over several weeks.</p>
-            <a href="#contact" class="shrink-0 inline-flex items-center justify-center gap-2 bg-white text-ink hover:bg-brand-50 font-semibold px-6 py-3 rounded-full transition-colors">Ask about cataract surgery <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+          <div class="reveal mt-12 flex flex-col sm:flex-row sm:items-center gap-5 border-t border-white/10 pt-8">
+            <p class="text-bone/70 max-w-2xl flex-1 leading-relaxed">Afterward, recovery is quick. There is usually little more than mild discomfort, you wear a light shield for a day or two, and most people are back to their routine within days, with vision that keeps sharpening over the following weeks.</p>
+            <a href="#contact" class="shrink-0 inline-flex items-center justify-center gap-2 bg-white text-ink hover:bg-brand-50 font-semibold px-6 py-3 rounded-full transition-colors">Ask Dr. Chuck about cataract surgery <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
           </div>
         </div>
       </div>
@@ -981,33 +943,6 @@
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-    // Living eye: iris tracks the cursor, pupil dilates as you get closer
-    (function () {
-      const svg = document.getElementById('eyeSvg');
-      const iris = document.getElementById('iris');
-      const pupil = document.getElementById('pupil');
-      if (!svg || !iris || !pupil) return;
-      const RX = 34, RY = 21;            // max iris travel (svg units)
-      let tx = 0, ty = 0, cx = 0, cy = 0, raf = null;
-      function apply() {
-        cx += (tx - cx) * 0.18; cy += (ty - cy) * 0.18;
-        iris.setAttribute('transform', 'translate(' + cx.toFixed(2) + ' ' + cy.toFixed(2) + ')');
-        if (Math.abs(tx - cx) > 0.1 || Math.abs(ty - cy) > 0.1) { raf = requestAnimationFrame(apply); } else { raf = null; }
-      }
-      window.addEventListener('mousemove', (e) => {
-        const r = svg.getBoundingClientRect();
-        if (!r.width) return;
-        const dx = e.clientX - (r.left + r.width / 2);
-        const dy = e.clientY - (r.top + r.height / 2);
-        const ang = Math.atan2(dy, dx);
-        const d = Math.min(Math.hypot(dx, dy) / (Math.min(r.width, r.height) / 1.5), 1);
-        tx = Math.cos(ang) * RX * d;
-        ty = Math.sin(ang) * RY * d;
-        pupil.setAttribute('r', (32 - d * 11).toFixed(1)); // dilate when near, constrict when far
-        if (!raf) raf = requestAnimationFrame(apply);
-      }, { passive: true });
-    })();
-
     // Count-up stats
     const counters = document.querySelectorAll('.count');
     const cIO = new IntersectionObserver((entries) => {
@@ -1112,60 +1047,6 @@
       });
     });
 
-    // Procedure timeline: self-playing stepper with a running clock
-    (function () {
-      const tl = document.getElementById('procTimeline');
-      if (!tl) return;
-      const steps = Array.from(tl.querySelectorAll('.proc-step'));
-      const fill = document.getElementById('procFill');
-      const clock = document.getElementById('procTime');
-      const TOTAL = 900; // 15:00 shown MM:SS
-      const STEP_MS = 3200, LOOP_PAUSE_MS = 3000;
-      let idx = -1, clockRAF = null, paused = false, raf = null, acc = 0, lastT = null;
-      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      function fmt(s) { s = Math.max(0, Math.round(s)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
-      function tweenClock(to) {
-        const p = clock.textContent.split(':'); const from = (+p[0]) * 60 + (+p[1] || 0);
-        cancelAnimationFrame(clockRAF);
-        const start = performance.now(), dur = 2600;
-        (function run(t) { const k = Math.min((t - start) / dur, 1); clock.textContent = fmt(from + (to - from) * k); if (k < 1) clockRAF = requestAnimationFrame(run); })(start);
-      }
-      function fillTo(i) {
-        const dot = steps[i].querySelector('.proc-dot');
-        const h = (dot.getBoundingClientRect().top + dot.getBoundingClientRect().height / 2) - tl.getBoundingClientRect().top - 12;
-        fill.style.height = Math.max(0, h) + 'px';
-      }
-      function setActive(i) {
-        idx = i;
-        steps.forEach((s, k) => s.classList.toggle('active', k === i));
-        fillTo(i);
-        tweenClock((i + 1) / steps.length * TOTAL);
-        acc = 0; // reset the dwell timer on every change (incl. manual clicks)
-      }
-      function loop(t) {
-        if (lastT === null) lastT = t;
-        const dt = t - lastT; lastT = t;
-        if (!paused) {
-          acc += dt;
-          // hold an extra beat after the final step before looping back to the start
-          const threshold = STEP_MS + (idx === steps.length - 1 ? LOOP_PAUSE_MS : 0);
-          if (acc >= threshold) setActive((idx + 1) % steps.length);
-        }
-        raf = requestAnimationFrame(loop);
-      }
-      function play() { if (raf || reduce) return; raf = requestAnimationFrame(loop); }
-
-      steps.forEach((s, i) => { s.addEventListener('click', () => setActive(i)); s.addEventListener('focus', () => setActive(i)); });
-      tl.addEventListener('mouseenter', () => { paused = true; });
-      tl.addEventListener('mouseleave', () => { paused = false; });
-      window.addEventListener('resize', () => { if (idx >= 0) fillTo(idx); }, { passive: true });
-
-      if (reduce) { steps.forEach(s => s.classList.add('active')); clock.textContent = '15:00'; fill.style.height = '100%'; return; }
-      const io = new IntersectionObserver((e) => { e.forEach(en => { if (en.isIntersecting) { setActive(0); play(); io.disconnect(); } }); }, { threshold: 0.3 });
-      io.observe(tl);
-    })();
-
     // Before / after slider
     (function () {
       const ba = document.getElementById('ba');
@@ -1202,7 +1083,7 @@
     const FRONT_DESK_EMAIL = 'ask.doctorchuck@gmail.com';
 
     function buildMailto(d, name) {
-      const subject = encodeURIComponent('Appointment Request — ' + d.get('title') + ' ' + name);
+      const subject = encodeURIComponent('Appointment Request: ' + d.get('title') + ' ' + name);
       const body = encodeURIComponent(
         'Appointment request from the website:\n\n' +
         'Name: ' + d.get('title') + ' ' + name + '\n' +
@@ -1229,7 +1110,7 @@
       formError.classList.add('hidden');
       const d = new FormData(form);
       const payload = {
-        _subject: 'Appointment Request — ' + d.get('title') + ' ' + name,
+        _subject: 'Appointment Request: ' + d.get('title') + ' ' + name,
         _template: 'table',
         _captcha: 'false',
         Name: d.get('title') + ' ' + name,
