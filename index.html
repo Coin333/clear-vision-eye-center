@@ -109,6 +109,18 @@
     @media (hover: none) { .cond-term { filter: none; } }
     @media (prefers-reduced-motion: reduce) { .cond-term { filter: none; transition: color .35s ease; } }
 
+    /* Procedure timeline */
+    .proc-step { opacity: .6; transition: opacity .45s ease; }
+    .proc-step:hover, .proc-step.active { opacity: 1; }
+    .proc-step .proc-title { color: rgba(251,250,247,.72); transition: color .45s ease; }
+    .proc-step .proc-desc { color: rgba(251,250,247,.45); transition: color .45s ease; }
+    .proc-step.active .proc-title { color: #fff; }
+    .proc-step.active .proc-desc { color: rgba(251,250,247,.82); }
+    .proc-dot { transition: background-color .45s, border-color .45s, color .45s, box-shadow .45s, transform .45s cubic-bezier(.16,1,.3,1); }
+    .proc-step.active .proc-dot { background: #2563eb; border-color: #2563eb; color: #fff; box-shadow: 0 0 0 6px rgba(37,99,235,.18); transform: scale(1.06); }
+    .proc-step:focus-visible { outline: 2px solid #60a5fa; outline-offset: 4px; border-radius: 12px; }
+    @media (prefers-reduced-motion: reduce) { .proc-step { opacity: 1; } }
+
     .faq-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
     .faq-item.open .faq-panel { grid-template-rows: 1fr; }
     .faq-panel > div { overflow: hidden; }
@@ -531,19 +543,62 @@
           </div>
         </div>
 
-        <!-- surgery steps (numbers KEPT — genuinely sequential) -->
-        <div class="mt-16 border-t border-white/15 pt-10">
-          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
-            <h3 class="reveal font-display text-3xl md:text-4xl" style="font-weight:600">The procedure, in about 15 minutes.</h3>
-            <p class="reveal reveal-d1 font-mono text-sm text-bone/50 max-w-xs">An outpatient procedure under microscope magnification. Once a cataract is removed, it cannot return.</p>
+        <!-- surgery steps: a self-playing procedure timeline with a running clock -->
+        <div class="mt-16 border-t border-white/15 pt-12">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div class="max-w-xl">
+              <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-brand-300">(How it works)</p>
+              <h3 class="reveal reveal-d1 font-display text-3xl md:text-5xl mt-4 leading-[1.05]" style="font-weight:600">The whole procedure,<br />in about 15 minutes.</h3>
+              <p class="reveal reveal-d2 mt-4 text-bone/60 max-w-md">An outpatient procedure under microscope magnification. Once a cataract is removed, it cannot return.</p>
+            </div>
+            <!-- running clock -->
+            <div class="reveal reveal-d1 shrink-0 text-right">
+              <p id="procTime" class="font-mono text-5xl md:text-6xl text-bone tabular-nums leading-none">00:00</p>
+              <p class="font-mono text-[11px] tracking-[.2em] uppercase text-bone/45 mt-2">Elapsed · outpatient</p>
+            </div>
           </div>
-          <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden">
-            <div class="reveal bg-ink p-7"><span class="font-mono text-brand-300">Step 01</span><h4 class="font-display text-xl mt-3 mb-2" style="font-weight:500">Gentle anesthesia</h4><p class="text-sm text-bone/60">Topical anesthesia without needles, plus light IV sedation for comfort.</p></div>
-            <div class="reveal reveal-d1 bg-ink p-7"><span class="font-mono text-brand-300">Step 02</span><h4 class="font-display text-xl mt-3 mb-2" style="font-weight:500">Micro-incision</h4><p class="text-sm text-bone/60">An incision of 2.8 mm or less allows ultrasonic phacoemulsification of the lens.</p></div>
-            <div class="reveal reveal-d2 bg-ink p-7"><span class="font-mono text-brand-300">Step 03</span><h4 class="font-display text-xl mt-3 mb-2" style="font-weight:500">Lens removal</h4><p class="text-sm text-bone/60">The cloudy lens material is removed while the clear lens capsule is preserved.</p></div>
-            <div class="reveal reveal-d3 bg-ink p-7"><span class="font-mono text-brand-300">Step 04</span><h4 class="font-display text-xl mt-3 mb-2" style="font-weight:500">New lens implant</h4><p class="text-sm text-bone/60">A foldable lens is inserted through the same incision and permanently replaces the old one.</p></div>
+
+          <div id="procTimeline" class="relative">
+            <div class="absolute left-[18px] md:left-[26px] top-3 bottom-3 w-px bg-white/15"></div>
+            <div id="procFill" class="absolute left-[18px] md:left-[26px] top-3 w-px bg-gradient-to-b from-brand-300 to-brand-600 transition-[height] duration-500 ease-out" style="height:0"></div>
+
+            <button type="button" class="proc-step group relative w-full text-left flex gap-6 md:gap-8 py-6" data-i="0" aria-label="Step 1: Gentle anesthesia">
+              <span class="proc-dot relative z-10 mt-0.5 grid place-items-center w-9 h-9 md:w-[52px] md:h-[52px] rounded-full border border-white/20 bg-ink font-mono text-sm text-bone/55 shrink-0">01</span>
+              <div class="flex-1 min-w-0">
+                <h4 class="proc-title font-display text-xl md:text-3xl" style="font-weight:500">Gentle anesthesia</h4>
+                <p class="proc-desc mt-1.5 md:text-lg max-w-xl">Topical anesthesia without needles, plus light IV sedation for comfort.</p>
+              </div>
+            </button>
+
+            <button type="button" class="proc-step group relative w-full text-left flex gap-6 md:gap-8 py-6 border-t border-white/10" data-i="1" aria-label="Step 2: Micro-incision">
+              <span class="proc-dot relative z-10 mt-0.5 grid place-items-center w-9 h-9 md:w-[52px] md:h-[52px] rounded-full border border-white/20 bg-ink font-mono text-sm text-bone/55 shrink-0">02</span>
+              <div class="flex-1 min-w-0">
+                <h4 class="proc-title font-display text-xl md:text-3xl" style="font-weight:500">Micro-incision</h4>
+                <p class="proc-desc mt-1.5 md:text-lg max-w-xl">An incision of 2.8 mm or less allows ultrasonic phacoemulsification of the lens.</p>
+              </div>
+            </button>
+
+            <button type="button" class="proc-step group relative w-full text-left flex gap-6 md:gap-8 py-6 border-t border-white/10" data-i="2" aria-label="Step 3: Lens removal">
+              <span class="proc-dot relative z-10 mt-0.5 grid place-items-center w-9 h-9 md:w-[52px] md:h-[52px] rounded-full border border-white/20 bg-ink font-mono text-sm text-bone/55 shrink-0">03</span>
+              <div class="flex-1 min-w-0">
+                <h4 class="proc-title font-display text-xl md:text-3xl" style="font-weight:500">Lens removal</h4>
+                <p class="proc-desc mt-1.5 md:text-lg max-w-xl">The cloudy lens material is removed while the clear lens capsule is preserved.</p>
+              </div>
+            </button>
+
+            <button type="button" class="proc-step group relative w-full text-left flex gap-6 md:gap-8 py-6 border-t border-white/10" data-i="3" aria-label="Step 4: New lens implant">
+              <span class="proc-dot relative z-10 mt-0.5 grid place-items-center w-9 h-9 md:w-[52px] md:h-[52px] rounded-full border border-white/20 bg-ink font-mono text-sm text-bone/55 shrink-0">04</span>
+              <div class="flex-1 min-w-0">
+                <h4 class="proc-title font-display text-xl md:text-3xl" style="font-weight:500">New lens implant</h4>
+                <p class="proc-desc mt-1.5 md:text-lg max-w-xl">A foldable lens is inserted through the same incision and permanently replaces the natural one.</p>
+              </div>
+            </button>
           </div>
-          <p class="reveal mt-8 text-bone/70 max-w-2xl">Recovery is quick. Most patients feel minimal discomfort, wear a light protective shield, and return to normal activities within days. Vision improves soon after surgery and keeps getting better over several weeks.</p>
+
+          <div class="reveal mt-10 flex flex-col sm:flex-row sm:items-center gap-4 border-t border-white/10 pt-8">
+            <p class="text-bone/70 max-w-2xl flex-1">Recovery is quick. Most patients feel minimal discomfort, wear a light protective shield, and return to normal activities within days. Vision improves soon after surgery and keeps getting better over several weeks.</p>
+            <a href="#contact" class="shrink-0 inline-flex items-center justify-center gap-2 bg-white text-ink hover:bg-brand-50 font-semibold px-6 py-3 rounded-full transition-colors">Ask about cataract surgery <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+          </div>
         </div>
       </div>
     </section>
@@ -995,6 +1050,47 @@
         if (!isOpen) { item.classList.add('open'); btn.setAttribute('aria-expanded', 'true'); }
       });
     });
+
+    // Procedure timeline: self-playing stepper with a running clock
+    (function () {
+      const tl = document.getElementById('procTimeline');
+      if (!tl) return;
+      const steps = Array.from(tl.querySelectorAll('.proc-step'));
+      const fill = document.getElementById('procFill');
+      const clock = document.getElementById('procTime');
+      const TOTAL = 900; // 15:00 shown MM:SS
+      let idx = -1, timer = null, clockRAF = null, paused = false;
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      function fmt(s) { s = Math.max(0, Math.round(s)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+      function tweenClock(to) {
+        const p = clock.textContent.split(':'); const from = (+p[0]) * 60 + (+p[1] || 0);
+        cancelAnimationFrame(clockRAF);
+        const start = performance.now(), dur = 2600;
+        (function run(t) { const k = Math.min((t - start) / dur, 1); clock.textContent = fmt(from + (to - from) * k); if (k < 1) clockRAF = requestAnimationFrame(run); })(start);
+      }
+      function fillTo(i) {
+        const dot = steps[i].querySelector('.proc-dot');
+        const h = (dot.getBoundingClientRect().top + dot.getBoundingClientRect().height / 2) - tl.getBoundingClientRect().top - 12;
+        fill.style.height = Math.max(0, h) + 'px';
+      }
+      function setActive(i) {
+        idx = i;
+        steps.forEach((s, k) => s.classList.toggle('active', k === i));
+        fillTo(i);
+        tweenClock((i + 1) / steps.length * TOTAL);
+      }
+      function play() { if (timer || reduce) return; timer = setInterval(() => { if (!paused) setActive((idx + 1) % steps.length); }, 3200); }
+
+      steps.forEach((s, i) => { s.addEventListener('click', () => setActive(i)); s.addEventListener('focus', () => setActive(i)); });
+      tl.addEventListener('mouseenter', () => { paused = true; });
+      tl.addEventListener('mouseleave', () => { paused = false; });
+      window.addEventListener('resize', () => { if (idx >= 0) fillTo(idx); }, { passive: true });
+
+      if (reduce) { steps.forEach(s => s.classList.add('active')); clock.textContent = '15:00'; fill.style.height = '100%'; return; }
+      const io = new IntersectionObserver((e) => { e.forEach(en => { if (en.isIntersecting) { setActive(0); play(); io.disconnect(); } }); }, { threshold: 0.3 });
+      io.observe(tl);
+    })();
 
     // Before / after slider
     (function () {
