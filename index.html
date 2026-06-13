@@ -207,6 +207,12 @@
       .scroll-cue span { animation: none; }
       body, html.leaving body { animation: none; }
     }
+    /* Responsive safety: no sideways scroll, media + text adapt to any width or aspect ratio */
+    html, body { overflow-x: clip; }
+    img, svg, video, iframe { max-width: 100%; }
+    h1, h2, h3, h4, p, a, li, span, blockquote { overflow-wrap: break-word; }
+    h1, h2, h3 { text-wrap: balance; }
+    p { text-wrap: pretty; }
   </style>
 </head>
 

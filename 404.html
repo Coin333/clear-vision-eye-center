@@ -36,6 +36,12 @@
     .fl { opacity:0; filter: blur(14px); animation: fl 1.1s cubic-bezier(.2,.85,.2,1) forwards; }
     @keyframes fl { 55% { opacity:1; } 100% { opacity:1; filter: blur(0); } }
     @media (prefers-reduced-motion: reduce) { body { animation:none; } .fl { opacity:1; filter:none; animation:none; } }
+    /* Responsive safety: no sideways scroll, media + text adapt to any width or aspect ratio */
+    html, body { overflow-x: clip; }
+    img, svg, video, iframe { max-width: 100%; }
+    h1, h2, h3, h4, p, a, li, span, blockquote { overflow-wrap: break-word; }
+    h1, h2, h3 { text-wrap: balance; }
+    p { text-wrap: pretty; }
   </style>
 </head>
 <body class="grain font-sans text-ink bg-bone selection:bg-brand-200 selection:text-brand-900">
