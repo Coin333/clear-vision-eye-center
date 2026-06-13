@@ -213,7 +213,7 @@
     <div class="max-w-7xl mx-auto px-6 lg:px-8 h-10 flex items-center justify-between">
       <span class="inline-flex items-center gap-2 font-mono tracking-tight">
         <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-400"></i>
-        1774 Alameda St · Pomona, CA 91768
+        <a href="https://maps.google.com/?q=1774+Alameda+St,+Pomona,+CA+91768" target="_blank" rel="noopener" class="hover:text-bone link-underline">1774 Alameda St · Pomona, CA 91768</a>
       </span>
       <div class="flex items-center gap-5">
         <span class="hidden lg:inline-flex items-center gap-2 font-mono text-[11px] tracking-[.15em] uppercase text-bone/40">
@@ -659,29 +659,25 @@
             </div>
 
             <div>
-              <div class="reveal grid md:grid-cols-[auto_1fr] gap-3 md:gap-8 py-7">
-                <span class="hidden md:block mt-3 h-px w-8 bg-brand-400/70 shrink-0"></span>
+              <div class="reveal py-7">
                 <div>
                   <h4 class="font-display text-2xl md:text-3xl text-bone" style="font-weight:500">You settle in.</h4>
                   <p class="mt-2 text-bone/65 md:text-lg leading-relaxed max-w-xl">You relax in a reclining chair. A few numbing drops, no needles at all, and a little something to help you unwind.</p>
                 </div>
               </div>
-              <div class="reveal grid md:grid-cols-[auto_1fr] gap-3 md:gap-8 py-7 border-t border-white/10">
-                <span class="hidden md:block mt-3 h-px w-8 bg-brand-400/70 shrink-0"></span>
+              <div class="reveal py-7 border-t border-white/10">
                 <div>
                   <h4 class="font-display text-2xl md:text-3xl text-bone" style="font-weight:500">A tiny opening.</h4>
                   <p class="mt-2 text-bone/65 md:text-lg leading-relaxed max-w-xl">Through an incision smaller than three millimeters, the clouded lens is gently softened with sound waves.</p>
                 </div>
               </div>
-              <div class="reveal grid md:grid-cols-[auto_1fr] gap-3 md:gap-8 py-7 border-t border-white/10">
-                <span class="hidden md:block mt-3 h-px w-8 bg-brand-400/70 shrink-0"></span>
+              <div class="reveal py-7 border-t border-white/10">
                 <div>
                   <h4 class="font-display text-2xl md:text-3xl text-bone" style="font-weight:500">The cloud lifts.</h4>
                   <p class="mt-2 text-bone/65 md:text-lg leading-relaxed max-w-xl">Dr. Chuck removes the clouded lens while leaving its delicate, clear membrane in place to cradle the new one.</p>
                 </div>
               </div>
-              <div class="reveal grid md:grid-cols-[auto_1fr] gap-3 md:gap-8 py-7 border-t border-white/10">
-                <span class="hidden md:block mt-3 h-px w-8 bg-brand-400/70 shrink-0"></span>
+              <div class="reveal py-7 border-t border-white/10">
                 <div>
                   <h4 class="font-display text-2xl md:text-3xl text-bone" style="font-weight:500">Clear again.</h4>
                   <p class="mt-2 text-bone/65 md:text-lg leading-relaxed max-w-xl">A soft, folded lens slides into the same opening and gently unfolds, becoming your new lens for good.</p>
@@ -1110,11 +1106,21 @@
     menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
     document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
-    // Reveal
-    const io = new IntersectionObserver((entries) => {
+    // Reveal (robust against a missed first observer tick after a page navigation)
+    const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0 }) : null;
+    (function initReveals() {
+      const els = Array.from(document.querySelectorAll('.reveal:not(.visible)'));
+      if (!io) { els.forEach(el => el.classList.add('visible')); return; }
+      els.forEach(el => io.observe(el));
+      requestAnimationFrame(() => {
+        els.forEach(el => {
+          const r = el.getBoundingClientRect();
+          if (r.top < window.innerHeight * 0.98 && r.bottom > 0) { el.classList.add('visible'); io.unobserve(el); }
+        });
+      });
+    })();
 
     // Count-up stats
     const counters = document.querySelectorAll('.count');

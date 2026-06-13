@@ -327,10 +327,22 @@
         </article>`;
     }
 
-    const io = new IntersectionObserver((entries) => {
+    const io = ('IntersectionObserver' in window) ? new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
-    }, { threshold: 0.12 });
-    function observe(scope) { (scope || document).querySelectorAll('.reveal').forEach(el => io.observe(el)); }
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0 }) : null;
+    function observe(scope) {
+      const els = Array.from((scope || document).querySelectorAll('.reveal:not(.visible)'));
+      if (!io) { els.forEach(el => el.classList.add('visible')); return; }
+      els.forEach(el => io.observe(el));
+      // Deterministically reveal whatever is already on screen, so a missed IO first-tick
+      // (which can happen right after a page navigation) never leaves content stuck hidden.
+      requestAnimationFrame(() => {
+        els.forEach(el => {
+          const r = el.getBoundingClientRect();
+          if (r.top < window.innerHeight * 0.98 && r.bottom > 0) { el.classList.add('visible'); io.unobserve(el); }
+        });
+      });
+    }
 
     function render(list) {
       const people = list
