@@ -121,6 +121,13 @@
     .proc-step:focus-visible { outline: 2px solid #60a5fa; outline-offset: 4px; border-radius: 12px; }
     @media (prefers-reduced-motion: reduce) { .proc-step { opacity: 1; } }
 
+    /* Living eye (About) */
+    #eyePanel { cursor: crosshair; }
+    #eyeLid { transform-box: fill-box; transform-origin: center; animation: eyeBlink 6.5s ease-in-out infinite; }
+    #iris { transition: none; }
+    @keyframes eyeBlink { 0%, 92%, 100% { transform: scaleY(1); } 95.5% { transform: scaleY(.04); } }
+    @media (prefers-reduced-motion: reduce) { #eyeLid { animation: none; } }
+
     .faq-panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
     .faq-item.open .faq-panel { grid-template-rows: 1fr; }
     .faq-panel > div { overflow: hidden; }
@@ -286,8 +293,35 @@
     <section id="about" class="py-20 md:py-28">
       <div class="max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-[1fr_1.1fr] gap-14 lg:gap-20 items-center">
         <div class="reveal relative">
-          <div class="rounded-[20px] overflow-hidden border border-ink/10 bg-brand-100 aspect-[4/5] shadow-[0_40px_80px_-30px_rgba(12,27,51,.35)]">
-            <img src="assets/eye-closeup.jpg" alt="A patient undergoing a refraction eye exam at Clear Vision Eye Center" class="w-full h-full object-cover" loading="lazy" />
+          <div id="eyePanel" class="relative rounded-[20px] overflow-hidden border border-ink/10 aspect-[4/5] shadow-[0_40px_80px_-30px_rgba(12,27,51,.35)] grid place-items-center bg-[radial-gradient(ellipse_at_center,#ffffff_0%,#eff6ff_52%,#dbeafe_100%)]">
+            <div class="absolute inset-0 grid-bg opacity-40 pointer-events-none"></div>
+            <svg id="eyeSvg" viewBox="0 0 320 320" class="relative w-[82%] max-w-[340px]" role="img" aria-label="An illustrated eye that follows your cursor">
+              <defs>
+                <radialGradient id="irisGrad" cx="50%" cy="42%" r="62%">
+                  <stop offset="0%" stop-color="#93c5fd" />
+                  <stop offset="46%" stop-color="#3b82f6" />
+                  <stop offset="100%" stop-color="#1e3a8a" />
+                </radialGradient>
+                <clipPath id="eyeClip"><path d="M28 160 Q160 62 292 160 Q160 258 28 160 Z" /></clipPath>
+              </defs>
+              <g id="eyeLid">
+                <path d="M28 160 Q160 62 292 160 Q160 258 28 160 Z" fill="#ffffff" />
+                <g clip-path="url(#eyeClip)">
+                  <g id="iris">
+                    <circle cx="160" cy="160" r="62" fill="url(#irisGrad)" />
+                    <circle cx="160" cy="160" r="50" fill="none" stroke="#bfdbfe" stroke-width="12" stroke-dasharray="1.5 7" opacity=".35" />
+                    <circle cx="160" cy="160" r="58" fill="none" stroke="#1e40af" stroke-width="6" stroke-dasharray="2 9" opacity=".3" />
+                    <circle cx="160" cy="160" r="62" fill="none" stroke="#1e3a8a" stroke-width="3" opacity=".55" />
+                    <circle id="pupil" cx="160" cy="160" r="26" fill="#0a1326" />
+                    <circle cx="146" cy="145" r="10" fill="#fff" opacity=".92" />
+                    <circle cx="174" cy="176" r="4.5" fill="#fff" opacity=".5" />
+                  </g>
+                </g>
+                <path d="M28 160 Q160 62 292 160 Q160 258 28 160 Z" fill="none" stroke="#0C1B33" stroke-width="4.5" stroke-linejoin="round" />
+                <path d="M28 160 Q160 62 292 160" fill="none" stroke="#0C1B33" stroke-width="7" stroke-linecap="round" />
+              </g>
+            </svg>
+            <span class="absolute bottom-4 left-4 font-mono text-[11px] tracking-[.15em] uppercase text-ink/40 inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span> It's watching you</span>
           </div>
           <div class="absolute -bottom-6 -right-4 sm:-right-8 bg-bone border border-ink/10 rounded-2xl shadow-xl px-6 py-5">
             <p class="font-display text-4xl text-brand-700" style="font-weight:600">40<span class="text-ink/30">+</span></p>
@@ -946,6 +980,33 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
     }, { threshold: 0.12 });
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // Living eye: iris tracks the cursor, pupil dilates as you get closer
+    (function () {
+      const svg = document.getElementById('eyeSvg');
+      const iris = document.getElementById('iris');
+      const pupil = document.getElementById('pupil');
+      if (!svg || !iris || !pupil) return;
+      const RX = 34, RY = 21;            // max iris travel (svg units)
+      let tx = 0, ty = 0, cx = 0, cy = 0, raf = null;
+      function apply() {
+        cx += (tx - cx) * 0.18; cy += (ty - cy) * 0.18;
+        iris.setAttribute('transform', 'translate(' + cx.toFixed(2) + ' ' + cy.toFixed(2) + ')');
+        if (Math.abs(tx - cx) > 0.1 || Math.abs(ty - cy) > 0.1) { raf = requestAnimationFrame(apply); } else { raf = null; }
+      }
+      window.addEventListener('mousemove', (e) => {
+        const r = svg.getBoundingClientRect();
+        if (!r.width) return;
+        const dx = e.clientX - (r.left + r.width / 2);
+        const dy = e.clientY - (r.top + r.height / 2);
+        const ang = Math.atan2(dy, dx);
+        const d = Math.min(Math.hypot(dx, dy) / (Math.min(r.width, r.height) / 1.5), 1);
+        tx = Math.cos(ang) * RX * d;
+        ty = Math.sin(ang) * RY * d;
+        pupil.setAttribute('r', (32 - d * 11).toFixed(1)); // dilate when near, constrict when far
+        if (!raf) raf = requestAnimationFrame(apply);
+      }, { passive: true });
+    })();
 
     // Count-up stats
     const counters = document.querySelectorAll('.count');
