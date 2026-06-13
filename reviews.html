@@ -35,7 +35,15 @@
     .chip.active { background:#0C1B33; color:#FBFAF7; border-color:#0C1B33; }
     .rev { transition: opacity .4s ease, transform .4s ease; }
     .rev.hide { display: none; }
-    @media (prefers-reduced-motion: reduce) { .reveal { opacity:1; transform:none; transition:none; } }
+    /* Gentle page-load entrance + cross-page fade so navigation never snaps */
+    @keyframes pageEnter { from { opacity:0; transform: translateY(18px); } to { opacity:1; transform:none; } }
+    @keyframes bodyIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes bodyOut { from { opacity:1; } to { opacity:0; } }
+    body { animation: bodyIn .5s ease both; }
+    html.leaving body { animation: bodyOut .28s ease forwards; }
+    .enter { opacity:0; animation: pageEnter .85s cubic-bezier(.16,1,.3,1) both; }
+    .enter-1 { animation-delay:.04s; } .enter-2 { animation-delay:.12s; } .enter-3 { animation-delay:.22s; } .enter-4 { animation-delay:.32s; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity:1; transform:none; transition:none; } body, html.leaving body { animation:none; } .enter { opacity:1; animation:none; } }
   </style>
 </head>
 <body class="grain font-sans text-ink bg-bone selection:bg-brand-200 selection:text-brand-900">
@@ -69,11 +77,11 @@
       <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16 md:py-24">
         <div class="grid lg:grid-cols-[1fr_1.15fr] gap-12 lg:gap-20 items-center">
           <div>
-            <p class="font-mono text-xs tracking-[.2em] uppercase text-ink/50">(Patient reviews)</p>
-            <h1 class="font-display text-5xl md:text-7xl tracking-tight text-ink mt-5 leading-[1.02]" style="font-weight:600">In their<br />own words.</h1>
-            <p class="mt-6 text-lg text-ink/70 leading-relaxed max-w-md">Four decades of Pomona families have trusted their eyes to Dr. Chuck. Here is what they tell their friends, and their own doctors.</p>
+            <p class="enter enter-1 font-mono text-xs tracking-[.2em] uppercase text-ink/50">(Patient reviews)</p>
+            <h1 class="enter enter-2 font-display text-5xl md:text-7xl tracking-tight text-ink mt-5 leading-[1.02]" style="font-weight:600">In their<br />own words.</h1>
+            <p class="enter enter-3 mt-6 text-lg text-ink/70 leading-relaxed max-w-md">Four decades of Pomona families have trusted their eyes to Dr. Chuck. Here is what they tell their friends, and their own doctors.</p>
 
-            <div class="mt-9 inline-flex items-stretch rounded-2xl border border-ink/10 bg-white overflow-hidden shadow-[0_30px_60px_-35px_rgba(12,27,51,.4)]">
+            <div class="enter enter-4 mt-9 inline-flex items-stretch rounded-2xl border border-ink/10 bg-white overflow-hidden shadow-[0_30px_60px_-35px_rgba(12,27,51,.4)]">
               <div class="px-6 py-5 text-center">
                 <p class="font-display text-5xl text-ink leading-none" style="font-weight:600">4.2</p>
                 <div class="flex gap-0.5 text-brand-500 mt-2 justify-center" aria-hidden="true">
@@ -293,6 +301,27 @@
       });
       noneMsg.classList.toggle('hidden', shown !== 0);
     }));
+  </script>
+
+  <!-- Smooth cross-page fade -->
+  <script>
+  (function () {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.addEventListener('click', function (e) {
+      const a = e.target.closest('a'); if (!a) return;
+      const href = a.getAttribute('href'); if (!href) return;
+      if (a.target === '_blank' || a.hasAttribute('download')) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      if (/^(#|mailto:|tel:|javascript:)/i.test(href)) return;
+      let url; try { url = new URL(href, location.href); } catch (_) { return; }
+      if (url.origin !== location.origin) return;
+      if (url.pathname === location.pathname) return;
+      e.preventDefault();
+      document.documentElement.classList.add('leaving');
+      setTimeout(function () { window.location.href = url.href; }, 280);
+    });
+    window.addEventListener('pageshow', function (ev) { if (ev.persisted) document.documentElement.classList.remove('leaving'); });
+  })();
   </script>
 </body>
 </html>

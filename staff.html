@@ -30,9 +30,20 @@
     .link-underline:hover { background-size: 100% 1.5px; }
     .reveal { opacity: 0; transform: translateY(22px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
-    .card-img { transition: transform .5s cubic-bezier(.16,1,.3,1); }
-    .team-card:hover .card-img { transform: scale(1.04); }
-    @media (prefers-reduced-motion: reduce) { .reveal { opacity:1; transform:none; transition:none; } .card-img { transition:none; } }
+    .reveal-d1 { transition-delay:.08s; } .reveal-d2 { transition-delay:.16s; } .reveal-d3 { transition-delay:.24s; }
+    .team-card { transition: transform .4s cubic-bezier(.16,1,.3,1), border-color .3s ease, box-shadow .4s ease; }
+    .team-card:hover { transform: translateY(-4px); border-color: rgba(37,99,235,.35); box-shadow: 0 30px 60px -34px rgba(12,27,51,.5); }
+    .card-img { transition: transform .6s cubic-bezier(.16,1,.3,1); }
+    .team-card:hover .card-img { transform: scale(1.05); }
+    /* Gentle page-load entrance + cross-page fade so navigation never snaps */
+    @keyframes pageEnter { from { opacity:0; transform: translateY(18px); } to { opacity:1; transform:none; } }
+    @keyframes bodyIn { from { opacity:0; } to { opacity:1; } }
+    @keyframes bodyOut { from { opacity:1; } to { opacity:0; } }
+    body { animation: bodyIn .5s ease both; }
+    html.leaving body { animation: bodyOut .28s ease forwards; }
+    .enter { opacity:0; animation: pageEnter .85s cubic-bezier(.16,1,.3,1) both; }
+    .enter-1 { animation-delay:.04s; } .enter-2 { animation-delay:.12s; } .enter-3 { animation-delay:.22s; } .enter-4 { animation-delay:.32s; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity:1; transform:none; transition:none; } body, html.leaving body { animation:none; } .enter { opacity:1; animation:none; } .card-img, .team-card { transition:none; } }
   </style>
 </head>
 <body class="grain font-sans text-ink bg-bone selection:bg-brand-200 selection:text-brand-900">
@@ -62,11 +73,18 @@
   <main>
     <!-- HERO -->
     <section class="relative overflow-hidden border-b border-ink/10">
-      <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,#ffffff_0%,#FBFAF7_60%,#F1F0EB_100%)]"></div>
+      <div class="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_65%_55%_at_50%_0%,#ffffff_0%,#FBFAF7_60%,#F1F0EB_100%)]"></div>
       <div class="max-w-7xl mx-auto px-6 lg:px-8 py-16 md:py-24">
-        <p class="font-mono text-xs tracking-[.2em] uppercase text-ink/50">(The people)</p>
-        <h1 class="font-display text-5xl md:text-7xl tracking-tight text-ink mt-5 leading-[1.02] max-w-4xl" style="font-weight:600">The faces behind your care.</h1>
-        <p class="mt-6 text-lg md:text-xl text-ink/70 leading-relaxed max-w-2xl">From your first phone call to your fitting at the optical counter, the same familiar people look after your whole family's eyes. Patients mention them by name in nearly every review, and for good reason.</p>
+        <p class="enter enter-1 font-mono text-xs tracking-[.2em] uppercase text-ink/50">(The people)</p>
+        <h1 class="enter enter-2 font-display text-5xl md:text-7xl tracking-tight text-ink mt-5 leading-[1.02] max-w-4xl" style="font-weight:600">The faces behind your care.</h1>
+        <p class="enter enter-3 mt-6 text-lg md:text-xl text-ink/70 leading-relaxed max-w-2xl">From your first phone call to your fitting at the optical counter, the same familiar people look after your whole family's eyes. Patients mention them by name in nearly every review, and for good reason.</p>
+        <div class="enter enter-4 mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 font-mono text-[11px] tracking-[.18em] uppercase text-ink/45">
+          <span class="inline-flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Serving Pomona since 1983</span>
+          <span class="text-ink/20">·</span>
+          <span class="inline-flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span> One team you'll recognize</span>
+          <span class="text-ink/20">·</span>
+          <span class="inline-flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand-500"></span> Bilingual front desk</span>
+        </div>
       </div>
     </section>
 
@@ -74,15 +92,25 @@
     <section id="team" class="py-14 md:py-20">
       <div class="max-w-7xl mx-auto px-6 lg:px-8">
 
-        <!-- Loading skeletons (shown until data resolves) -->
-        <div id="staffSkeleton" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6" aria-hidden="true">
-          <div class="bg-white border border-ink/10 rounded-2xl overflow-hidden animate-pulse"><div class="aspect-[4/5] bg-ink/5"></div><div class="p-6"><div class="h-4 bg-ink/10 rounded w-2/3 mb-3"></div><div class="h-3 bg-ink/10 rounded w-1/2"></div></div></div>
-          <div class="bg-white border border-ink/10 rounded-2xl overflow-hidden animate-pulse"><div class="aspect-[4/5] bg-ink/5"></div><div class="p-6"><div class="h-4 bg-ink/10 rounded w-2/3 mb-3"></div><div class="h-3 bg-ink/10 rounded w-1/2"></div></div></div>
-          <div class="bg-white border border-ink/10 rounded-2xl overflow-hidden animate-pulse"><div class="aspect-[4/5] bg-ink/5"></div><div class="p-6"><div class="h-4 bg-ink/10 rounded w-2/3 mb-3"></div><div class="h-3 bg-ink/10 rounded w-1/2"></div></div></div>
+        <!-- Loading skeleton -->
+        <div id="staffSkeleton" aria-hidden="true">
+          <div class="grid lg:grid-cols-[0.85fr_1.15fr] gap-10 lg:gap-16 items-center animate-pulse">
+            <div class="bg-white border border-ink/10 rounded-[14px] p-3"><div class="aspect-[4/5] bg-ink/5 rounded-[8px]"></div></div>
+            <div><div class="h-3 bg-ink/10 rounded w-32 mb-5"></div><div class="h-9 bg-ink/10 rounded w-3/4 mb-4"></div><div class="h-3 bg-ink/10 rounded w-40 mb-6"></div><div class="h-3 bg-ink/10 rounded w-full mb-2"></div><div class="h-3 bg-ink/10 rounded w-5/6"></div></div>
+          </div>
         </div>
 
-        <!-- Rendered team grid -->
-        <div id="staffGrid" class="hidden grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        <!-- Lead (featured) -->
+        <div id="leadMount" class="hidden"></div>
+
+        <!-- The rest of the team -->
+        <div id="teamRest" class="hidden mt-16 md:mt-24">
+          <div class="flex items-end justify-between gap-4 mb-9 border-t border-ink/15 pt-9">
+            <h2 class="reveal font-display text-3xl md:text-4xl tracking-tight text-ink" style="font-weight:600">The people who'll greet you.</h2>
+            <span class="reveal hidden sm:block font-mono text-[11px] tracking-[.2em] uppercase text-ink/40">Front desk · optical · clinical</span>
+          </div>
+          <div id="staffGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
 
         <!-- Error state -->
         <div id="staffError" class="hidden text-center py-16">
@@ -100,6 +128,30 @@
           <span class="mx-auto grid place-items-center w-14 h-14 rounded-full bg-ink/5 text-ink/40 mb-5"><i data-lucide="users" class="w-7 h-7"></i></span>
           <p class="font-display text-2xl text-ink" style="font-weight:600">Team profiles are on the way.</p>
           <p class="mt-3 text-ink/60 max-w-sm mx-auto">We're putting names to the friendly faces. In the meantime, come say hello in person.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- What patients say about the team (static, from real review language) -->
+    <section class="py-14 md:py-20 border-t border-ink/10 bg-white">
+      <div class="max-w-7xl mx-auto px-6 lg:px-8">
+        <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-ink/50 mb-9">What patients say about the team</p>
+        <div class="grid md:grid-cols-3 gap-6">
+          <figure class="reveal bg-bone border border-ink/10 rounded-2xl p-7">
+            <i data-lucide="quote" class="w-6 h-6 text-brand-500 mb-4"></i>
+            <blockquote class="font-display text-xl text-ink leading-snug" style="font-weight:500">"His staff is very sweet and caring."</blockquote>
+            <figcaption class="mt-4 font-mono text-[11px] tracking-wide uppercase text-ink/45">Char Asfar · Google</figcaption>
+          </figure>
+          <figure class="reveal reveal-d1 bg-bone border border-ink/10 rounded-2xl p-7">
+            <i data-lucide="quote" class="w-6 h-6 text-brand-500 mb-4"></i>
+            <blockquote class="font-display text-xl text-ink leading-snug" style="font-weight:500">"The ladies in the office are always helpful and polite."</blockquote>
+            <figcaption class="mt-4 font-mono text-[11px] tracking-wide uppercase text-ink/45">Rita · Google</figcaption>
+          </figure>
+          <figure class="reveal reveal-d2 bg-bone border border-ink/10 rounded-2xl p-7">
+            <i data-lucide="quote" class="w-6 h-6 text-brand-500 mb-4"></i>
+            <blockquote class="font-display text-xl text-ink leading-snug" style="font-weight:500">"His staff is very helpful and friendly."</blockquote>
+            <figcaption class="mt-4 font-mono text-[11px] tracking-wide uppercase text-ink/45">Diana Butcher · Google</figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -142,49 +194,37 @@
   ===================================================================
    HOW THE OFFICE UPDATES THIS PAGE  (no code, no developer needed)
   ===================================================================
-   The team list below is driven by a Google Sheet. To edit who appears,
-   you just edit the spreadsheet. Steps (one-time setup):
-
-   1. Open the Google Sheet (or make a new one). Put these headers in row 1,
-      spelled exactly:  Name | Role | Bio | Photo | Order | Show
-   2. Fill one row per person.
-        - Name:  e.g.  Dennis A. Chuck, M.D.
-        - Role:  e.g.  Ophthalmologist & Eye Surgeon
-        - Bio:   one or two friendly sentences (optional)
-        - Photo: a web link to a photo, OR a filename in the assets folder
-                 like  assets/dr-chuck.jpg  (optional; a colored initial
-                 is shown automatically if left blank)
-        - Order: a number for sorting (1, 2, 3 ...). Lower shows first.
-        - Show:  TRUE to display, FALSE to hide without deleting the row.
-   3. In Google Sheets:  File  ->  Share  ->  Publish to web.
-        Choose this sheet (tab), format "Comma-separated values (.csv)",
-        click Publish, and copy the link it gives you.
-   4. Paste that link below as SHEET_CSV_URL (between the quotes) and save.
-
-   That's it. After that, ANY edit you make in the Google Sheet shows up on
-   this page within a few minutes (Google refreshes the published file on a
-   short delay). No code changes ever again.
-
-   Until SHEET_CSV_URL is filled in, the page shows the built-in default
-   roster below so it always looks complete.
+   The team is driven by a Google Sheet. To change who appears, just edit
+   the sheet. Headers in row 1 (spelled exactly): Name | Role | Bio | Photo | Order | Show
+     - Name   e.g.  Dennis A. Chuck, M.D.
+     - Role   e.g.  Ophthalmologist & Eye Surgeon
+     - Bio    one or two friendly sentences (optional)
+     - Photo  a web link, OR a filename like assets/dr-chuck.jpg (optional;
+              a colored initial shows automatically if blank)
+     - Order  a number (1, 2, 3 ...). Lower shows first. The Order 1 person
+              is featured larger at the top.
+     - Show   TRUE to display, FALSE to hide without deleting.
+   Then File -> Share -> Publish to web -> this sheet -> CSV -> Publish, and
+   paste the link below as SHEET_CSV_URL. Full guide: STAFF-PAGE-GUIDE.md
   ===================================================================
   -->
   <script>
     lucide.createIcons();
 
-    // ---- CONFIG: paste your published-to-web CSV link here ----
+    // ---- CONFIG: published-to-web CSV link for the team sheet ----
     const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTGVdyKIIL0w1UmXdOE5SYYkplaNkj-doupO8rldo8hWi7Zu24sqku40DPvKlxJXLp03tT2cD3MU85d/pub?output=csv";
 
-    // Built-in roster used when no sheet is configured (and as a safe fallback).
-    // The office can replace all of this just by filling in the Google Sheet above.
+    // Built-in roster: used when no sheet is configured, the sheet is empty, or it can't be reached.
     const DEFAULT_STAFF = [
-      { Name: "Dennis A. Chuck, M.D.", Role: "Ophthalmologist & Eye Surgeon", Bio: "An eye surgeon since 1983, board certified, and a Clinical Instructor at the USC Doheny Eye Institute. Known for exceptional surgical results and a caring, personal approach.", Photo: "assets/dr-chuck.jpg", Order: 1, Show: "TRUE" },
+      { Name: "Dennis A. Chuck, M.D.", Role: "Ophthalmologist & Eye Surgeon", Bio: "An eye surgeon since 1983, board certified, and a Clinical Instructor at the USC Doheny Eye Institute. Known for exceptional surgical results and a caring, personal approach to every patient.", Photo: "assets/dr-chuck.jpg", Order: 1, Show: "TRUE" },
       { Name: "Front Desk & Scheduling", Role: "Patient Coordination", Bio: "The first friendly voice you hear. They handle appointments, insurance questions, and make sure your visit runs smoothly.", Photo: "", Order: 2, Show: "TRUE" },
       { Name: "Optical Team", Role: "Eyewear & Contact Lens Fittings", Bio: "Helps you choose frames and lenses that fit your prescription and your day, and gets your contacts fitted just right.", Photo: "", Order: 3, Show: "TRUE" },
       { Name: "Clinical Team", Role: "Exams & Surgical Support", Bio: "The technicians who guide you through testing and assist Dr. Chuck before, during, and after your procedure.", Photo: "", Order: 4, Show: "TRUE" }
     ];
 
     const skeleton = document.getElementById('staffSkeleton');
+    const leadMount = document.getElementById('leadMount');
+    const teamRest = document.getElementById('teamRest');
     const grid = document.getElementById('staffGrid');
     const errorBox = document.getElementById('staffError');
     const emptyBox = document.getElementById('staffEmpty');
@@ -195,10 +235,7 @@
       while (i < text.length) {
         const c = text[i];
         if (inQuotes) {
-          if (c === '"') {
-            if (text[i + 1] === '"') { field += '"'; i += 2; continue; }
-            inQuotes = false; i++; continue;
-          }
+          if (c === '"') { if (text[i + 1] === '"') { field += '"'; i += 2; continue; } inQuotes = false; i++; continue; }
           field += c; i++; continue;
         }
         if (c === '"') { inQuotes = true; i++; continue; }
@@ -216,33 +253,78 @@
       const headers = rows[0].map(h => h.trim());
       return rows.slice(1)
         .filter(r => r.some(c => c.trim() !== ''))
-        .map(r => {
-          const o = {};
-          headers.forEach((h, idx) => { o[h] = (r[idx] || '').trim(); });
-          return o;
-        });
+        .map(r => { const o = {}; headers.forEach((h, idx) => { o[h] = (r[idx] || '').trim(); }); return o; });
     }
 
-    const INITIAL_TONES = ['bg-brand-100 text-brand-700', 'bg-ink/10 text-ink/70', 'bg-emerald-100 text-emerald-700', 'bg-amber-100 text-amber-700'];
+    const INITIAL_TONES = ['from-brand-100 to-brand-50 text-brand-700', 'from-ink/10 to-ink/5 text-ink/70', 'from-emerald-100 to-emerald-50 text-emerald-700', 'from-amber-100 to-amber-50 text-amber-700'];
     function escapeHtml(s) { return (s || '').replace(/[&<>"']/g, m => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m])); }
+    function initialOf(name) { return (name || '?').trim().charAt(0).toUpperCase(); }
+
+    function mediaHTML(person, idx, aspect) {
+      const photo = (person.Photo || '').trim();
+      const name = escapeHtml(person.Name || '');
+      const tone = INITIAL_TONES[idx % INITIAL_TONES.length];
+      if (photo) {
+        return `<div class="relative ${aspect} overflow-hidden bg-ink/5">
+          <img src="${escapeHtml(photo)}" alt="${name}" class="card-img w-full h-full object-cover object-top" loading="lazy"
+               onerror="this.closest('.media').querySelector('.fallback').classList.remove('hidden'); this.remove();" />
+          <div class="fallback hidden absolute inset-0 grid place-items-center bg-gradient-to-br ${tone}"><span class="font-display text-6xl" style="font-weight:600">${initialOf(person.Name)}</span></div>
+        </div>`;
+      }
+      return `<div class="${aspect} grid place-items-center bg-gradient-to-br ${tone}"><span class="font-display text-7xl" style="font-weight:600">${initialOf(person.Name)}</span></div>`;
+    }
+
+    function leadHTML(person) {
+      const name = escapeHtml(person.Name || '');
+      const role = escapeHtml(person.Role || '');
+      const bio = escapeHtml(person.Bio || '');
+      const isDoctor = /m\.?d\.?|doctor|chuck|ophthalmolog|surgeon/i.test((person.Name || '') + ' ' + (person.Role || ''));
+      return `
+        <div class="grid lg:grid-cols-[0.82fr_1.18fr] gap-10 lg:gap-16 items-center">
+          <div class="reveal relative">
+            <figure class="relative bg-white p-3 rounded-[14px] border border-ink/10 shadow-[0_40px_80px_-30px_rgba(12,27,51,.35)] rotate-[-1.3deg]">
+              <div class="media relative rounded-[8px] overflow-hidden">${mediaHTML(person, 0, 'aspect-[4/5]')}</div>
+              <figcaption class="flex items-center justify-between px-1 pt-3 pb-0.5">
+                <span class="font-mono text-[10px] tracking-[.18em] uppercase text-ink/45">Clear Vision Eye Center</span>
+                <span class="font-mono text-[10px] tracking-[.18em] uppercase text-ink/45">Pomona</span>
+              </figcaption>
+            </figure>
+            <div class="absolute -bottom-5 -right-3 sm:-right-6 rotate-[-7deg] select-none">
+              <div class="rounded-md px-4 py-2 text-center bg-bone/85 backdrop-blur-sm text-brand-700 border-2 border-brand-700/60" style="box-shadow: inset 0 0 0 2px rgba(29,78,216,.16);">
+                <p class="font-mono text-[9px] tracking-[.2em] uppercase leading-none text-brand-700/80">Leading</p>
+                <p class="font-display text-2xl leading-tight mt-1" style="font-weight:600">Your care</p>
+                <p class="font-mono text-[9px] tracking-[.18em] uppercase leading-none text-brand-700/80">since 1983</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p class="reveal font-mono text-xs tracking-[.2em] uppercase text-brand-700">${isDoctor ? 'Your surgeon' : 'Leading the practice'}</p>
+            <h2 class="reveal reveal-d1 font-display text-4xl md:text-6xl tracking-tight text-ink mt-4 leading-[1.02]" style="font-weight:600">${name}</h2>
+            ${role ? `<p class="reveal reveal-d1 mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-500/10 text-brand-700 border border-brand-500/20 font-mono text-[11px] tracking-wide uppercase">${role}</p>` : ''}
+            ${bio ? `<p class="reveal reveal-d2 mt-6 text-lg text-ink/72 leading-relaxed max-w-xl">${bio}</p>` : ''}
+            <div class="reveal reveal-d3 mt-7 flex flex-wrap gap-3">
+              <a href="index.html#contact" class="inline-flex items-center gap-2 bg-ink hover:bg-brand-700 text-bone font-semibold px-6 py-3 rounded-full transition-colors">Book a visit <i data-lucide="arrow-up-right" class="w-4 h-4"></i></a>
+              ${isDoctor ? `<a href="index.html#doctor" class="inline-flex items-center gap-2 border border-ink/20 hover:border-ink text-ink font-semibold px-6 py-3 rounded-full transition-colors">Full bio &amp; credentials</a>` : ''}
+            </div>
+          </div>
+        </div>`;
+    }
 
     function cardHTML(person, idx) {
       const name = escapeHtml(person.Name || '');
       const role = escapeHtml(person.Role || '');
       const bio = escapeHtml(person.Bio || '');
-      const photo = (person.Photo || '').trim();
-      const initial = (person.Name || '?').trim().charAt(0).toUpperCase();
-      const tone = INITIAL_TONES[idx % INITIAL_TONES.length];
-      const media = photo
-        ? `<div class="aspect-[4/5] overflow-hidden bg-ink/5"><img src="${escapeHtml(photo)}" alt="${name}" class="card-img w-full h-full object-cover object-top" loading="lazy" onerror="this.closest('.team-card').querySelector('.fallback').classList.remove('hidden'); this.remove();" /><div class="fallback hidden absolute inset-0 grid place-items-center ${tone}"><span class="font-display text-6xl" style="font-weight:600">${initial}</span></div></div>`
-        : `<div class="aspect-[4/5] grid place-items-center ${tone}"><span class="font-display text-7xl" style="font-weight:600">${initial}</span></div>`;
+      const num = String(idx + 2).padStart(2, '0'); // lead is 01
       return `
-        <article class="team-card reveal relative bg-white border border-ink/10 rounded-2xl overflow-hidden shadow-sm hover:border-ink/20 transition-colors">
-          <div class="relative">${media}</div>
+        <article class="team-card reveal relative bg-white border border-ink/10 rounded-2xl overflow-hidden shadow-sm">
+          <div class="media relative">
+            ${mediaHTML(person, idx + 1, 'aspect-[4/5]')}
+            <span class="absolute top-3 left-3 font-mono text-[10px] tracking-[.2em] uppercase text-white/85 bg-ink/45 backdrop-blur-sm px-2 py-1 rounded-full">${num}</span>
+            ${role ? `<span class="absolute bottom-3 left-3 right-3 font-mono text-[10px] tracking-wide uppercase text-brand-50 bg-brand-600/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-center truncate">${role}</span>` : ''}
+          </div>
           <div class="p-6">
             <h3 class="font-display text-xl text-ink" style="font-weight:600">${name}</h3>
-            <p class="font-mono text-[11px] tracking-wide uppercase text-brand-700 mt-1.5">${role}</p>
-            ${bio ? `<p class="mt-3 text-ink/65 text-sm leading-relaxed">${bio}</p>` : ''}
+            ${bio ? `<p class="mt-2.5 text-ink/65 text-sm leading-relaxed">${bio}</p>` : ''}
           </div>
         </article>`;
     }
@@ -250,6 +332,7 @@
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
     }, { threshold: 0.12 });
+    function observe(scope) { (scope || document).querySelectorAll('.reveal').forEach(el => io.observe(el)); }
 
     function render(list) {
       const people = list
@@ -262,43 +345,69 @@
 
       if (!people.length) { emptyBox.classList.remove('hidden'); return; }
 
-      grid.innerHTML = people.map((p, i) => cardHTML(p, i)).join('');
-      grid.classList.remove('hidden');
+      const [lead, ...rest] = people;
+      leadMount.innerHTML = leadHTML(lead);
+      leadMount.classList.remove('hidden');
+
+      if (rest.length) {
+        grid.innerHTML = rest.map((p, i) => cardHTML(p, i)).join('');
+        teamRest.classList.remove('hidden');
+      }
+
       lucide.createIcons();
-      grid.querySelectorAll('.reveal').forEach(el => io.observe(el));
+      observe(document);
     }
 
     function showError() {
       skeleton.classList.add('hidden');
-      grid.classList.add('hidden');
+      leadMount.classList.add('hidden');
+      teamRest.classList.add('hidden');
       emptyBox.classList.add('hidden');
       errorBox.classList.remove('hidden');
     }
 
     async function load() {
       skeleton.classList.remove('hidden');
-      grid.classList.add('hidden');
+      leadMount.classList.add('hidden');
+      teamRest.classList.add('hidden');
       errorBox.classList.add('hidden');
       emptyBox.classList.add('hidden');
 
-      // No sheet configured yet: use the built-in roster so the page is always complete.
       if (!SHEET_CSV_URL) { render(DEFAULT_STAFF); return; }
-
       try {
         const res = await fetch(SHEET_CSV_URL, { cache: 'no-store' });
         if (!res.ok) throw new Error('status ' + res.status);
-        const text = await res.text();
-        const people = rowsToObjects(parseCSV(text));
-        if (!people.length) { render(DEFAULT_STAFF); return; } // sheet empty -> fall back gracefully
+        const people = rowsToObjects(parseCSV(await res.text()));
+        if (!people.length) { render(DEFAULT_STAFF); return; }
         render(people);
       } catch (err) {
-        // If the sheet can't be reached, fall back to the default roster rather than a broken page.
         if (DEFAULT_STAFF.length) { render(DEFAULT_STAFF); } else { showError(); }
       }
     }
 
     document.getElementById('retryBtn').addEventListener('click', load);
     load();
+  </script>
+
+  <!-- Smooth cross-page fade -->
+  <script>
+  (function () {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.addEventListener('click', function (e) {
+      const a = e.target.closest('a'); if (!a) return;
+      const href = a.getAttribute('href'); if (!href) return;
+      if (a.target === '_blank' || a.hasAttribute('download')) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      if (/^(#|mailto:|tel:|javascript:)/i.test(href)) return;
+      let url; try { url = new URL(href, location.href); } catch (_) { return; }
+      if (url.origin !== location.origin) return;
+      if (url.pathname === location.pathname) return; // same page (anchor/query) -> let default
+      e.preventDefault();
+      document.documentElement.classList.add('leaving');
+      setTimeout(function () { window.location.href = url.href; }, 280);
+    });
+    window.addEventListener('pageshow', function (ev) { if (ev.persisted) document.documentElement.classList.remove('leaving'); });
+  })();
   </script>
 </body>
 </html>

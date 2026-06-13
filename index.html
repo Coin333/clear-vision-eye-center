@@ -187,11 +187,18 @@
     .no-bar::-webkit-scrollbar { display: none; }
     .rev-card { scroll-snap-align: start; }
 
+    /* Soft full-page fade in/out so opening and leaving never snaps */
+    @keyframes bodyIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes bodyOut { from { opacity: 1; } to { opacity: 0; } }
+    body { animation: bodyIn .5s ease both; }
+    html.leaving body { animation: bodyOut .28s ease forwards; }
+
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1; transform: none; transition: none; }
       .marquee-track { animation: none; }
       .fline, .hero-fade { opacity: 1; animation: none; filter: none; transform: none; }
       .scroll-cue span { animation: none; }
+      body, html.leaving body { animation: none; }
     }
   </style>
 </head>
@@ -240,10 +247,10 @@
         <div class="hidden lg:flex items-center gap-8 text-[15px]">
           <a href="#about" class="text-ink/70 hover:text-ink link-underline">About</a>
           <a href="#services" class="text-ink/70 hover:text-ink link-underline">Services</a>
-          <a href="#cataracts" class="text-ink/70 hover:text-ink link-underline">Cataracts</a>
           <a href="#doctor" class="text-ink/70 hover:text-ink link-underline">Dr. Chuck</a>
-          <a href="#faq" class="text-ink/70 hover:text-ink link-underline">FAQ</a>
+          <a href="staff.html" class="text-ink/70 hover:text-ink link-underline">Team</a>
           <a href="reviews.html" class="text-ink/70 hover:text-ink link-underline">Reviews</a>
+          <a href="#faq" class="text-ink/70 hover:text-ink link-underline">FAQ</a>
           <a href="#contact" class="text-ink/70 hover:text-ink link-underline">Contact</a>
         </div>
 
@@ -266,10 +273,10 @@
       <div class="px-6 py-4 flex flex-col gap-1 text-[15px]">
         <a href="#about" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">About</a>
         <a href="#services" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Services</a>
-        <a href="#cataracts" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Cataracts</a>
         <a href="#doctor" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Dr. Chuck</a>
-        <a href="#faq" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">FAQ</a>
+        <a href="staff.html" class="px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Team</a>
         <a href="reviews.html" class="px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Reviews</a>
+        <a href="#faq" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">FAQ</a>
         <a href="#contact" class="mobile-link px-3 py-3 rounded-lg text-ink/80 font-medium hover:bg-ink/5">Contact</a>
         <div class="mt-3 flex items-center gap-2 px-3">
           <span class="font-mono text-[11px] tracking-wide uppercase text-ink/40">Language</span>
@@ -420,8 +427,8 @@
           <p class="font-mono text-[11px] tracking-[.15em] uppercase text-ink/50 mt-2">Micro-incision, or less</p>
         </div>
         <div class="reveal reveal-d3 px-2">
-          <p class="font-display text-5xl md:text-6xl text-ink" style="font-weight:600"><span class="count" data-to="3">0</span><span class="text-brand-600">M+</span></p>
-          <p class="font-mono text-[11px] tracking-[.15em] uppercase text-ink/50 mt-2">U.S. cataract surgeries / year</p>
+          <p class="font-display text-5xl md:text-6xl text-ink" style="font-weight:600"><span class="count" data-to="100">0</span><span class="text-brand-600">%</span></p>
+          <p class="font-mono text-[11px] tracking-[.15em] uppercase text-ink/50 mt-2">Outpatient · home the same day</p>
         </div>
       </div>
     </section>
@@ -1326,7 +1333,7 @@
         "Meet Dr. Chuck":"Conozca al Dr. Chuck",
         "An eye exam in progress · 1774 Alameda St, Pomona":"Un examen de la vista en curso · 1774 Alameda St, Pomona",
         "Est. 1983":"Desde 1983","40 years":"40 años","of care · Pomona":"de atención · Pomona",
-        "Years caring for Pomona":"Años cuidando a Pomona","Minute outpatient surgery":"Minutos, cirugía ambulatoria","Micro-incision, or less":"Microincisión, o menos","U.S. cataract surgeries / year":"Cirugías de cataratas en EE. UU. / año",
+        "Years caring for Pomona":"Años cuidando a Pomona","Minute outpatient surgery":"Minutos, cirugía ambulatoria","Micro-incision, or less":"Microincisión, o menos","Outpatient · home the same day":"Ambulatorio · a casa el mismo día",
         "(What we do)":"(Lo que hacemos)","Care for every part of seeing.":"Cuidado para cada parte de su visión.",
         "From the front desk to the operating microscope, every service is delivered by the same surgeon who has done it thousands of times.":"Desde la recepción hasta el microscopio quirúrgico, cada servicio lo brinda el mismo cirujano que lo ha hecho miles de veces.",
         "Comprehensive Eye Care":"Cuidado integral de los ojos","Cataract Surgery":"Cirugía de cataratas","Optical Shop & Eyewear":"Óptica y anteojos","Eye Exams":"Exámenes de la vista","Lens Implants":"Implantes de lente","Glaucoma Management":"Manejo del glaucoma",
@@ -1390,7 +1397,7 @@
         "(In their words)":"(En sus palabras)","The doctor the":"El médico en quien","doctors trust.":"confían los médicos.","Read all reviews":"Ver todas las reseñas",
         "Our Team":"Nuestro equipo","Privacy Policy":"Política de privacidad","Accessibility":"Accesibilidad","Licensed Ophthalmologist · Pomona, CA":"Oftalmólogo licenciado · Pomona, CA",
         "I agree to be contacted about my request and understand this form is submitted through a third-party service (FormSubmit) and is not a secure channel for sensitive medical details. Please don't include diagnoses or medical history here. See our":"Acepto que me contacten sobre mi solicitud y entiendo que este formulario se envía a través de un servicio externo (FormSubmit) y no es un canal seguro para datos médicos delicados. Por favor, no incluya diagnósticos ni historial médico aquí. Consulte nuestra",
-        "Read about each service in detail":"Conozca cada servicio en detalle","Meet the team":"Conozca al equipo","Board-certified eye care in Pomona":"Oftalmología certificada en Pomona"
+        "Read about each service in detail":"Conozca cada servicio en detalle","Meet the team":"Conozca al equipo","Board-certified eye care in Pomona":"Oftalmología certificada en Pomona","Team":"Equipo"
       },
       zh: {
         "About":"关于","Services":"服务","Cataracts":"白内障","Dr. Chuck":"Chuck 医生","FAQ":"常见问题","Reviews":"评价","Contact":"联系","Book a visit":"预约就诊","Language":"语言","Skip to main content":"跳到主要内容","Scroll":"向下滚动","Call (909) 622-1188":"致电 (909) 622-1188",
@@ -1404,7 +1411,7 @@
         "Meet Dr. Chuck":"认识 Chuck 医生",
         "An eye exam in progress · 1774 Alameda St, Pomona":"正在进行的视力检查 · 1774 Alameda St, Pomona",
         "Est. 1983":"始于 1983","40 years":"40 年","of care · Pomona":"用心守护 · 波莫纳",
-        "Years caring for Pomona":"守护波莫纳的年头","Minute outpatient surgery":"分钟门诊手术","Micro-incision, or less":"微切口，甚至更小","U.S. cataract surgeries / year":"美国每年白内障手术量",
+        "Years caring for Pomona":"守护波莫纳的年头","Minute outpatient surgery":"分钟门诊手术","Micro-incision, or less":"微切口，甚至更小","Outpatient · home the same day":"门诊手术 · 当天回家",
         "(What we do)":"(我们的服务)","Care for every part of seeing.":"呵护视觉的每一个环节。",
         "From the front desk to the operating microscope, every service is delivered by the same surgeon who has done it thousands of times.":"从前台到手术显微镜，每一项服务都由同一位做过数千次的医生亲自完成。",
         "Comprehensive Eye Care":"全面眼科护理","Cataract Surgery":"白内障手术","Optical Shop & Eyewear":"眼镜店与镜架","Eye Exams":"视力检查","Lens Implants":"人工晶体植入","Glaucoma Management":"青光眼管理",
@@ -1510,6 +1517,27 @@
     document.querySelectorAll('.lang-btn').forEach(b => b.addEventListener('click', () => apply(b.dataset.lang)));
     let saved = 'en'; try { saved = localStorage.getItem('cvlang') || 'en'; } catch (e) {}
     apply(saved);
+  })();
+  </script>
+
+  <!-- Smooth cross-page fade -->
+  <script>
+  (function () {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    document.addEventListener('click', function (e) {
+      const a = e.target.closest('a'); if (!a) return;
+      const href = a.getAttribute('href'); if (!href) return;
+      if (a.target === '_blank' || a.hasAttribute('download')) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      if (/^(#|mailto:|tel:|javascript:)/i.test(href)) return;
+      let url; try { url = new URL(href, location.href); } catch (_) { return; }
+      if (url.origin !== location.origin) return;
+      if (url.pathname === location.pathname) return; // same page (anchor/query) -> let default
+      e.preventDefault();
+      document.documentElement.classList.add('leaving');
+      setTimeout(function () { window.location.href = url.href; }, 280);
+    });
+    window.addEventListener('pageshow', function (ev) { if (ev.persisted) document.documentElement.classList.remove('leaving'); });
   })();
   </script>
 </body>
