@@ -201,16 +201,21 @@
   <div class="progress-bar" id="progress"></div>
   <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[90] focus:px-4 focus:py-2 focus:bg-brand-600 focus:text-white focus:rounded-lg focus:font-semibold">Skip to main content</a>
 
-  <!-- Top utility bar -->
-  <div class="hidden md:block border-b border-ink/10 text-ink/70 text-[13px]">
+  <!-- Top utility ribbon: slim dark band, distinct from the bone navbar below -->
+  <div class="hidden md:block bg-ink text-bone/65 text-[13px]">
     <div class="max-w-7xl mx-auto px-6 lg:px-8 h-10 flex items-center justify-between">
-      <span class="font-mono tracking-tight">1774 Alameda St · Pomona, CA 91768</span>
+      <span class="inline-flex items-center gap-2 font-mono tracking-tight">
+        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-400"></i>
+        1774 Alameda St · Pomona, CA 91768
+      </span>
       <div class="flex items-center gap-5">
-        <span id="statusBarTop" class="inline-flex items-center gap-2 font-mono text-xs"><span class="w-2 h-2 rounded-full bg-ink/30"></span><span>Checking hours…</span></span>
-        <span class="text-ink/30">·</span>
-        <a href="mailto:ask.doctorchuck@gmail.com" class="link-underline">ask.doctorchuck@gmail.com</a>
-        <span class="text-ink/30">·</span>
-        <a href="tel:+19096221188" class="font-semibold text-ink link-underline">(909) 622-1188</a>
+        <span class="hidden lg:inline-flex items-center gap-2 font-mono text-[11px] tracking-[.15em] uppercase text-bone/40">
+          <span class="w-1.5 h-1.5 rounded-full bg-brand-400"></span> Board-certified eye care in Pomona
+        </span>
+        <span class="hidden lg:inline text-bone/20">·</span>
+        <a href="mailto:ask.doctorchuck@gmail.com" class="hover:text-bone link-underline">ask.doctorchuck@gmail.com</a>
+        <span class="text-bone/20">·</span>
+        <a href="tel:+19096221188" class="font-semibold text-brand-300 hover:text-brand-200 link-underline">(909) 622-1188</a>
       </div>
     </div>
   </div>
@@ -1167,7 +1172,7 @@
     (function paintStatus() {
       const s = computeStatus();
       const dot = s.open ? 'bg-emerald-500' : 'bg-chartred';
-      [['statusHero', true], ['statusBarTop', false], ['statusFooter', false]].forEach(([id]) => {
+      [['statusHero', true], ['statusFooter', false]].forEach(([id]) => {
         const el = document.getElementById(id); if (!el) return;
         el.innerHTML = '<span class="w-2 h-2 rounded-full ' + dot + '"></span><span>' + s.label + '</span>';
       });
@@ -1385,7 +1390,7 @@
         "(In their words)":"(En sus palabras)","The doctor the":"El médico en quien","doctors trust.":"confían los médicos.","Read all reviews":"Ver todas las reseñas",
         "Our Team":"Nuestro equipo","Privacy Policy":"Política de privacidad","Accessibility":"Accesibilidad","Licensed Ophthalmologist · Pomona, CA":"Oftalmólogo licenciado · Pomona, CA",
         "I agree to be contacted about my request and understand this form is submitted through a third-party service (FormSubmit) and is not a secure channel for sensitive medical details. Please don't include diagnoses or medical history here. See our":"Acepto que me contacten sobre mi solicitud y entiendo que este formulario se envía a través de un servicio externo (FormSubmit) y no es un canal seguro para datos médicos delicados. Por favor, no incluya diagnósticos ni historial médico aquí. Consulte nuestra",
-        "Read about each service in detail":"Conozca cada servicio en detalle","Meet the team":"Conozca al equipo"
+        "Read about each service in detail":"Conozca cada servicio en detalle","Meet the team":"Conozca al equipo","Board-certified eye care in Pomona":"Oftalmología certificada en Pomona"
       },
       zh: {
         "About":"关于","Services":"服务","Cataracts":"白内障","Dr. Chuck":"Chuck 医生","FAQ":"常见问题","Reviews":"评价","Contact":"联系","Book a visit":"预约就诊","Language":"语言","Skip to main content":"跳到主要内容","Scroll":"向下滚动","Call (909) 622-1188":"致电 (909) 622-1188",
@@ -1463,7 +1468,7 @@
         "(In their words)":"(患者心声)","The doctor the":"连医生都","doctors trust.":"信赖的医生。","Read all reviews":"查看全部评价",
         "Our Team":"我们的团队","Privacy Policy":"隐私政策","Accessibility":"无障碍声明","Licensed Ophthalmologist · Pomona, CA":"持照眼科医生 · 波莫纳，加州",
         "I agree to be contacted about my request and understand this form is submitted through a third-party service (FormSubmit) and is not a secure channel for sensitive medical details. Please don't include diagnoses or medical history here. See our":"我同意就我的申请与诊所联系，并理解此表单通过第三方服务（FormSubmit）提交，并非传输敏感医疗信息的安全渠道。请勿在此填写诊断或病史。详见我们的",
-        "Read about each service in detail":"详细了解每一项服务","Meet the team":"认识我们的团队"
+        "Read about each service in detail":"详细了解每一项服务","Meet the team":"认识我们的团队","Board-certified eye care in Pomona":"波莫纳的委员会认证眼科"
       }
     };
 
