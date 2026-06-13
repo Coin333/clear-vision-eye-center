@@ -190,8 +190,8 @@
     /* Soft full-page fade in/out so opening and leaving never snaps */
     @keyframes bodyIn { from { opacity: 0; } to { opacity: 1; } }
     @keyframes bodyOut { from { opacity: 1; } to { opacity: 0; } }
-    body { animation: bodyIn .32s ease both; }
-    html.leaving body { animation: bodyOut .15s ease forwards; }
+    body { animation: bodyIn .22s ease both; }
+    html.leaving body { animation: bodyOut .1s ease forwards; }
 
     @media (prefers-reduced-motion: reduce) {
       .reveal { opacity: 1; transform: none; transition: none; }
@@ -1535,7 +1535,7 @@
       if (url.pathname === location.pathname) return; // same page (anchor/query) -> let default
       e.preventDefault();
       document.documentElement.classList.add('leaving');
-      setTimeout(function () { window.location.href = url.href; }, 150);
+      setTimeout(function () { window.location.href = url.href; }, 100);
     });
     window.addEventListener('pageshow', function (ev) { if (ev.persisted) document.documentElement.classList.remove('leaving'); });
   })();
